@@ -228,6 +228,7 @@ namespace BlobGame
                 Main.spriteBatch.DrawString(Main.font, "Blob Stamina: " + blobStamina, new Vector2(0, 150), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Is Moving: " + isMoving, new Vector2(0, 180), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Is Left: " + isLeft, new Vector2(0, 210), Color.Black);
+                Main.spriteBatch.DrawString(Main.font, "Size to Tile: " + Main.widthInTiles + ", " + Main.heightInTiles, new Vector2(0, 240), Color.Black);
             }
             Main.spriteBatch.End();
         }

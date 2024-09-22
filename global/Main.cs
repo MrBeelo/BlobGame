@@ -12,7 +12,6 @@ public class Main : Game
     private GraphicsDeviceManager graphics;
     public static SpriteBatch spriteBatch;
     Player player;
-
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
     public static bool hasF11On = false;
@@ -30,6 +29,8 @@ public class Main : Game
     public int tilesize = 30; //Display Tilesize
     public int playerSizeW = 60;
     public int playerSizeH = 90;
+    public static float widthInTiles;
+    public static float heightInTiles;
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public enum GameState
@@ -108,6 +109,12 @@ public class Main : Game
         player = new Player(playerTexture, playerDrect, new(0, 0, 20, 30), graphics);
         player.LoadContent(this);
         sprites.Add(player);
+
+        widthInTiles = (player.Drect.Width - (player.Drect.Width % tilesize)) / tilesize;
+        heightInTiles = (player.Drect.Height - (player.Drect.Height % tilesize)) / tilesize;
+
+        //widthInTiles = playerSizeW / 32;
+        //heightInTiles = playerSizeH / 32;
 
         mainMenu = new MainMenuScreen(font, graphics);
         paused = new PausedScreen(font, graphics);
@@ -196,14 +203,6 @@ public class Main : Game
                 } else {
                 }
 
-            }
-        }
-
-        foreach (var rect in intersections)
-        {
-            if(collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
-            {
-                
             }
         }
 
@@ -379,9 +378,6 @@ public class Main : Game
 
         List<Rectangle> intersections = new();
 
-        int widthInTiles = (target.Width - (target.Width % tilesize)) / tilesize;
-        int heightInTiles = (target.Height - (target.Height % tilesize)) / tilesize;
-
         for (int x = 0; x <= widthInTiles; x++) {
             for (int y = 0; y <= heightInTiles; y++) {
 
@@ -402,9 +398,6 @@ public class Main : Game
     public List<Rectangle> getIntersectingTilesVertical(Rectangle target) {
 
         List<Rectangle> intersections = new();
-
-        int widthInTiles = (target.Width - (target.Width % tilesize)) / tilesize;
-        int heightInTiles = (target.Height - (target.Height % tilesize)) / tilesize;
 
         for (int x = 0; x <= widthInTiles; x++) {
             for (int y = 0; y <= heightInTiles; y++) {
