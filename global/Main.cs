@@ -26,11 +26,9 @@ public class Main : Game
     public Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
-    public int tilesize = 30; //Display Tilesize
-    public int playerSizeW = 60;
-    public int playerSizeH = 90;
-    public static float widthInTiles;
-    public static float heightInTiles;
+    public int tilesize = 32; //Display Tilesize
+    public int playerSizeW = 42;
+    public int playerSizeH = 64;
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public enum GameState
@@ -109,12 +107,6 @@ public class Main : Game
         player = new Player(playerTexture, playerDrect, new(0, 0, 20, 30), graphics);
         player.LoadContent(this);
         sprites.Add(player);
-
-        widthInTiles = (player.Drect.Width - (player.Drect.Width % tilesize)) / tilesize;
-        heightInTiles = (player.Drect.Height - (player.Drect.Height % tilesize)) / tilesize;
-
-        //widthInTiles = playerSizeW / 32;
-        //heightInTiles = playerSizeH / 32;
 
         mainMenu = new MainMenuScreen(font, graphics);
         paused = new PausedScreen(font, graphics);
@@ -378,13 +370,13 @@ public class Main : Game
 
         List<Rectangle> intersections = new();
 
-        for (int x = 0; x <= widthInTiles; x++) {
-            for (int y = 0; y <= heightInTiles; y++) {
+        for (int x = 0; x <= playerSizeW; x += tilesize) {
+            for (int y = 0; y <= playerSizeH; y += tilesize) {
 
                 intersections.Add(new Rectangle(
 
-                    (target.X + x*tilesize) / tilesize,
-                    (target.Y + y*(tilesize-1)) / tilesize,
+                    (target.X + x) / tilesize,
+                    (target.Y + y / tilesize *(tilesize-1)) / tilesize,
                     tilesize,
                     tilesize
 
@@ -393,25 +385,43 @@ public class Main : Game
             }
         }
 
+        if (playerSizeW % tilesize != 0) {
+        intersections.Add(new Rectangle(
+            (target.X + playerSizeW) / tilesize,
+            (target.Y) / tilesize,
+            tilesize,
+            tilesize
+        ));
+        }
+
         return intersections;
     }
     public List<Rectangle> getIntersectingTilesVertical(Rectangle target) {
 
         List<Rectangle> intersections = new();
 
-        for (int x = 0; x <= widthInTiles; x++) {
-            for (int y = 0; y <= heightInTiles; y++) {
+        for (int x = 0; x <= playerSizeW; x += tilesize) {
+            for (int y = 0; y <= playerSizeH; y += tilesize) {
 
                 intersections.Add(new Rectangle(
 
-                    (target.X + x*(tilesize-1)) / tilesize,
-                    (target.Y + y*tilesize) / tilesize,
+                    (target.X + x / tilesize *(tilesize-1)) / tilesize,
+                    (target.Y + y) / tilesize,
                     tilesize,
                     tilesize
 
                 ));
 
             }
+        }
+
+        if (playerSizeH % tilesize != 0) {
+        intersections.Add(new Rectangle(
+            (target.X) / tilesize,
+            (target.Y + playerSizeH) / tilesize,
+            tilesize,
+            tilesize
+        ));
         }
 
         return intersections;
