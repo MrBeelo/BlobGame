@@ -88,7 +88,7 @@ namespace BlobGame
             }
 
             walkingCounter++;
-            if(walkingCounter > 29)
+            if(walkingCounter > 44 - (blobSpeed * 6))
             {
                 walkingCounter = 0;
                 walkingActiveFrame++;

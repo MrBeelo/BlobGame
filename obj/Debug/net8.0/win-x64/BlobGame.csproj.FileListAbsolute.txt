@@ -429,3 +429,4 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\wi
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\player\PlayerWalk1.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\player\PlayerWalk2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\player\PlayerWalk3.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Debug\net8.0\win-x64\BlobGame.sourcelink.json
