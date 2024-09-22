@@ -26,9 +26,9 @@ public class Main : Game
     public Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
-    public int tilesize = 32; //Display Tilesize
-    public int playerSizeW = 42;
-    public int playerSizeH = 64;
+    public int tilesize = 30; //Display Tilesize
+    public int playerSizeW = 60;
+    public int playerSizeH = 90;
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public enum GameState
