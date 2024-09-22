@@ -29,9 +29,9 @@ public class Main : Game
     public Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
-    private int tilesize = 32; //Display Tilesize
-    public int playerSizeW = 32;
-    public int playerSizeH = 64;
+    private int tilesize = 30; //Display Tilesize
+    public int playerSizeW = 60;
+    public int playerSizeH = 90;
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public enum GameState
@@ -50,8 +50,8 @@ public class Main : Game
         normal = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
         collision = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_collision.csv"));
 
-        //graphics.PreferredBackBufferWidth = 1920;
-        //graphics.PreferredBackBufferHeight = 1080;
+        graphics.PreferredBackBufferWidth = 1920;
+        graphics.PreferredBackBufferHeight = 1080;
 
         sprites = new();
         intersections = new();
