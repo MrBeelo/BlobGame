@@ -22,7 +22,7 @@ namespace BlobGame
             for (int i = 0; i < menuItems.Length; i++)
             {
                 string item = menuItems[i];
-                itemPosition[i] = new Vector2(graphics.PreferredBackBufferWidth / 2f - (menuFont.MeasureString(item).X / 2f), 200); // Set the position of the menu
+                itemPosition[i] = new Vector2(graphics.PreferredBackBufferWidth / 2f - (menuFont.MeasureString(item).X / 2f), 400); // Set the position of the menu
             }
         }
 

@@ -234,8 +234,6 @@ public class Main : Game
                 spriteBatch.End();
             }
 
-            player.Draw(spriteBatch);
-
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             int tpr = 8; //Tiles per row
             int p_tilesize = 16; //Pixel Tilesize
@@ -286,6 +284,8 @@ public class Main : Game
             }
 
             spriteBatch.End();
+
+            player.Draw(spriteBatch);
            
         }
         else if (currentGameState == GameState.Paused)
