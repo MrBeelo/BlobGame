@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using BlobGame;
 using System.IO;
 
 namespace BlobGame;
@@ -18,6 +15,7 @@ public class Main : Game
 
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
+    public static bool hasF11On = false;
     public static Texture2D pixelTexture;
     public static Texture2D rectangleTexture;
     public static SpriteFont font;
@@ -118,7 +116,23 @@ public class Main : Game
 
     protected override void Update(GameTime gameTime)
     {
+        if(hasF11On)
+        {
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
+        } else {
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+        }
+        
         KeyboardState kstate = Keyboard.GetState();
+        if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
+        {
+            hasF11On = true;
+        } else if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == true)
+        {
+            hasF11On = false;
+        }
 
         if(IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
                 {
