@@ -27,7 +27,7 @@ public class Main : Game
     public Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
-    private int tilesize = 30; //Display Tilesize
+    public int tilesize = 30; //Display Tilesize
     public int playerSizeW = 60;
     public int playerSizeH = 90;
     private List<Rectangle> intersections;
@@ -119,12 +119,14 @@ public class Main : Game
         if(hasF11On)
         {
             graphics.IsFullScreen = true;
+            IsMouseVisible = false;
             graphics.ApplyChanges();
         } else {
             graphics.IsFullScreen = false;
+            IsMouseVisible = true;
             graphics.ApplyChanges();
         }
-        
+
         KeyboardState kstate = Keyboard.GetState();
         if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
         {
