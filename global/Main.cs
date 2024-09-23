@@ -337,7 +337,6 @@ public class Main : Game
                 string[] mainDebugInfo = 
                 {
                     "Current Game State: " + currentGameState,
-                    "Time Elapsed: " + timeSpan,
                     "FPS: " + FPS
                 };
 
