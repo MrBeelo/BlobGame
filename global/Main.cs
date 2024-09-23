@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using System.Linq;
 
 namespace BlobGame;
 
@@ -31,6 +32,9 @@ public class Main : Game
     public int playerSizeH = 90;
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
+    public int frameCounter;
+    public TimeSpan timeSpan;
+    public int FPS;
     public enum GameState
     {
         MainMenu,
@@ -103,7 +107,7 @@ public class Main : Game
         hitboxAtlas = Content.Load<Texture2D>("assets/collision_atlas");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
-        Rectangle playerDrect = new Rectangle(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2 - 200, playerSizeW, playerSizeH);
+        Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
         player = new Player(playerTexture, playerDrect, new(0, 0, 20, 30), graphics);
         player.LoadContent(this);
         sprites.Add(player);
@@ -115,6 +119,16 @@ public class Main : Game
 
     protected override void Update(GameTime gameTime)
     {
+        timeSpan += gameTime.ElapsedGameTime;
+        frameCounter++;
+
+        if (timeSpan > TimeSpan.FromSeconds(1))
+        {
+            timeSpan -= TimeSpan.FromSeconds(1);
+            FPS = frameCounter;
+            frameCounter = 0;
+        }
+
         if(hasF11On)
         {
             graphics.IsFullScreen = true;
@@ -305,8 +319,32 @@ public class Main : Game
 
         if(hasF3On)
             {
+                List<string> otherDebugInfoList = new List<string>();
+
+                foreach(var sprite in sprites)
+                {
+                    string[] spriteDebugInfo = sprite.GetDebugInfo();
+                    otherDebugInfoList.AddRange(spriteDebugInfo);
+                }
+                string[] mainDebugInfo = 
+                {
+                    "Current Game State: " + currentGameState,
+                    "Time Elapsed: " + timeSpan,
+                    "FPS: " + FPS
+                };
+
+                string[] otherDebugInfo = otherDebugInfoList.ToArray();
+
+                string[] combinedDebugInfo = mainDebugInfo.Concat(otherDebugInfo).ToArray();
+
+                Vector2 pos = Vector2.Zero;
+
                 spriteBatch.Begin();
-                spriteBatch.DrawString(font, "Current Game State: " + currentGameState, Vector2.Zero, Color.Black);
+                foreach(var info in combinedDebugInfo)
+                {
+                    spriteBatch.DrawString(font, info, pos, Color.Black);
+                    pos.Y += 32;
+                }
                 spriteBatch.End();
             }
 

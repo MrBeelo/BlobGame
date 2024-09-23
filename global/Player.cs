@@ -11,7 +11,6 @@ namespace BlobGame
     public class Player : Sprite
     {
         public Vector2 velocity;
-        public Vector2 Position;
         public int blobSpeed = 3;
         public int blobStamina = 0;
         private SoundEffect successSound;
@@ -74,6 +73,7 @@ namespace BlobGame
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
 
             idleCounter++;
             if(idleCounter > 29)
@@ -151,8 +151,6 @@ namespace BlobGame
                 isLeft = false;
             }
 
-            Position = new Vector2(Drect.X, Drect.Y);
-
             prevkstate = kstate; //Used for one-shot
         } 
         public override void Draw(SpriteBatch spriteBatch)
@@ -219,17 +217,34 @@ namespace BlobGame
                 );
             }
 
-            if(Main.hasF3On && Main.currentGameState == Main.GameState.Playing)
+            /*if(Main.hasF3On && Main.currentGameState == Main.GameState.Playing)
             {
-                Main.spriteBatch.DrawString(Main.font, "Blob Position: " + Drect.X + ", " + Drect.Y, new Vector2(0, 30), Color.Black);
+                Main.spriteBatch.DrawString(Main.font, "Blob Position: " + Position, new Vector2(0, 30), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Velocity: " + velocity, new Vector2(0, 60), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Is In Air: " + isInAir, new Vector2(0, 90), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Blob Speed: " + blobSpeed, new Vector2(0, 120), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Blob Stamina: " + blobStamina, new Vector2(0, 150), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Is Moving: " + isMoving, new Vector2(0, 180), Color.Black);
                 Main.spriteBatch.DrawString(Main.font, "Is Left: " + isLeft, new Vector2(0, 210), Color.Black);
-            }
+                Main.spriteBatch.DrawString(Main.font, "Tile Position: " + TilePosition, new Vector2(0, 240), Color.Black);
+            }*/
             Main.spriteBatch.End();
+        }
+
+        public override string[] GetDebugInfo()
+        {
+            return new string[] 
+            {
+                "Position: " + Position,
+                "Tile Position: " + TilePosition,
+                "Veocity: " + velocity,
+                "Speed: " + blobSpeed,
+                "Stamina: " + blobStamina,
+                "Is in Air: " + isInAir,
+                "Is Moving: " + isMoving,
+                "Is looking Left: " + isLeft
+
+            };
         }
     }
 }
