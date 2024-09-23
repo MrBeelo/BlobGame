@@ -76,7 +76,6 @@ namespace BlobGame
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Main.options.LoadSettings(Path.Combine(AppContext.BaseDirectory, "data", "settings.json"));
 
             idleCounter++;
             if(idleCounter > 29)
