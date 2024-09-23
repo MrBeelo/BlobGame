@@ -58,7 +58,7 @@ namespace BlobGame
                         break;
                     case 1:
                         // Options
-                        // Add logic for options if needed
+                        Main.currentGameState = Main.GameState.Options;
                         break;
                     case 2:
                         // Exit

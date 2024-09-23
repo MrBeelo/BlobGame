@@ -23,6 +23,7 @@ public class Main : Game
     private MainMenuScreen mainMenu;
     private PausedScreen paused;
     private QuitScreen quit;
+    public SettingsScreen options;
     public Dictionary<Vector2, int> normal;
     public Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
@@ -115,6 +116,7 @@ public class Main : Game
         mainMenu = new MainMenuScreen(font, graphics);
         paused = new PausedScreen(font, graphics);
         quit = new QuitScreen(font, graphics);
+        options = new SettingsScreen(font, graphics);
     }
 
     protected override void Update(GameTime gameTime)
@@ -225,6 +227,9 @@ public class Main : Game
         } else if (currentGameState == GameState.Quit)
         {
             quit.Update(gameTime);
+        } else if (currentGameState == GameState.Options)
+        {
+            options.Update(gameTime);
         }
 
         prevkstate = kstate;
@@ -315,6 +320,9 @@ public class Main : Game
         } else if (currentGameState == GameState.Quit)
         {
             quit.Draw(spriteBatch, graphics);
+        } else if(currentGameState == GameState.Options)
+        {
+            options.Draw(spriteBatch, graphics);
         }
 
         if(hasF3On)

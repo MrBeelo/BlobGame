@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -69,11 +70,13 @@ namespace BlobGame
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
 
             successSound.Play();
+            //successSound.Play(settings.Volume, 0.0f, 0.0f);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            Main.options.LoadSettings(Path.Combine(AppContext.BaseDirectory, "data", "settings.json"));
 
             idleCounter++;
             if(idleCounter > 29)
@@ -217,17 +220,6 @@ namespace BlobGame
                 );
             }
 
-            /*if(Main.hasF3On && Main.currentGameState == Main.GameState.Playing)
-            {
-                Main.spriteBatch.DrawString(Main.font, "Blob Position: " + Position, new Vector2(0, 30), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Velocity: " + velocity, new Vector2(0, 60), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Is In Air: " + isInAir, new Vector2(0, 90), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Blob Speed: " + blobSpeed, new Vector2(0, 120), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Blob Stamina: " + blobStamina, new Vector2(0, 150), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Is Moving: " + isMoving, new Vector2(0, 180), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Is Left: " + isLeft, new Vector2(0, 210), Color.Black);
-                Main.spriteBatch.DrawString(Main.font, "Tile Position: " + TilePosition, new Vector2(0, 240), Color.Black);
-            }*/
             Main.spriteBatch.End();
         }
 
@@ -242,8 +234,7 @@ namespace BlobGame
                 "Stamina: " + blobStamina,
                 "Is in Air: " + isInAir,
                 "Is Moving: " + isMoving,
-                "Is looking Left: " + isLeft
-
+                "Is looking Left: " + isLeft,
             };
         }
     }
