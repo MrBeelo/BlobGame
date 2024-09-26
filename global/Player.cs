@@ -25,6 +25,7 @@ namespace BlobGame
         int walkingCounter;
         int walkingActiveFrame;
         public Texture2D[] jumpingTextures;
+        Settings settings = new Settings();
 
         public bool isInAir = true;
         public static int gravity = 1;
@@ -69,12 +70,12 @@ namespace BlobGame
             speedStartSound = game.Content.Load<SoundEffect>("assets/sounds/speedStart");
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
 
-            successSound.Play();
-            //successSound.Play(settings.Volume, 0.0f, 0.0f);
+            successSound.Play(settings.Volume, 0.0f, 0.0f);
         }
 
         public override void Update(GameTime gameTime)
         {
+            settings = Settings.LoadSettings(Path.Combine(AppContext.BaseDirectory, "data", "settings.json"));
             base.Update(gameTime);
 
             idleCounter++;
@@ -119,12 +120,12 @@ namespace BlobGame
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && !isInAir) {
                 velocity.Y = -10;
-                jumpSound.Play();
+                jumpSound.Play(settings.Volume, 0.0f, 0.0f);
             }
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.LeftShift) && blobStamina == 0) {
                 blobStamina = 1000;
-                speedStartSound.Play();
+                speedStartSound.Play(settings.Volume, 0.0f, 0.0f);
             }
 
             if(blobStamina > 600) {
@@ -134,7 +135,7 @@ namespace BlobGame
             {
                 blobSpeed = 6;
                 blobStamina--;
-                speedEndSound.Play();
+                speedEndSound.Play(settings.Volume, 0.0f, 0.0f);
             } else if(blobStamina >= 1)
             {
                 blobSpeed = 3;
@@ -233,7 +234,7 @@ namespace BlobGame
                 "Stamina: " + blobStamina,
                 "Is in Air: " + isInAir,
                 "Is Moving: " + isMoving,
-                "Is looking Left: " + isLeft,
+                "Is looking Left: " + isLeft
             };
         }
     }

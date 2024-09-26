@@ -15,6 +15,8 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\player\PlayerWalk2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\player\PlayerWalk3.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\map.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\old_testlevel_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\old_testlevel_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\testlevel_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\testlevel_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\soft_oal.dll

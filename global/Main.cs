@@ -46,7 +46,9 @@ public class Main : Game
     }
     public Main()
     {
+        //IsFixedTimeStep = false;
         graphics = new GraphicsDeviceManager(this);
+
         Content.RootDirectory = "content";
         IsMouseVisible = true;
         normal = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
@@ -57,6 +59,10 @@ public class Main : Game
 
         sprites = new();
         intersections = new();
+
+        //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
+        
+        //TEST
     }
 
     public Dictionary<Vector2, int> LoadMap(string filepath)
