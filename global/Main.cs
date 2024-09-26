@@ -17,7 +17,6 @@ public class Main : Game
     public static bool hasF3On = false;
     public static bool hasF11On = false;
     public static Texture2D pixelTexture;
-    public static Texture2D rectangleTexture;
     public static SpriteFont font;
     public static GameState currentGameState = GameState.MainMenu;
     private MainMenuScreen mainMenu;
@@ -102,9 +101,6 @@ public class Main : Game
 
         pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         pixelTexture.SetData(new[] { Color.White });
-
-        rectangleTexture = new Texture2D(GraphicsDevice, 1, 1);
-        rectangleTexture.SetData(new[] { Color.Red });
 
         //! Definition of a texture and a position for the sprite class is needed here.
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
@@ -258,11 +254,11 @@ public class Main : Game
                 foreach(var rect in intersections)
                 {
                     spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                    DrawRectHollow(spriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1);
+                    DrawRectHollow(spriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
                     spriteBatch.End();
                 }
                 spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                DrawRectHollow(spriteBatch, player.Drect, 4);
+                DrawRectHollow(spriteBatch, player.Drect, 4, Color.Blue);
                 spriteBatch.End();
             }
 
@@ -287,6 +283,7 @@ public class Main : Game
                     p_tilesize,
                     p_tilesize
                 );
+
                 spriteBatch.Draw(textureAtlas, dest, src, Color.White);
             }
 
@@ -311,7 +308,8 @@ public class Main : Game
 
                 if(hasF3On)
                 {
-                    spriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
+                    //spriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
+                    DrawRectHollow(spriteBatch, dest, 2, Color.Orange);
                 }
             }
 
@@ -374,46 +372,46 @@ public class Main : Game
         Environment.Exit(0);
     }
 
-    public void DrawRectHollow(SpriteBatch spriteBatch, Rectangle rect, int thickness) {
+    public void DrawRectHollow(SpriteBatch spriteBatch, Rectangle rect, int thickness, Color color) {
         spriteBatch.Draw(
-            rectangleTexture,
+            pixelTexture,
             new Rectangle(
                 rect.X,
                 rect.Y,
                 rect.Width,
                 thickness
             ),
-            Color.White
+            color
         );
         spriteBatch.Draw(
-            rectangleTexture,
+            pixelTexture,
             new Rectangle(
                 rect.X,
                 rect.Bottom - thickness,
                 rect.Width,
                 thickness
             ),
-            Color.White
+            color
         );
         spriteBatch.Draw(
-            rectangleTexture,
+            pixelTexture,
             new Rectangle(
                 rect.X,
                 rect.Y,
                 thickness,
                 rect.Height
             ),
-            Color.White
+            color
         );
         spriteBatch.Draw(
-            rectangleTexture,
+            pixelTexture,
             new Rectangle(
                 rect.Right - thickness,
                 rect.Y,
                 thickness,
                 rect.Height
             ),
-            Color.White
+            color
         );
     }
 
