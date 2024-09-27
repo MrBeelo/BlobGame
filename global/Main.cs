@@ -23,6 +23,7 @@ public class Main : Game
     private PausedScreen paused;
     private QuitScreen quit;
     public SettingsScreen options;
+    public PausedSettingsScreen poptions;
     public Dictionary<Vector2, int> normal;
     public Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
@@ -41,7 +42,8 @@ public class Main : Game
         Playing,
         Paused,
         Options,
-        Quit
+        Quit,
+        POptions
     }
     public Main()
     {
@@ -60,8 +62,6 @@ public class Main : Game
         intersections = new();
 
         //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
-        
-        //TEST
     }
 
     public Dictionary<Vector2, int> LoadMap(string filepath)
@@ -119,6 +119,7 @@ public class Main : Game
         paused = new PausedScreen(font, graphics);
         quit = new QuitScreen(font, graphics);
         options = new SettingsScreen(font, graphics);
+        poptions = new PausedSettingsScreen(font, graphics);
     }
 
     protected override void Update(GameTime gameTime)
@@ -232,6 +233,9 @@ public class Main : Game
         } else if (currentGameState == GameState.Options)
         {
             options.Update(gameTime);
+        } else if (currentGameState == GameState.POptions)
+        {
+            poptions.Update(gameTime);
         }
 
         prevkstate = kstate;
@@ -327,6 +331,9 @@ public class Main : Game
         } else if(currentGameState == GameState.Options)
         {
             options.Draw(spriteBatch, graphics);
+        } else if(currentGameState == GameState.POptions)
+        {
+            poptions.Draw(spriteBatch, graphics);
         }
 
         if(hasF3On)

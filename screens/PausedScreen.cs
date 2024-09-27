@@ -57,8 +57,8 @@ namespace BlobGame
                         Main.currentGameState = Main.GameState.Playing;
                         break;
                     case 1:
-                        // Options
-                        Main.currentGameState = Main.GameState.Options;
+                        // Paused Options
+                        Main.currentGameState = Main.GameState.POptions;
                         break;
                     case 2:
                         // Exit
