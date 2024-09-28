@@ -16,7 +16,6 @@ namespace BlobGame
         private Vector2[] itemPosition;
         private Color normalColor = Color.White;
         private Color selectedColor = Color.Yellow;
-        private string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
         public Settings settings = new Settings();
 
         public SettingsScreen(SpriteFont font, GraphicsDeviceManager graphics)
@@ -25,7 +24,7 @@ namespace BlobGame
             selectedIndex = 0;
 
             // Load settings and parse menu items
-            settings = Settings.LoadSettings(settingsFilePath);
+            settings = Settings.LoadSettings(Main.settingsFilePath);
             UpdateMenuItems();
 
             itemPosition = new Vector2[menuItems.Length];
@@ -80,7 +79,7 @@ namespace BlobGame
                         break;
                 }
                 
-                settings.SaveSettings(settingsFilePath); // Save changes to the file
+                settings.SaveSettings(Main.settingsFilePath); // Save changes to the file
                 UpdateMenuItems();
             }
             prevkstate = kstate;

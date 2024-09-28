@@ -15,6 +15,7 @@ namespace BlobGame
         private Vector2[] itemPosition = {Vector2.Zero, Vector2.Zero, Vector2.Zero};
         private Color normalColor = Color.White;
         private Color selectedColor = Color.Yellow;
+        private Settings settings = new Settings();
 
         public MainMenuScreen(SpriteFont font, GraphicsDeviceManager graphics)
         {
@@ -29,6 +30,7 @@ namespace BlobGame
 
         public void Update(GameTime gameTime)
         {
+            Settings.LoadSettings(Main.settingsFilePath);
             KeyboardState kstate = Keyboard.GetState();
 
             if (Main.IsKeyPressed(kstate, prevkstate, Keys.Down) || Main.IsKeyPressed(kstate, prevkstate, Keys.S))
@@ -64,6 +66,7 @@ namespace BlobGame
                     case 2:
                         // Exit
                         Main.currentGameState = Main.GameState.Quit;
+                        //settings.PlayerPos = Main.player.Position;
                         break;
                 }
             }

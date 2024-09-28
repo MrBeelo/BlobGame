@@ -75,7 +75,20 @@ namespace BlobGame
 
         public override void Update(GameTime gameTime)
         {
-            settings = Settings.LoadSettings(Path.Combine(AppContext.BaseDirectory, "data", "settings.json"));
+            /*switch(settings.Level)
+            {
+                case 1:
+                Main.levelStartPos.X = 50;
+                Main.levelStartPos.Y = 600;
+                break;
+
+                case 2:
+                Main.levelStartPos.X = 200;
+                Main.levelStartPos.Y = 400;
+                break;
+            }*/
+
+            settings = Settings.LoadSettings(Main.settingsFilePath);
             base.Update(gameTime);
 
             idleCounter++;

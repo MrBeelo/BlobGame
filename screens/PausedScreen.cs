@@ -10,7 +10,7 @@ namespace BlobGame
         KeyboardState prevkstate;
         private SpriteFont menuFont;
         private int selectedIndex;
-        private string[] menuItems = { "Continue", "Options", "Back to Main Menu" };
+        private string[] menuItems = { "Continue", "Options", "Quit" };
         private Vector2[] itemPosition = {Vector2.Zero, Vector2.Zero, Vector2.Zero};
         private Color normalColor = Color.White;
         private Color selectedColor = Color.Yellow;
@@ -61,7 +61,7 @@ namespace BlobGame
                         Main.currentGameState = Main.GameState.POptions;
                         break;
                     case 2:
-                        // Exit
+                        // Save and Exit
                         Main.currentGameState = Main.GameState.MainMenu;
                         break;
                 }

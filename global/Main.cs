@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace BlobGame;
 
@@ -12,7 +13,9 @@ public class Main : Game
 {
     private GraphicsDeviceManager graphics;
     public static SpriteBatch spriteBatch;
-    Player player;
+    public Settings settings = new Settings();
+    public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
+    public static Player player {get; set;}
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
     public static bool hasF11On = false;
@@ -29,8 +32,9 @@ public class Main : Game
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
     public int tilesize = 30; //Display Tilesize
-    public int playerSizeW = 60;
-    public int playerSizeH = 90;
+    public static int playerSizeW = 60;
+    public static int playerSizeH = 90;
+    //public static Vector2 levelStartPos = new Vector2(0, 0);
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public int frameCounter;
@@ -92,11 +96,13 @@ public class Main : Game
 
     protected override void Initialize()
     {
+        Settings.LoadSettings(settingsFilePath);
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
+        Settings.LoadSettings(settingsFilePath);
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -110,8 +116,24 @@ public class Main : Game
         hitboxAtlas = Content.Load<Texture2D>("assets/collision_atlas");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
-        Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
-        player = new Player(playerTexture, playerDrect, new(0, 0, 20, 30), graphics);
+
+        /*switch(settings.Level)
+            {
+                case 1:
+                levelStartPos.X = 50;
+                levelStartPos.Y = 600;
+                break;
+
+                case 2:
+                levelStartPos.X = 200;
+                levelStartPos.Y = 400;
+                break;
+            }*/
+
+        
+        //var playerPosition = settings.GetPlayerPos(settings.PlayerPos.ToString.);
+        //Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
+        player = new Player(playerTexture, new Rectangle(50, 600, playerSizeW, playerSizeH), new(0, 0, 20, 30), graphics);
         player.LoadContent(this);
         sprites.Add(player);
 
@@ -124,6 +146,14 @@ public class Main : Game
 
     protected override void Update(GameTime gameTime)
     {
+        //Settings.LoadSettings(settingsFilePath);
+        KeyboardState kstate = Keyboard.GetState();
+
+        /*if(IsKeyPressed(kstate, prevkstate, Keys.F))
+        {
+            settings.Level += 1;
+            settings.SaveSettings(settingsFilePath);
+        }*/
         timeSpan += gameTime.ElapsedGameTime;
         frameCounter++;
 
@@ -145,7 +175,6 @@ public class Main : Game
             graphics.ApplyChanges();
         }
 
-        KeyboardState kstate = Keyboard.GetState();
         if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
         {
             hasF11On = true;
@@ -246,6 +275,7 @@ public class Main : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+        //Settings.LoadSettings(settingsFilePath);
 
         if (currentGameState == GameState.MainMenu)
         {
@@ -349,6 +379,7 @@ public class Main : Game
                 {
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS
+                    //"Level: " + settings.Level
                 };
 
                 string[] otherDebugInfo = otherDebugInfoList.ToArray();
