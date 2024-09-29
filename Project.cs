@@ -7,5 +7,3 @@ using (var game = new BlobGame.Main())
 //git commit -m "Your commit message here" (to commit)
 //git push origin main (to push, with main being the branch name)
 
-
-
