@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
 
 namespace BlobGame;
 
@@ -98,6 +97,7 @@ public class Main : Game
     {
         Settings.LoadSettings(settingsFilePath);
         base.Initialize();
+        //TEST
     }
 
     protected override void LoadContent()
