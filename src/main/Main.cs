@@ -34,6 +34,7 @@ public class Main : Game
     public static int playerSizeW = 60;
     public static int playerSizeH = 90;
     //public static Vector2 levelStartPos = new Vector2(0, 0);
+    public FollowCamera camera;
     private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public int frameCounter;
@@ -57,6 +58,8 @@ public class Main : Game
         IsMouseVisible = true;
         normal = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
         collision = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_collision.csv"));
+
+        camera = new(Vector2.Zero);
 
         graphics.PreferredBackBufferWidth = 1920;
         graphics.PreferredBackBufferHeight = 1080;
@@ -268,6 +271,8 @@ public class Main : Game
         }
 
         prevkstate = kstate;
+
+        //camera.Follow(player.Drect, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
 
         base.Update(gameTime);
     }
