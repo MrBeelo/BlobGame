@@ -24,11 +24,25 @@ namespace BlobGame
         int walkingCounter;
         int walkingActiveFrame;
         public Texture2D[] jumpingTextures;
+        public Direction direction = Direction.NA;
 
         public bool isInAir = true;
         public static int gravity = 1;
         public bool isMoving = false;
         public bool isLeft = false;
+
+        public enum Direction 
+        {
+            Up,
+            Down,
+            Left,
+            Right,
+            UpLeft,
+            UpRight,
+            DownLeft,
+            DownRight,
+            NA
+        }
 
         KeyboardState prevkstate;
 
@@ -153,16 +167,6 @@ namespace BlobGame
             } else {
                 speed = 3;
             }
-
-            isMoving = velocity.X != 0;
-
-            if(velocity.X < 0)
-            {
-                isLeft = true;
-            } else if(velocity.X > 0)
-            {
-                isLeft = false;
-            }
             
             //! Previous logic from main for moving and hitboxes
             
@@ -198,7 +202,7 @@ namespace BlobGame
                     if(velocity.Y > 0.0f)
                     {
                         Drect.Y = collision.Top - Drect.Height;
-                        velocity.Y = 0.5f;
+                        velocity.Y = 0.0f;
                         isInAir = false;
                     } else if(velocity.Y < 0.0f)
                     {
@@ -207,6 +211,55 @@ namespace BlobGame
                     }
     
                 }
+            }
+
+            //! Logic For Direction and all other bools
+
+            if(velocity.Y > 0 && velocity.X > 0)
+            {
+                direction = Direction.DownRight;
+            }
+            else if(velocity.Y > 0 && velocity.X < 0)
+            {
+                direction = Direction.DownLeft;
+            }
+            else if(velocity.Y < 0 && velocity.X > 0)
+            {
+                direction = Direction.UpRight;
+            }
+            else if(velocity.Y < 0 && velocity.X < 0)
+            {
+                direction = Direction.UpLeft;
+            }
+            else if(velocity.X > 0)
+            {
+                direction = Direction.Right;
+            }
+            else if(velocity.X < 0)
+            {
+                direction = Direction.Left;
+            }
+            else if(velocity.Y > 0)
+            {
+                direction = Direction.Down;
+            }
+            else if(velocity.Y < 0)
+            {
+                direction = Direction.Up;
+            }
+            else if(velocity.X == 0 && velocity.Y == 0)
+            {
+                direction = Direction.NA;
+            }
+
+            isMoving = velocity.X != 0;
+
+            if(velocity.X < 0)
+            {
+                isLeft = true;
+            } else if(velocity.X > 0)
+            {
+                isLeft = false;
             }
 
             prevkstate = kstate; //Used for one-shot
@@ -285,7 +338,8 @@ namespace BlobGame
                 "Stamina: " + stamina,
                 "Is in Air: " + isInAir,
                 "Is Moving: " + isMoving,
-                "Is looking Left: " + isLeft
+                "Is looking Left: " + isLeft,
+                "Direction: " + direction
             };
         }
         

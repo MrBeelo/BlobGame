@@ -20,9 +20,4 @@ public static class Globals
         TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
         Settings = Settings.LoadSettings(Main.settingsFilePath);
     }
-
-    public static bool IsKeyPressed(KeyboardState kstate, KeyboardState prevkstate, Keys key)
-    {
-        return kstate.IsKeyDown(key) && !prevkstate.IsKeyDown(key);
-    }
 }
