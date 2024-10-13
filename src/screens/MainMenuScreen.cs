@@ -75,18 +75,15 @@ namespace BlobGame
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
-            spriteBatch.Begin();
             string message = "Blob Game";
 
-            Main.spriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
 
             for (int i = 0; i < menuItems.Length; i++)
             {
                 Color textColor = (i == selectedIndex) ? selectedColor : normalColor;
                 spriteBatch.DrawString(menuFont, menuItems[i], itemPosition[i] + new Vector2(0, i * 40), textColor);
             }
-
-            spriteBatch.End();
         }
     }
 }

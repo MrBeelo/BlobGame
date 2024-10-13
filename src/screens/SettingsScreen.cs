@@ -87,7 +87,6 @@ namespace BlobGame
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
-            spriteBatch.Begin();
             string message = "Settings";
 
             spriteBatch.DrawString(menuFont, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
@@ -97,8 +96,6 @@ namespace BlobGame
                 Color textColor = (i == selectedIndex) ? selectedColor : normalColor;
                 spriteBatch.DrawString(menuFont, menuItems[i], itemPosition[i], textColor);
             }
-
-            spriteBatch.End();
         }
 
         public void UpdateMenuItems()

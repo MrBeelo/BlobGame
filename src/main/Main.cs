@@ -10,11 +10,9 @@ namespace BlobGame;
 
 public class Main : Game
 {
-    private GraphicsDeviceManager graphics;
-    public static SpriteBatch spriteBatch;
-    public Settings settings = new Settings();
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
+    public static List<Rectangle> intersections;
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
     public static bool hasF11On = false;
@@ -26,16 +24,14 @@ public class Main : Game
     private QuitScreen quit;
     public SettingsScreen options;
     public PausedSettingsScreen poptions;
-    public Dictionary<Vector2, int> normal;
-    public Dictionary<Vector2, int> collision;
+    public static Dictionary<Vector2, int> normal;
+    public static Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
-    public int tilesize = 30; //Display Tilesize
+    public static int tilesize = 30; //Display Tilesize
     public static int playerSizeW = 60;
     public static int playerSizeH = 90;
-    //public static Vector2 levelStartPos = new Vector2(0, 0);
     public FollowCamera camera;
-    private List<Rectangle> intersections;
     KeyboardState prevkstate;
     public int frameCounter;
     public TimeSpan timeSpan;
@@ -52,7 +48,7 @@ public class Main : Game
     public Main()
     {
         //IsFixedTimeStep = false;
-        graphics = new GraphicsDeviceManager(this);
+        Globals.Graphics = new GraphicsDeviceManager(this);
 
         Content.RootDirectory = "content";
         IsMouseVisible = true;
@@ -61,11 +57,11 @@ public class Main : Game
 
         camera = new(Vector2.Zero);
 
-        graphics.PreferredBackBufferWidth = 1920;
-        graphics.PreferredBackBufferHeight = 1080;
+        Globals.Graphics.PreferredBackBufferWidth = Globals.WindowSize.X;
+        Globals.Graphics.PreferredBackBufferHeight = Globals.WindowSize.Y;
 
         sprites = new();
-        intersections = new();
+        intersections = new List<Rectangle>();
 
         //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
     }
@@ -106,7 +102,7 @@ public class Main : Game
     protected override void LoadContent()
     {
         Settings.LoadSettings(settingsFilePath);
-        spriteBatch = new SpriteBatch(GraphicsDevice);
+        Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
         pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         pixelTexture.SetData(new[] { Color.White });
@@ -136,15 +132,15 @@ public class Main : Game
         
         //var playerPosition = settings.GetPlayerPos(settings.PlayerPos.ToString.);
         //Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
-        player = new Player(playerTexture, new Rectangle(50, 600, playerSizeW, playerSizeH), new(0, 0, 20, 30), graphics);
+        player = new Player(playerTexture, new Rectangle(50, 600, playerSizeW, playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
         player.LoadContent(this);
         sprites.Add(player);
 
-        mainMenu = new MainMenuScreen(font, graphics);
-        paused = new PausedScreen(font, graphics);
-        quit = new QuitScreen(font, graphics);
-        options = new SettingsScreen(font, graphics);
-        poptions = new PausedSettingsScreen(font, graphics);
+        mainMenu = new MainMenuScreen(font, Globals.Graphics);
+        paused = new PausedScreen(font, Globals.Graphics);
+        quit = new QuitScreen(font, Globals.Graphics);
+        options = new SettingsScreen(font, Globals.Graphics);
+        poptions = new PausedSettingsScreen(font, Globals.Graphics);
     }
 
     protected override void Update(GameTime gameTime)
@@ -169,13 +165,13 @@ public class Main : Game
 
         if(hasF11On)
         {
-            graphics.IsFullScreen = true;
+            Globals.Graphics.IsFullScreen = true;
             IsMouseVisible = false;
-            graphics.ApplyChanges();
+            Globals.Graphics.ApplyChanges();
         } else {
-            graphics.IsFullScreen = false;
+            Globals.Graphics.IsFullScreen = false;
             IsMouseVisible = true;
-            graphics.ApplyChanges();
+            Globals.Graphics.ApplyChanges();
         }
 
         if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
@@ -206,49 +202,6 @@ public class Main : Game
         {
         player.Update(gameTime);
 
-        player.Drect.X += (int)player.velocity.X;
-        intersections = getIntersectingTilesHorizontal(player.Drect);
-
-        foreach (var rect in intersections)
-        {
-            if(collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
-            {
-                Rectangle collision = new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize);
-
-                if(player.velocity.X > 0.0f)
-                {
-                    player.Drect.X = collision.Left - player.Drect.Width;
-                } else if(player.velocity.X < 0.0f)
-                {
-                    player.Drect.X = collision.Right;
-                }
-            }
-        }
-
-        player.Drect.Y += (int)player.velocity.Y;
-        intersections = getIntersectingTilesVertical(player.Drect);
-
-        player.isInAir = true;
-        foreach (var rect in intersections)
-        {
-            if(collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
-            {
-                Rectangle collision = new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize);
-
-                if(player.velocity.Y > 0.0f)
-                {
-                    player.Drect.Y = collision.Top - player.Drect.Height;
-                    player.velocity.Y = 0.5f;
-                    player.isInAir = false;
-                } else if(player.velocity.Y < 0.0f)
-                {
-                    player.Drect.Y = collision.Bottom;
-                } else {
-                }
-
-            }
-        }
-
             if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
             {
                 currentGameState = GameState.Paused;
@@ -273,18 +226,20 @@ public class Main : Game
         prevkstate = kstate;
 
         //camera.Follow(player.Drect, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
-
+        Globals.Update(gameTime);
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
-        //Settings.LoadSettings(settingsFilePath);
+
+        //Beginning Sprite Batch
+        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         if (currentGameState == GameState.MainMenu)
         {
-            mainMenu.Draw(spriteBatch, graphics);
+            mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
         else if (currentGameState == GameState.Playing)
         {
@@ -292,16 +247,11 @@ public class Main : Game
             {
                 foreach(var rect in intersections)
                 {
-                    spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                    DrawRectHollow(spriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
-                    spriteBatch.End();
+                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
                 }
-                spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-                DrawRectHollow(spriteBatch, player.Drect, 4, Color.Blue);
-                spriteBatch.End();
+                DrawRectHollow(Globals.SpriteBatch, player.Drect, 4, Color.Blue);
             }
 
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             int tpr = 8; //Tiles per row
             int p_tilesize = 16; //Pixel Tilesize
             foreach(var item in normal)
@@ -323,7 +273,7 @@ public class Main : Game
                     p_tilesize
                 );
 
-                spriteBatch.Draw(textureAtlas, dest, src, Color.White);
+                Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
             }
 
             foreach(var item in collision)
@@ -348,27 +298,25 @@ public class Main : Game
                 if(hasF3On)
                 {
                     //spriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
-                    DrawRectHollow(spriteBatch, dest, 2, Color.Orange);
+                    DrawRectHollow(Globals.SpriteBatch, dest, 2, Color.Orange);
                 }
             }
 
-            spriteBatch.End();
-
-            player.Draw(spriteBatch);
+            player.Draw(Globals.SpriteBatch);
            
         }
         else if (currentGameState == GameState.Paused)
         {
-            paused.Draw(spriteBatch, graphics);
+            paused.Draw(Globals.SpriteBatch, Globals.Graphics);
         } else if (currentGameState == GameState.Quit)
         {
-            quit.Draw(spriteBatch, graphics);
+            quit.Draw(Globals.SpriteBatch, Globals.Graphics);
         } else if(currentGameState == GameState.Options)
         {
-            options.Draw(spriteBatch, graphics);
+            options.Draw(Globals.SpriteBatch, Globals.Graphics);
         } else if(currentGameState == GameState.POptions)
         {
-            poptions.Draw(spriteBatch, graphics);
+            poptions.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
 
         if(hasF3On)
@@ -393,15 +341,16 @@ public class Main : Game
 
                 Vector2 pos = Vector2.Zero;
 
-                spriteBatch.Begin();
                 foreach(var info in combinedDebugInfo)
                 {
-                    spriteBatch.DrawString(font, info, pos, Color.Black);
+                    Globals.SpriteBatch.DrawString(font, info, pos, Color.Black);
                     pos.Y += 32;
                 }
-                spriteBatch.End();
             }
-
+            
+        //Ending Sprite Batch
+        Globals.SpriteBatch.End();
+        
         base.Draw(gameTime);
     }
 
@@ -456,66 +405,5 @@ public class Main : Game
             ),
             color
         );
-    }
-
-    public List<Rectangle> getIntersectingTilesHorizontal(Rectangle target) {
-
-        List<Rectangle> intersections = new();
-
-        for (int x = 0; x <= playerSizeW; x += tilesize) {
-            for (int y = 0; y <= playerSizeH; y += tilesize) {
-
-                intersections.Add(new Rectangle(
-
-                    (target.X + x) / tilesize,
-                    (target.Y + y / tilesize *(tilesize-1)) / tilesize,
-                    tilesize,
-                    tilesize
-
-                ));
-
-            }
-        }
-
-        if (playerSizeW % tilesize != 0) {
-        intersections.Add(new Rectangle(
-            (target.X + playerSizeW) / tilesize,
-            (target.Y) / tilesize,
-            tilesize,
-            tilesize
-        ));
-        }
-
-        return intersections;
-    }
-    public List<Rectangle> getIntersectingTilesVertical(Rectangle target) {
-
-        List<Rectangle> intersections = new();
-
-        for (int x = 0; x <= playerSizeW; x += tilesize) {
-            for (int y = 0; y <= playerSizeH; y += tilesize) {
-
-                intersections.Add(new Rectangle(
-
-                    (target.X + x / tilesize *(tilesize-1)) / tilesize,
-                    (target.Y + y) / tilesize,
-                    tilesize,
-                    tilesize
-
-                ));
-
-            }
-        }
-
-        if (playerSizeH % tilesize != 0) {
-        intersections.Add(new Rectangle(
-            (target.X) / tilesize,
-            (target.Y + playerSizeH) / tilesize,
-            tilesize,
-            tilesize
-        ));
-        }
-
-        return intersections;
     }
 }
