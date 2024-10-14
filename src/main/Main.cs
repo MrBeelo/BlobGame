@@ -29,8 +29,7 @@ public class Main : Game
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
     public static int tilesize = 30; //Display Tilesize
-    public static int playerSizeW = 60;
-    public static int playerSizeH = 90;
+    
     public FollowCamera camera;
     KeyboardState prevkstate;
     public int frameCounter;
@@ -132,7 +131,7 @@ public class Main : Game
         
         //var playerPosition = settings.GetPlayerPos(settings.PlayerPos.ToString.);
         //Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
-        player = new Player(playerTexture, new Rectangle(50, 600, playerSizeW, playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player = new Player(playerTexture, new Rectangle(50, 600, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
         player.LoadContent(this);
         sprites.Add(player);
 

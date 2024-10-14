@@ -10,6 +10,8 @@ namespace BlobGame
 {
     public class Player : Sprite
     {
+        public static int playerSizeW = 53;
+        public static int playerSizeH = 80;
         public Vector2 velocity;
         public int speed = 3;
         public int stamina = 0;
@@ -87,19 +89,6 @@ namespace BlobGame
 
         public override void Update(GameTime gameTime)
         {
-            /*switch(settings.Level)
-            {
-                case 1:
-                Main.levelStartPos.X = 50;
-                Main.levelStartPos.Y = 600;
-                break;
-
-                case 2:
-                Main.levelStartPos.X = 200;
-                Main.levelStartPos.Y = 400;
-                break;
-            }*/
-
             base.Update(gameTime);
 
             idleCounter++;
@@ -170,7 +159,7 @@ namespace BlobGame
             
             //! Previous logic from main for moving and hitboxes
             
-            Drect.X += (int)velocity.X;
+            /*Drect.X += (int)velocity.X;
             Main.intersections = getIntersectingTilesHorizontal(Drect);
     
             foreach (var rect in Main.intersections)
@@ -211,15 +200,63 @@ namespace BlobGame
                     }
     
                 }
+            }*/
+            
+            // Horizontal Collision Resolution
+            Drect.X += (int)velocity.X;
+            List<Point> horizontalCollisions = GetIntersectingTiles(Drect);
+            
+            foreach (var tile in horizontalCollisions)
+            {
+                if (Main.collision.TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                {
+                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+            
+                    if (velocity.X > 0) // Moving Right
+                    {
+                        Drect.X = collision.Left - Drect.Width;
+                    }
+                    else if (velocity.X < 0) // Moving Left
+                    {
+                        Drect.X = collision.Right;
+                    }
+                    velocity.X = 0; // Stop horizontal movement upon collision
+                }
             }
+            
+            // Vertical Collision Resolution
+            Drect.Y += (int)velocity.Y;
+            List<Point> verticalCollisions = GetIntersectingTiles(Drect);
+            
+            isInAir = true;
+            foreach (var tile in verticalCollisions)
+            {
+                if (Main.collision.TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                {
+                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+            
+                    if (velocity.Y > 0) // Falling Down
+                    {
+                        Drect.Y = collision.Top - Drect.Height;
+                        velocity.Y = 0.5f;
+                        isInAir = false;
+                    }
+                    else if (velocity.Y < 0) // Moving Up
+                    {
+                        Drect.Y = collision.Bottom;
+                        velocity.Y = 0;
+                    }
+                }
+            }
+
 
             //! Logic For Direction and all other bools
 
-            if(velocity.Y > 0 && velocity.X > 0)
+            if(velocity.Y > 0.5 && velocity.X > 0)
             {
                 direction = Direction.DownRight;
             }
-            else if(velocity.Y > 0 && velocity.X < 0)
+            else if(velocity.Y > 0.5 && velocity.X < 0)
             {
                 direction = Direction.DownLeft;
             }
@@ -239,7 +276,7 @@ namespace BlobGame
             {
                 direction = Direction.Left;
             }
-            else if(velocity.Y > 0)
+            else if(velocity.Y > 0.5)
             {
                 direction = Direction.Down;
             }
@@ -247,7 +284,7 @@ namespace BlobGame
             {
                 direction = Direction.Up;
             }
-            else if(velocity.X == 0 && velocity.Y == 0)
+            else if(velocity.X == 0 && velocity.Y == 0.5)
             {
                 direction = Direction.NA;
             }
@@ -343,7 +380,7 @@ namespace BlobGame
             };
         }
         
-        public List<Rectangle> getIntersectingTilesHorizontal(Rectangle target) {
+        /*public List<Rectangle> getIntersectingTilesHorizontal(Rectangle target) {
     
             List<Rectangle> intersections = new();
     
@@ -400,6 +437,26 @@ namespace BlobGame
             }
     
             return intersections;
+        }*/
+        
+        public List<Point> GetIntersectingTiles(Rectangle target)
+        {
+            List<Point> tiles = new List<Point>();
+        
+            int leftTile = target.Left / Main.tilesize;
+            int rightTile = (target.Right - 1) / Main.tilesize;
+            int topTile = target.Top / Main.tilesize;
+            int bottomTile = (target.Bottom - 1) / Main.tilesize;
+        
+            for (int x = leftTile; x <= rightTile; x++)
+            {
+                for (int y = topTile; y <= bottomTile; y++)
+                {
+                    tiles.Add(new Point(x, y));
+                }
+            }
+        
+            return tiles;
         }
     }
 }
