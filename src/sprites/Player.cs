@@ -8,11 +8,10 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace BlobGame
 {
-    public class Player : MovingSprite
+    public class Player : MoveableSprite
     {
         public static int playerSizeW = 53;
         public static int playerSizeH = 80;
-        //public Vector2 velocity;
         public int speed = 3;
         public int stamina = 0;
         private SoundEffect successSound;
