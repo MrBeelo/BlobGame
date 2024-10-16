@@ -12,7 +12,6 @@ public class Main : Game
 {
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
-    public static List<Rectangle> intersections;
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
     public static bool hasF11On = false;
@@ -60,7 +59,6 @@ public class Main : Game
         Globals.Graphics.PreferredBackBufferHeight = Globals.WindowSize.Y;
 
         sprites = new();
-        intersections = new List<Rectangle>();
 
         //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
     }
@@ -244,7 +242,11 @@ public class Main : Game
         {
             if(hasF3On)
             {
-                foreach(var rect in intersections)
+                foreach(var rect in player.horizontalCollisions)
+                {
+                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
+                }
+                foreach(var rect in player.verticalCollisions)
                 {
                     DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
                 }

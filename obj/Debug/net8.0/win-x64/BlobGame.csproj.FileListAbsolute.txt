@@ -417,7 +417,6 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame2\obj\Debug\net8.0\w
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame2\obj\Debug\net8.0\win-x64\ref\BlobGame.dll
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame2\bin\Debug\net8.0\win-x64\content\assets\atlas.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\atlas.xnb
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\map.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\collision_atlas.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\testlevel_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\testlevel_normal.csv
@@ -429,7 +428,5 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\wi
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\player\PlayerWalk2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\player\PlayerWalk3.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Debug\net8.0\win-x64\BlobGame.sourcelink.json
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\old_testlevel_collision.csv
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\old_testlevel_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\Newtonsoft.Json.dll
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\mscordaccore_amd64_amd64_8.0.1024.46610.dll

@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace BlobGame
 {
-    public class Player : Sprite
+    public class Player : MovingSprite
     {
         public static int playerSizeW = 53;
         public static int playerSizeH = 80;
-        public Vector2 velocity;
+        //public Vector2 velocity;
         public int speed = 3;
         public int stamina = 0;
         private SoundEffect successSound;
@@ -27,6 +27,8 @@ namespace BlobGame
         int walkingActiveFrame;
         public Texture2D[] jumpingTextures;
         public Direction direction = Direction.NA;
+        public List<Point> horizontalCollisions;
+        public List<Point> verticalCollisions;
 
         public bool isInAir = true;
         public static int gravity = 1;
@@ -54,7 +56,7 @@ namespace BlobGame
             Drect = drect;
             Srect = srect;
             Graphics = graphics;
-            velocity = new();
+            Velocity = new();
         }
 
         public void Initialize()
@@ -116,23 +118,23 @@ namespace BlobGame
             }
 
             KeyboardState kstate = Keyboard.GetState();
-            velocity.X = 0;
-            velocity.Y += 0.5f;
+            Velocity.X = 0;
+            Velocity.Y += 0.5f;
 
-            velocity.Y = Math.Min(25.0f, velocity.Y);
+            Velocity.Y = Math.Min(25.0f, Velocity.Y);
             
             if (kstate.IsKeyDown(Keys.A))
             {
-                velocity.X = -speed;
+                Velocity.X = -speed;
             }
             
             if (kstate.IsKeyDown(Keys.D))
             {
-                velocity.X = speed;
+                Velocity.X = speed;
             }
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && !isInAir) {
-                velocity.Y = -10;
+                Velocity.Y = -10;
                 jumpSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
             }
 
@@ -203,8 +205,8 @@ namespace BlobGame
             }*/
             
             // Horizontal Collision Resolution
-            Drect.X += (int)velocity.X;
-            List<Point> horizontalCollisions = GetIntersectingTiles(Drect);
+            Drect.X += (int)Velocity.X;
+            horizontalCollisions = GetIntersectingTiles(Drect);
             
             foreach (var tile in horizontalCollisions)
             {
@@ -212,21 +214,21 @@ namespace BlobGame
                 {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
-                    if (velocity.X > 0) // Moving Right
+                    if (Velocity.X > 0) // Moving Right
                     {
                         Drect.X = collision.Left - Drect.Width;
                     }
-                    else if (velocity.X < 0) // Moving Left
+                    else if (Velocity.X < 0) // Moving Left
                     {
                         Drect.X = collision.Right;
                     }
-                    velocity.X = 0; // Stop horizontal movement upon collision
+                    Velocity.X = 0; // Stop horizontal movement upon collision
                 }
             }
             
             // Vertical Collision Resolution
-            Drect.Y += (int)velocity.Y;
-            List<Point> verticalCollisions = GetIntersectingTiles(Drect);
+            Drect.Y += (int)Velocity.Y;
+            verticalCollisions = GetIntersectingTiles(Drect);
             
             isInAir = true;
             foreach (var tile in verticalCollisions)
@@ -235,16 +237,16 @@ namespace BlobGame
                 {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
-                    if (velocity.Y > 0) // Falling Down
+                    if (Velocity.Y > 0) // Falling Down
                     {
                         Drect.Y = collision.Top - Drect.Height;
-                        velocity.Y = 0.5f;
+                        Velocity.Y = 0.5f;
                         isInAir = false;
                     }
-                    else if (velocity.Y < 0) // Moving Up
+                    else if (Velocity.Y < 0) // Moving Up
                     {
                         Drect.Y = collision.Bottom;
-                        velocity.Y = 0;
+                        Velocity.Y = 0;
                     }
                 }
             }
@@ -252,49 +254,49 @@ namespace BlobGame
 
             //! Logic For Direction and all other bools
 
-            if(velocity.Y > 0.5 && velocity.X > 0)
+            if(Velocity.Y > 0.5 && Velocity.X > 0)
             {
                 direction = Direction.DownRight;
             }
-            else if(velocity.Y > 0.5 && velocity.X < 0)
+            else if(Velocity.Y > 0.5 && Velocity.X < 0)
             {
                 direction = Direction.DownLeft;
             }
-            else if(velocity.Y < 0 && velocity.X > 0)
+            else if(Velocity.Y < 0 && Velocity.X > 0)
             {
                 direction = Direction.UpRight;
             }
-            else if(velocity.Y < 0 && velocity.X < 0)
+            else if(Velocity.Y < 0 && Velocity.X < 0)
             {
                 direction = Direction.UpLeft;
             }
-            else if(velocity.X > 0)
+            else if(Velocity.X > 0)
             {
                 direction = Direction.Right;
             }
-            else if(velocity.X < 0)
+            else if(Velocity.X < 0)
             {
                 direction = Direction.Left;
             }
-            else if(velocity.Y > 0.5)
+            else if(Velocity.Y > 0.5)
             {
                 direction = Direction.Down;
             }
-            else if(velocity.Y < 0)
+            else if(Velocity.Y < 0)
             {
                 direction = Direction.Up;
             }
-            else if(velocity.X == 0 && velocity.Y == 0.5)
+            else if(Velocity.X == 0 && Velocity.Y == 0.5)
             {
                 direction = Direction.NA;
             }
 
-            isMoving = velocity.X != 0;
+            isMoving = Velocity.X != 0;
 
-            if(velocity.X < 0)
+            if(Velocity.X < 0)
             {
                 isLeft = true;
-            } else if(velocity.X > 0)
+            } else if(Velocity.X > 0)
             {
                 isLeft = false;
             }
@@ -321,7 +323,7 @@ namespace BlobGame
 
             if(isInAir)
             {
-                if(velocity.Y >= 5 || velocity.Y <= -5)
+                if(Velocity.Y >= 5 || Velocity.Y <= -5)
                 {
                     Globals.SpriteBatch.Draw(
                         jumpingTextures[0],
@@ -370,7 +372,7 @@ namespace BlobGame
             {
                 "Position: " + Position,
                 "Tile Position: " + TilePosition,
-                "Veocity: " + velocity,
+                "Velocity: " + Velocity,
                 "Speed: " + speed,
                 "Stamina: " + stamina,
                 "Is in Air: " + isInAir,
