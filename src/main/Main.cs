@@ -23,6 +23,7 @@ public class Main : Game
     private QuitScreen quit;
     public SettingsScreen options;
     public PausedSettingsScreen poptions;
+    public DeathScreen death;
     public static Dictionary<Vector2, int> normal;
     public static Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
@@ -41,7 +42,8 @@ public class Main : Game
         Paused,
         Options,
         Quit,
-        POptions
+        POptions,
+        Death
     }
     public Main()
     {
@@ -138,18 +140,13 @@ public class Main : Game
         quit = new QuitScreen(font, Globals.Graphics);
         options = new SettingsScreen(font, Globals.Graphics);
         poptions = new PausedSettingsScreen(font, Globals.Graphics);
+        death = new DeathScreen(font, Globals.Graphics);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        //Settings.LoadSettings(settingsFilePath);
         KeyboardState kstate = Keyboard.GetState();
 
-        /*if(IsKeyPressed(kstate, prevkstate, Keys.F))
-        {
-            settings.Level += 1;
-            settings.SaveSettings(settingsFilePath);
-        }*/
         timeSpan += gameTime.ElapsedGameTime;
         frameCounter++;
 
@@ -218,6 +215,9 @@ public class Main : Game
         } else if (currentGameState == GameState.POptions)
         {
             poptions.Update(gameTime);
+        } else if (currentGameState == GameState.Death)
+        {
+            death.Update(gameTime);
         }
 
         prevkstate = kstate;
@@ -318,6 +318,9 @@ public class Main : Game
         } else if(currentGameState == GameState.POptions)
         {
             poptions.Draw(Globals.SpriteBatch, Globals.Graphics);
+        } else if(currentGameState == GameState.Death)
+        {
+            death.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
 
         if(hasF3On)

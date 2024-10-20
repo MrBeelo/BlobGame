@@ -29,6 +29,7 @@ namespace BlobGame
         public List<Point> horizontalCollisions;
         public List<Point> verticalCollisions;
 
+        public bool alive = true;
         public bool isInAir = true;
         public static int gravity = 1;
         public bool isMoving = false;
@@ -86,11 +87,29 @@ namespace BlobGame
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
 
             successSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+
+            horizontalCollisions = GetIntersectingTiles(Drect);
+            verticalCollisions = GetIntersectingTiles(Drect);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if(alive == false)
+            {
+                Main.currentGameState = Main.GameState.Death;
+            }
+
+            if(Drect.Y > 1500)
+            {
+                Drect.Y = 1500;
+                alive = false;
+            }
+            else if(Drect.Y < -3000)
+            {
+                Drect.Y = -3000;
+            }
 
             idleCounter++;
             if(idleCounter > 29)
@@ -121,6 +140,13 @@ namespace BlobGame
             Velocity.Y += 0.5f;
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
+
+            //! Debug
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.R))
+            {
+                ResetPos(this);
+                ResetState(this);
+            }
             
             if (kstate.IsKeyDown(Keys.A))
             {
@@ -211,17 +237,47 @@ namespace BlobGame
             {
                 if (Main.collision.TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
+                    if(value == 0) //! Solid
+                    {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
-                    if (Velocity.X > 0) // Moving Right
-                    {
-                        Drect.X = collision.Left - Drect.Width;
+                        if (Velocity.X > 0) // Moving Right
+                        {
+                            Drect.X = collision.Left - Drect.Width;
+                        }
+                        else if (Velocity.X < 0) // Moving Left
+                        {
+                            Drect.X = collision.Right;
+                        }
+                        Velocity.X = 0; // Stop horizontal movement upon collision
                     }
-                    else if (Velocity.X < 0) // Moving Left
+                    else if (value == 4) //! Water
                     {
-                        Drect.X = collision.Right;
+                        if(Velocity.X > 1)
+                        {
+                            Velocity.X = 1;
+                        }
+                        else if(Velocity.X < -1)
+                        {
+                            Velocity.X = -1;
+                        }
                     }
-                    Velocity.X = 0; // Stop horizontal movement upon collision
+                    else if(value == 1 || value == 3) //! Hazard
+                    {
+                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+            
+                        if (Velocity.X > 0) // Moving Right
+                        {
+                            Drect.X = collision.Left - Drect.Width;
+                            alive = false;
+                        }
+                        else if (Velocity.X < 0) // Moving Left
+                        {
+                            Drect.X = collision.Right;
+                            alive = false;
+                        }
+                        Velocity.X = 0; // Stop horizontal movement upon collision
+                    }
                 }
             }
             
@@ -234,18 +290,47 @@ namespace BlobGame
             {
                 if (Main.collision.TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                    if(value == 0) //! Solid
+                    {
+                        Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
-                    if (Velocity.Y > 0) // Falling Down
-                    {
-                        Drect.Y = collision.Top - Drect.Height;
-                        Velocity.Y = 0.5f;
-                        isInAir = false;
+                        if (Velocity.Y > 0) // Falling Down
+                        {
+                            Drect.Y = collision.Top - Drect.Height;
+                            Velocity.Y = 0.5f;
+                            isInAir = false;
+                        }
+                        else if (Velocity.Y < 0) // Moving Up
+                        {
+                            Drect.Y = collision.Bottom;
+                            Velocity.Y = 0;
+                        }
                     }
-                    else if (Velocity.Y < 0) // Moving Up
+                    else if (value == 4) //! Water
                     {
-                        Drect.Y = collision.Bottom;
-                        Velocity.Y = 0;
+                        if(Velocity.Y > 0)
+                        {
+                            Velocity.Y = 1;
+                        }
+                        isInAir = true;
+                    }
+                    else if(value == 1 || value == 3) //! Hazard
+                    {
+                        Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+            
+                        if (Velocity.Y > 0) // Falling Down
+                        {
+                            Drect.Y = collision.Top - Drect.Height;
+                            Velocity.Y = 0.5f;
+                            isInAir = false;
+                            alive = false;
+                        }
+                        else if (Velocity.Y < 0) // Moving Up
+                        {
+                            Drect.Y = collision.Bottom;
+                            Velocity.Y = 0;
+                            alive = false;
+                        }
                     }
                 }
             }
@@ -377,7 +462,8 @@ namespace BlobGame
                 "Is in Air: " + isInAir,
                 "Is Moving: " + isMoving,
                 "Is looking Left: " + isLeft,
-                "Direction: " + direction
+                "Direction: " + direction,
+                "Alive: " + alive
             };
         }
         
@@ -458,6 +544,19 @@ namespace BlobGame
             }
         
             return tiles;
+        }
+
+        public static void ResetPos(Player player)
+        {
+            player.Drect = new Rectangle(50, 600, playerSizeW, playerSizeH);
+        }
+
+        public static void ResetState(Player player)
+        {
+            player.alive = true;
+            player.isLeft = false;
+            player.stamina = 0;
+            player.speed = 3;
         }
     }
 }
