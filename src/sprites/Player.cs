@@ -262,7 +262,7 @@ namespace BlobGame
                             Velocity.X = -1;
                         }
                     }
-                    else if(value == 1 || value == 3) //! Hazard
+                    else if(value == 1) //! Hazard
                     {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
@@ -314,7 +314,7 @@ namespace BlobGame
                         }
                         isInAir = true;
                     }
-                    else if(value == 1 || value == 3) //! Hazard
+                    else if(value == 1) //! Hazard
                     {
                         Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
