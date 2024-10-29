@@ -163,10 +163,10 @@ namespace BlobGame
                 jumpSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
             }
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.LeftShift) && stamina == 0) {
+            /*if(Main.IsKeyPressed(kstate, prevkstate, Keys.LeftShift) && stamina == 0) {
                 stamina = 1000;
                 speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
-            }
+            }*/
 
             if(stamina > 600) {
                 speed = 6;
@@ -278,6 +278,14 @@ namespace BlobGame
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
+                    else if(value == 5) //! Crystal
+                    {
+                        if(stamina == 0)
+                        {
+                            stamina = 1000;
+                            speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+                        }
+                    }
                 }
             }
             
@@ -330,6 +338,14 @@ namespace BlobGame
                             Drect.Y = collision.Bottom;
                             Velocity.Y = 0;
                             alive = false;
+                        }
+                    }
+                    else if(value == 5) //! Crystal
+                    {
+                        if(stamina == 0)
+                        {
+                            stamina = 1000;
+                            speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
                         }
                     }
                 }
