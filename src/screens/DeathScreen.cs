@@ -76,7 +76,7 @@ namespace BlobGame
         {
             string message = "You Died!";
 
-            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Red);
 
             for (int i = 0; i < menuItems.Length; i++)
             {

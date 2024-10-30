@@ -28,6 +28,7 @@ namespace BlobGame
         public Direction direction = Direction.NA;
         public List<Point> horizontalCollisions;
         public List<Point> verticalCollisions;
+        private float flickerTime;
 
         public bool alive = true;
         public bool isInAir = true;
@@ -95,6 +96,8 @@ namespace BlobGame
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            flickerTime += Globals.TotalSeconds * 5; // Adjust speed by changing multiplier
 
             if(alive == false)
             {
@@ -251,17 +254,6 @@ namespace BlobGame
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
-                    else if (value == 4) //! Water
-                    {
-                        if(Velocity.X > 1)
-                        {
-                            Velocity.X = 1;
-                        }
-                        else if(Velocity.X < -1)
-                        {
-                            Velocity.X = -1;
-                        }
-                    }
                     else if(value == 1) //! Hazard
                     {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
@@ -277,6 +269,31 @@ namespace BlobGame
                             alive = false;
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
+                    }
+                    else if (value == 2) //! Win (Nothing happens from sides)
+                    {
+                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+            
+                        if (Velocity.X > 0) // Moving Right
+                        {
+                            Drect.X = collision.Left - Drect.Width;
+                        }
+                        else if (Velocity.X < 0) // Moving Left
+                        {
+                            Drect.X = collision.Right;
+                        }
+                        Velocity.X = 0; // Stop horizontal movement upon collision
+                    }
+                    else if (value == 4) //! Water
+                    {
+                        if(Velocity.X > 1)
+                        {
+                            Velocity.X = 1;
+                        }
+                        else if(Velocity.X < -1)
+                        {
+                            Velocity.X = -1;
+                        }
                     }
                     else if(value == 5) //! Crystal
                     {
@@ -314,14 +331,6 @@ namespace BlobGame
                             Velocity.Y = 0;
                         }
                     }
-                    else if (value == 4) //! Water
-                    {
-                        if(Velocity.Y > 0)
-                        {
-                            Velocity.Y = 1;
-                        }
-                        isInAir = true;
-                    }
                     else if(value == 1) //! Hazard
                     {
                         Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
@@ -339,6 +348,31 @@ namespace BlobGame
                             Velocity.Y = 0;
                             alive = false;
                         }
+                    }
+                    else if (value == 2) //! Win
+                    {
+                        Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+            
+                        if (Velocity.Y > 0) // Falling Down
+                        {
+                            Drect.Y = collision.Top - Drect.Height;
+                            Velocity.Y = 0.5f;
+                            isInAir = false;
+                            Main.currentGameState = Main.GameState.Win;
+                        }
+                        else if (Velocity.Y < 0) // Moving Up
+                        {
+                            Drect.Y = collision.Bottom;
+                            Velocity.Y = 0;
+                        }
+                    }
+                    else if (value == 4) //! Water
+                    {
+                        if(Velocity.Y > 0)
+                        {
+                            Velocity.Y = 1;
+                        }
+                        isInAir = true;
                     }
                     else if(value == 5) //! Crystal
                     {
@@ -413,7 +447,7 @@ namespace BlobGame
                     walkingTextures[walkingActiveFrame],
                     Drect,
                     Srect,
-                    Color.White,
+                    PlayerColor(),
                     0f,
                     Vector2.Zero,
                     spriteEffects,
@@ -429,7 +463,7 @@ namespace BlobGame
                         jumpingTextures[0],
                         Drect,
                         Srect,
-                        Color.White,
+                        PlayerColor(),
                         0f,
                         Vector2.Zero,
                         spriteEffects,
@@ -442,7 +476,7 @@ namespace BlobGame
                         jumpingTextures[1],
                         Drect,
                         Srect,
-                        Color.White,
+                        PlayerColor(),
                         0f,
                         Vector2.Zero,
                         spriteEffects,
@@ -457,7 +491,7 @@ namespace BlobGame
                     idleTextures[idleActiveFrame],
                     Drect,
                     Srect,
-                    Color.White,
+                    PlayerColor(),
                     0f,
                     Vector2.Zero,
                     spriteEffects,
@@ -573,6 +607,21 @@ namespace BlobGame
             player.isLeft = false;
             player.stamina = 0;
             player.speed = 3;
+        }
+
+        public Color PlayerColor()
+        {
+            if(stamina > 0 && stamina < 600)
+            {
+                float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
+                return Color.Lerp(Color.White, Color.LightSalmon, t); // Blends from white to red based on t
+            }
+            else if(stamina > 600)
+            {
+                float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
+                return Color.Lerp(Color.White, Color.LightBlue, t); // Blends from white to red based on t
+            }
+            return Color.White;
         }
     }
 }

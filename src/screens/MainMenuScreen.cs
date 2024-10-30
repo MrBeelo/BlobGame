@@ -76,8 +76,10 @@ namespace BlobGame
         public void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
         {
             string message = "Blob Game";
+            string credits = "Made by MrBeelo";
 
             Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, credits, new Vector2(graphics.PreferredBackBufferWidth - menuFont.MeasureString(credits).X - 20, graphics.PreferredBackBufferHeight - 70), Color.Black);
 
             for (int i = 0; i < menuItems.Length; i++)
             {

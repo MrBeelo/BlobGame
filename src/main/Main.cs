@@ -24,6 +24,7 @@ public class Main : Game
     public SettingsScreen options;
     public PausedSettingsScreen poptions;
     public DeathScreen death;
+    public WinScreen win;
     public static Dictionary<Vector2, int> normal;
     public static Dictionary<Vector2, int> collision;
     public Texture2D textureAtlas;
@@ -43,7 +44,8 @@ public class Main : Game
         Options,
         Quit,
         POptions,
-        Death
+        Death,
+        Win
     }
     public Main()
     {
@@ -141,6 +143,7 @@ public class Main : Game
         options = new SettingsScreen(font, Globals.Graphics);
         poptions = new PausedSettingsScreen(font, Globals.Graphics);
         death = new DeathScreen(font, Globals.Graphics);
+        win = new WinScreen(font, Globals.Graphics);
     }
 
     protected override void Update(GameTime gameTime)
@@ -218,6 +221,9 @@ public class Main : Game
         } else if (currentGameState == GameState.Death)
         {
             death.Update(gameTime);
+        } else if (currentGameState == GameState.Win)
+        {
+            win.Update(gameTime);
         }
 
         prevkstate = kstate;
@@ -257,6 +263,11 @@ public class Main : Game
             int p_tilesize = 16; //Pixel Tilesize
             foreach(var item in normal)
             {
+                if(player.stamina > 0)
+                {
+                    if(item.Value == 14) continue;
+                }
+
                 Rectangle dest = new(
                     (int)item.Key.X * tilesize,
                     (int)item.Key.Y * tilesize,
@@ -279,6 +290,11 @@ public class Main : Game
 
             foreach(var item in collision)
             {
+                if(player.stamina > 0)
+                {
+                    if(item.Value == 5) continue;
+                }
+
                 Rectangle dest = new(
                     (int)item.Key.X * tilesize,
                     (int)item.Key.Y * tilesize,
@@ -321,6 +337,9 @@ public class Main : Game
         } else if(currentGameState == GameState.Death)
         {
             death.Draw(Globals.SpriteBatch, Globals.Graphics);
+        } else if(currentGameState == GameState.Win)
+        {
+            win.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
 
         if(hasF3On)
