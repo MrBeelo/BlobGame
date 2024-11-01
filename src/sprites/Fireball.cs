@@ -107,6 +107,11 @@ namespace BlobGame
                 }
             }
 
+            if(Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
+            {
+                FireIsAlive = false;
+            }
+
             if(!FireIsAlive)
             {
                 Main.fireballs.Remove(this);

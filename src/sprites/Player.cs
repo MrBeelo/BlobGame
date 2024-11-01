@@ -438,10 +438,11 @@ namespace BlobGame
                 isLeft = false;
             }
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F))
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && stamina >= 500)
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
+                stamina -= 100;
             }
 
             prevkstate = kstate; //Used for one-shot
