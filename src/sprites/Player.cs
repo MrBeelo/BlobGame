@@ -13,7 +13,7 @@ namespace BlobGame
         public static int playerSizeW = 53;
         public static int playerSizeH = 80;
         public int speed = 3;
-        public int stamina = 0;
+        public int stamina = 500;
         private SoundEffect successSound;
         private SoundEffect jumpSound;
         private SoundEffect speedStartSound;
@@ -35,6 +35,7 @@ namespace BlobGame
         public static int gravity = 1;
         public bool isMoving = false;
         public bool isLeft = false;
+        public bool isSanic = false;
 
         public enum Direction 
         {
@@ -145,11 +146,11 @@ namespace BlobGame
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
 
             //! Debug
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.R))
+            /*if(Main.IsKeyPressed(kstate, prevkstate, Keys.R))
             {
                 ResetPos(this);
                 ResetState(this);
-            }
+            }*/
             
             if (kstate.IsKeyDown(Keys.A))
             {
@@ -166,25 +167,27 @@ namespace BlobGame
                 jumpSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
             }
 
-            /*if(Main.IsKeyPressed(kstate, prevkstate, Keys.LeftShift) && stamina == 0) {
-                stamina = 1000;
-                speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
-            }*/
+            if(isSanic)
+            {
+                speed = 6;
+                stamina--;
+            }
 
-            if(stamina > 600) {
-                speed = 6;
-                stamina--;
-            } else if (stamina == 600)
+            if(stamina == 0 && isSanic)
             {
-                speed = 6;
-                stamina--;
+                speed = 3;
+                isSanic = false;
                 speedEndSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
-            } else if(stamina >= 1)
+            } else if(stamina < 0 && isSanic)
             {
                 speed = 3;
-                stamina--;
-            } else {
+                isSanic = false;
+            }
+
+            if(stamina < 500 && !isSanic)
+            {
                 speed = 3;
+                stamina++;
             }
             
             //! Previous logic from main for moving and hitboxes
@@ -297,9 +300,9 @@ namespace BlobGame
                     }
                     else if(value == 5) //! Crystal
                     {
-                        if(stamina == 0)
+                        if(stamina >= 500)
                         {
-                            stamina = 1000;
+                            isSanic = true;
                             speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
                         }
                     }
@@ -376,9 +379,9 @@ namespace BlobGame
                     }
                     else if(value == 5) //! Crystal
                     {
-                        if(stamina == 0)
+                        if(stamina >= 500)
                         {
-                            stamina = 1000;
+                            isSanic = true;
                             speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
                         }
                     }
@@ -513,7 +516,8 @@ namespace BlobGame
                 "Is Moving: " + isMoving,
                 "Is looking Left: " + isLeft,
                 "Direction: " + direction,
-                "Alive: " + alive
+                "Alive: " + alive,
+                "Is Sanic: " + isSanic
             };
         }
         
@@ -611,12 +615,12 @@ namespace BlobGame
 
         public Color PlayerColor()
         {
-            if(stamina > 0 && stamina < 600)
+            if(stamina > 0 && stamina < 500 && !isSanic)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
                 return Color.Lerp(Color.White, Color.LightSalmon, t); // Blends from white to red based on t
             }
-            else if(stamina > 600)
+            else if(isSanic)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
                 return Color.Lerp(Color.White, Color.LightBlue, t); // Blends from white to red based on t

@@ -263,7 +263,7 @@ public class Main : Game
             int p_tilesize = 16; //Pixel Tilesize
             foreach(var item in normal)
             {
-                if(player.stamina > 0)
+                if(player.stamina < 500)
                 {
                     if(item.Value == 14) continue;
                 }
@@ -290,7 +290,7 @@ public class Main : Game
 
             foreach(var item in collision)
             {
-                if(player.stamina > 0)
+                if(player.stamina < 500)
                 {
                     if(item.Value == 5) continue;
                 }
