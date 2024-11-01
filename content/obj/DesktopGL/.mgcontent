@@ -11,6 +11,9 @@
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedEnd.wav</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedStart.wav</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/success.wav</File>
+    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball-0001.png</File>
+    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball-0002.png</File>
+    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball-0003.png</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerIdle1.png</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerIdle2.png</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerJump1.png</File>
@@ -27,6 +30,9 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File>assets/sprites/fireball/Fireball1.png</File>
+    <File>assets/sprites/fireball/Fireball2.png</File>
+    <File>assets/sprites/fireball/Fireball3.png</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

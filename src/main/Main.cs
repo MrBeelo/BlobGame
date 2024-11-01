@@ -12,6 +12,8 @@ public class Main : Game
 {
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
+    public static Fireball fireball {get; set;}
+    public static List<Fireball> fireballs;
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
     public static bool hasF11On = false;
@@ -63,6 +65,7 @@ public class Main : Game
         Globals.Graphics.PreferredBackBufferHeight = Globals.WindowSize.Y;
 
         sprites = new();
+        fireballs = new();
 
         //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
     }
@@ -116,6 +119,7 @@ public class Main : Game
         hitboxAtlas = Content.Load<Texture2D>("assets/collision_atlas");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
+        Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
 
         /*switch(settings.Level)
             {
@@ -144,6 +148,9 @@ public class Main : Game
         poptions = new PausedSettingsScreen(font, Globals.Graphics);
         death = new DeathScreen(font, Globals.Graphics);
         win = new WinScreen(font, Globals.Graphics);
+
+        fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
+        fireball.LoadContent(this);
     }
 
     protected override void Update(GameTime gameTime)
@@ -198,6 +205,11 @@ public class Main : Game
         else if (currentGameState == GameState.Playing)
         {
         player.Update(gameTime);
+
+        foreach(Fireball fireball in fireballs.ToList())
+        {
+            fireball.Update(gameTime);
+        }
 
             if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
             {
@@ -320,6 +332,11 @@ public class Main : Game
             }
 
             player.Draw(Globals.SpriteBatch);
+
+            foreach(Fireball fireball in fireballs.ToList())
+            {
+                fireball.Draw(Globals.SpriteBatch);
+            }
            
         }
         else if (currentGameState == GameState.Paused)

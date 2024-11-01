@@ -438,6 +438,12 @@ namespace BlobGame
                 isLeft = false;
             }
 
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F))
+            {
+                Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
+                Main.fireballs.Add(fireball);
+            }
+
             prevkstate = kstate; //Used for one-shot
         } 
         public override void Draw(SpriteBatch spriteBatch)
@@ -609,7 +615,7 @@ namespace BlobGame
         {
             player.alive = true;
             player.isLeft = false;
-            player.stamina = 0;
+            player.stamina = 500;
             player.speed = 3;
         }
 

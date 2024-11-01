@@ -68,6 +68,42 @@
 /processorParam:Quality=Best
 /build:assets/sounds/success.wav
 
+#begin assets/sprites/fireball/Fireball1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/sprites/fireball/Fireball1.png;assets/sprites/fireball/Fireball1.png
+
+#begin assets/sprites/fireball/Fireball2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/sprites/fireball/Fireball2.png;assets/sprites/fireball/Fireball2.png
+
+#begin assets/sprites/fireball/Fireball3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:assets/sprites/fireball/Fireball3.png;assets/sprites/fireball/Fireball3.png
+
 #begin assets/sprites/player/PlayerIdle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
