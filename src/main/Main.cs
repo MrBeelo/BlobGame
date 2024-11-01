@@ -27,12 +27,13 @@ public class Main : Game
     public PausedSettingsScreen poptions;
     public DeathScreen death;
     public WinScreen win;
-    public static Dictionary<Vector2, int> normal;
-    public static Dictionary<Vector2, int> collision;
+    public static Dictionary<Vector2, int>[] normal;
+    public static Dictionary<Vector2, int>[] collision;
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
     public static int tilesize = 30; //Display Tilesize
-    public static double LoweredVolume = Globals.Settings.Volume * 0.6;
+    public static double LoweredVolume = Globals.Settings.Volume * 0.4;
+    public static int level = 0;
     
     public FollowCamera camera;
     KeyboardState prevkstate;
@@ -57,8 +58,12 @@ public class Main : Game
 
         Content.RootDirectory = "content";
         IsMouseVisible = true;
-        normal = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
-        collision = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_collision.csv"));
+
+        normal = new Dictionary<Vector2, int>[1];
+        collision = new Dictionary<Vector2, int>[1];
+        
+        normal[0] = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
+        collision[0] = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_collision.csv"));
 
         camera = new(Vector2.Zero);
 
@@ -241,6 +246,13 @@ public class Main : Game
             win.Update(gameTime);
         }
 
+        //! Debug
+
+        /*if(IsKeyPressed(kstate, prevkstate, Keys.R))
+        {
+            level++;
+        }*/
+
         prevkstate = kstate;
 
         //camera.Follow(player.Drect, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
@@ -276,7 +288,7 @@ public class Main : Game
 
             int tpr = 8; //Tiles per row
             int p_tilesize = 16; //Pixel Tilesize
-            foreach(var item in normal)
+            foreach(var item in normal[level])
             {
                 if(player.stamina < 500)
                 {
@@ -303,7 +315,7 @@ public class Main : Game
                 Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
             }
 
-            foreach(var item in collision)
+            foreach(var item in collision[level])
             {
                 if(player.stamina < 500)
                 {
@@ -374,7 +386,8 @@ public class Main : Game
                 string[] mainDebugInfo = 
                 {
                     "Current Game State: " + currentGameState,
-                    "FPS: " + FPS
+                    "FPS: " + FPS,
+                    "Level: " + level
                     //"Level: " + settings.Level
                 };
 

@@ -7,6 +7,9 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sounds\speedEnd.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sounds\speedStart.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sounds\success.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\fireball\Fireball1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\fireball\Fireball2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\fireball\Fireball3.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\player\PlayerIdle1.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\player\PlayerIdle2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\player\PlayerJump1.xnb
