@@ -32,6 +32,7 @@ public class Main : Game
     public Texture2D textureAtlas;
     public Texture2D hitboxAtlas;
     public static int tilesize = 30; //Display Tilesize
+    public static double LoweredVolume = Globals.Settings.Volume * 0.6;
     
     public FollowCamera camera;
     KeyboardState prevkstate;
@@ -156,6 +157,8 @@ public class Main : Game
     protected override void Update(GameTime gameTime)
     {
         KeyboardState kstate = Keyboard.GetState();
+
+        LoweredVolume = Globals.Settings.Volume * 0.6;
 
         timeSpan += gameTime.ElapsedGameTime;
         frameCounter++;

@@ -26,6 +26,7 @@ namespace BlobGame
         int walkingActiveFrame;
         public Texture2D[] jumpingTextures;
         public Direction direction = Direction.NA;
+        public PressedDirection pressedDirection = PressedDirection.NA;
         public List<Point> horizontalCollisions;
         public List<Point> verticalCollisions;
         private float flickerTime;
@@ -38,6 +39,19 @@ namespace BlobGame
         public bool isSanic = false;
 
         public enum Direction 
+        {
+            Up,
+            Down,
+            Left,
+            Right,
+            UpLeft,
+            UpRight,
+            DownLeft,
+            DownRight,
+            NA
+        }
+
+        public enum PressedDirection 
         {
             Up,
             Down,
@@ -88,7 +102,7 @@ namespace BlobGame
             speedStartSound = game.Content.Load<SoundEffect>("assets/sounds/speedStart");
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
 
-            successSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+            successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
 
             horizontalCollisions = GetIntersectingTiles(Drect);
             verticalCollisions = GetIntersectingTiles(Drect);
@@ -164,7 +178,7 @@ namespace BlobGame
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && !isInAir) {
                 Velocity.Y = -10;
-                jumpSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+                jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
             }
 
             if(isSanic)
@@ -177,7 +191,7 @@ namespace BlobGame
             {
                 speed = 3;
                 isSanic = false;
-                speedEndSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+                speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
             } else if(stamina < 0 && isSanic)
             {
                 speed = 3;
@@ -303,7 +317,7 @@ namespace BlobGame
                         if(stamina >= 500)
                         {
                             isSanic = true;
-                            speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     }
                 }
@@ -382,7 +396,7 @@ namespace BlobGame
                         if(stamina >= 500)
                         {
                             isSanic = true;
-                            speedStartSound.Play(Globals.Settings.Volume, 0.0f, 0.0f);
+                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     }
                 }
@@ -428,6 +442,43 @@ namespace BlobGame
                 direction = Direction.NA;
             }
 
+            if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.D))
+            {
+                pressedDirection = PressedDirection.DownRight;
+            }
+            else if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.A))
+            {
+                pressedDirection = PressedDirection.DownLeft;
+            }
+            else if(kstate.IsKeyDown(Keys.W) && kstate.IsKeyDown(Keys.D))
+            {
+                pressedDirection = PressedDirection.UpRight;
+            }
+            else if(kstate.IsKeyDown(Keys.W) && kstate.IsKeyDown(Keys.A))
+            {
+                pressedDirection = PressedDirection.UpLeft;
+            }
+            else if(kstate.IsKeyDown(Keys.D))
+            {
+                pressedDirection = PressedDirection.Right;
+            }
+            else if(kstate.IsKeyDown(Keys.A))
+            {
+                pressedDirection = PressedDirection.Left;
+            }
+            else if(kstate.IsKeyDown(Keys.S))
+            {
+                pressedDirection = PressedDirection.Down;
+            }
+            else if(kstate.IsKeyDown(Keys.W))
+            {
+                pressedDirection = PressedDirection.Up;
+            }
+            else
+            {
+                pressedDirection = PressedDirection.NA;
+            }
+
             isMoving = Velocity.X != 0;
 
             if(Velocity.X < 0)
@@ -438,11 +489,23 @@ namespace BlobGame
                 isLeft = false;
             }
 
+            //! Fireball
+
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && stamina >= 500)
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
                 stamina -= 100;
+                speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            }
+
+            //! Dash
+
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && stamina >= 500)
+            {
+                Dash(pressedDirection, 100);
+                stamina -= 200;
+                speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
             }
 
             prevkstate = kstate; //Used for one-shot
@@ -524,7 +587,8 @@ namespace BlobGame
                 "Is looking Left: " + isLeft,
                 "Direction: " + direction,
                 "Alive: " + alive,
-                "Is Sanic: " + isSanic
+                "Is Sanic: " + isSanic,
+                "Pressed Direction: " + pressedDirection
             };
         }
         
@@ -633,6 +697,50 @@ namespace BlobGame
                 return Color.Lerp(Color.White, Color.LightBlue, t); // Blends from white to red based on t
             }
             return Color.White;
+        }
+
+        public static void Dash(PressedDirection pressedDirection, int pixelsMoved)
+        {
+            if(pressedDirection == PressedDirection.Right)
+            {
+                Main.player.Drect.X += pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.Left)
+            {
+                Main.player.Drect.X -= pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.Down)
+            {
+                Main.player.Drect.Y += pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.Up)
+            {
+                Main.player.Drect.Y -= pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.DownRight)
+            {
+                Main.player.Drect.X += pixelsMoved;
+                Main.player.Drect.Y += pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.DownLeft)
+            {
+                Main.player.Drect.X -= pixelsMoved;
+                Main.player.Drect.Y += pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.UpRight)
+            {
+                Main.player.Drect.X += pixelsMoved;
+                Main.player.Drect.Y -= pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.UpLeft)
+            {
+                Main.player.Drect.X -= pixelsMoved;
+                Main.player.Drect.Y -= pixelsMoved;
+            }
+            else if(pressedDirection == PressedDirection.NA) //!When not holding anything, go right.
+            {
+                Main.player.Drect.X += pixelsMoved;
+            }
         }
     }
 }
