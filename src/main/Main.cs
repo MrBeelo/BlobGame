@@ -341,8 +341,8 @@ public class Main : Game
 
                 if(hasF3On)
                 {
-                    //spriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
-                    DrawRectHollow(Globals.SpriteBatch, dest, 2, Color.Orange);
+                    Globals.SpriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
+                    //DrawRectHollow(Globals.SpriteBatch, dest, 2, Color.Orange);
                 }
             }
 

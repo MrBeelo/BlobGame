@@ -78,7 +78,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/sprites/fireball/Fireball1.png;assets/sprites/fireball/Fireball1.png
+/build:assets/sprites/fireball/Fireball1.png
 
 #begin assets/sprites/fireball/Fireball2.png
 /importer:TextureImporter
@@ -90,7 +90,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/sprites/fireball/Fireball2.png;assets/sprites/fireball/Fireball2.png
+/build:assets/sprites/fireball/Fireball2.png
 
 #begin assets/sprites/fireball/Fireball3.png
 /importer:TextureImporter
@@ -102,7 +102,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/sprites/fireball/Fireball3.png;assets/sprites/fireball/Fireball3.png
+/build:assets/sprites/fireball/Fireball3.png
 
 #begin assets/sprites/player/PlayerIdle1.png
 /importer:TextureImporter
