@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlobGame")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb327e1bf7b07bbfa8d0e670bf92e76b62b179d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11bc8d1585f6184ecb4d423491c7d084aa91743a")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlobGame")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlobGame")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

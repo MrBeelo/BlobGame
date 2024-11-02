@@ -37,6 +37,7 @@ namespace BlobGame
         public bool isMoving = false;
         public bool isLeft = false;
         public bool isSanic = false;
+        public bool isDashing = false;
 
         public enum Direction 
         {
@@ -154,8 +155,11 @@ namespace BlobGame
             }
 
             KeyboardState kstate = Keyboard.GetState();
-            Velocity.X = 0;
-            Velocity.Y += 0.5f;
+            if(!isDashing)
+            {
+                Velocity.X = 0;
+                Velocity.Y += 0.5f;
+            }
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
 
@@ -166,14 +170,24 @@ namespace BlobGame
                 ResetState(this);
             }*/
             
-            if (kstate.IsKeyDown(Keys.A))
+            if (kstate.IsKeyDown(Keys.A) && !isDashing)
             {
                 Velocity.X = -speed;
+            } 
+            else 
+            if (kstate.IsKeyDown(Keys.A) && isDashing)
+            {
+                Velocity.X --;
             }
             
-            if (kstate.IsKeyDown(Keys.D))
+            if (kstate.IsKeyDown(Keys.D) && !isDashing)
             {
                 Velocity.X = speed;
+            }
+            else 
+            if (kstate.IsKeyDown(Keys.D) && isDashing)
+            {
+                Velocity.X ++;
             }
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && !isInAir) {
@@ -181,24 +195,24 @@ namespace BlobGame
                 jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
             }
 
-            if(isSanic)
+            if(isSanic && !isDashing)
             {
                 speed = 6;
                 stamina--;
             }
 
-            if(stamina == 0 && isSanic)
+            if(stamina == 0 && isSanic && !isDashing)
             {
                 speed = 3;
                 isSanic = false;
                 speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-            } else if(stamina < 0 && isSanic)
+            } else if(stamina < 0 && isSanic && !isDashing)
             {
                 speed = 3;
                 isSanic = false;
             }
 
-            if(stamina < 500 && !isSanic)
+            if(stamina < 500 && !isSanic && !isDashing)
             {
                 speed = 3;
                 stamina++;
@@ -503,9 +517,19 @@ namespace BlobGame
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && stamina >= 500)
             {
-                Dash(pressedDirection, 100);
-                stamina -= 200;
+                Dash(pressedDirection, 15);
                 speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                isDashing = true;
+            }
+
+            if(isDashing && stamina > 0)
+            {
+                stamina -= 20;
+            }
+
+            if(stamina <= 300)
+            {
+                isDashing = false;
             }
 
             prevkstate = kstate; //Used for one-shot
@@ -588,7 +612,8 @@ namespace BlobGame
                 "Direction: " + direction,
                 "Alive: " + alive,
                 "Is Sanic: " + isSanic,
-                "Pressed Direction: " + pressedDirection
+                "Pressed Direction: " + pressedDirection,
+                "Is Dashing: " + isDashing
             };
         }
         
@@ -682,6 +707,8 @@ namespace BlobGame
             player.isLeft = false;
             player.stamina = 500;
             player.speed = 3;
+            player.isSanic = false;
+            player.isDashing = false;
         }
 
         public Color PlayerColor()
@@ -699,47 +726,50 @@ namespace BlobGame
             return Color.White;
         }
 
-        public static void Dash(PressedDirection pressedDirection, int pixelsMoved)
+        public static void Dash(PressedDirection pressedDirection, int power)
         {
+            double dPower = power * 0.6;
             if(pressedDirection == PressedDirection.Right)
             {
-                Main.player.Drect.X += pixelsMoved;
+                Main.player.Velocity.X = power;
+                Main.player.Velocity.Y = 0.5f;
             }
             else if(pressedDirection == PressedDirection.Left)
             {
-                Main.player.Drect.X -= pixelsMoved;
+                Main.player.Velocity.X = -power;
+                Main.player.Velocity.Y = 0.5f;
             }
             else if(pressedDirection == PressedDirection.Down)
             {
-                Main.player.Drect.Y += pixelsMoved;
+                Main.player.Velocity.Y = power;
             }
             else if(pressedDirection == PressedDirection.Up)
             {
-                Main.player.Drect.Y -= pixelsMoved;
+                Main.player.Velocity.Y = -power;
             }
             else if(pressedDirection == PressedDirection.DownRight)
             {
-                Main.player.Drect.X += pixelsMoved;
-                Main.player.Drect.Y += pixelsMoved;
+                Main.player.Velocity.X = (int)dPower;
+                Main.player.Velocity.Y = (int)dPower;
             }
             else if(pressedDirection == PressedDirection.DownLeft)
             {
-                Main.player.Drect.X -= pixelsMoved;
-                Main.player.Drect.Y += pixelsMoved;
+                Main.player.Velocity.X = (int)-dPower;
+                Main.player.Velocity.Y = (int)dPower;
             }
             else if(pressedDirection == PressedDirection.UpRight)
             {
-                Main.player.Drect.X += pixelsMoved;
-                Main.player.Drect.Y -= pixelsMoved;
+                Main.player.Velocity.X = (int)dPower;
+                Main.player.Velocity.Y = (int)-dPower;
             }
             else if(pressedDirection == PressedDirection.UpLeft)
             {
-                Main.player.Drect.X -= pixelsMoved;
-                Main.player.Drect.Y -= pixelsMoved;
+                Main.player.Velocity.X = (int)-dPower;
+                Main.player.Velocity.Y = (int)-dPower;
             }
             else if(pressedDirection == PressedDirection.NA) //!When not holding anything, go right.
             {
-                Main.player.Drect.X += pixelsMoved;
+                Main.player.Velocity.X = power;
             }
         }
 
