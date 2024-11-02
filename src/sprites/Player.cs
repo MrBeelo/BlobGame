@@ -269,7 +269,7 @@ namespace BlobGame
             
             foreach (var tile in horizontalCollisions)
             {
-                if (Main.collision[Main.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Main.collision[(int)Main.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 0) //! Solid
                     {
@@ -344,7 +344,7 @@ namespace BlobGame
             isInAir = true;
             foreach (var tile in verticalCollisions)
             {
-                if (Main.collision[Main.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Main.collision[(int)Main.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 0) //! Solid
                     {
@@ -698,7 +698,7 @@ namespace BlobGame
 
         public static void ResetPos(Player player)
         {
-            player.Drect = new Rectangle(50, 600, playerSizeW, playerSizeH);
+            player.Drect = new Rectangle((int)Main.level.Y, (int)Main.level.Z, playerSizeW, playerSizeH);
         }
 
         public static void ResetState(Player player)
@@ -775,8 +775,10 @@ namespace BlobGame
 
         public static void MoveLevel(Player player, Vector2 newPos)
         {
-            Main.level++;
-            player.Drect = new Rectangle((int)newPos.X, (int)newPos.Y, 50, 600);
+            Main.level.X++;
+            Main.level.Y = newPos.X;
+            Main.level.Z = newPos.Y;
+            player.Drect = new Rectangle((int)Main.level.Y, (int)Main.level.Z, playerSizeW, playerSizeH);
         }
     }
 }

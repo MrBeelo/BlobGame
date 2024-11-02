@@ -64,7 +64,7 @@ namespace BlobGame
             horizontalCollisions = GetIntersectingTiles(Drect);
             foreach (var tile in horizontalCollisions)
             {
-                if (Main.collision[Main.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Main.collision[(int)Main.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             
@@ -88,7 +88,7 @@ namespace BlobGame
             verticalCollisions = GetIntersectingTiles(Drect);
             foreach (var tile in verticalCollisions)
             {
-                if (Main.collision[Main.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Main.collision[(int)Main.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
             

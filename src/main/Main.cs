@@ -33,7 +33,7 @@ public class Main : Game
     public Texture2D hitboxAtlas;
     public static int tilesize = 30; //Display Tilesize
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
-    public static int level = 0;
+    public static Vector3 level = new Vector3(0, 50, 600);
     
     public FollowCamera camera;
     KeyboardState prevkstate;
@@ -143,7 +143,7 @@ public class Main : Game
         
         //var playerPosition = settings.GetPlayerPos(settings.PlayerPos.ToString.);
         //Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
-        player = new Player(playerTexture, new Rectangle(50, 600, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player = new Player(playerTexture, new Rectangle((int)level.Y, (int)level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
         player.LoadContent(this);
         sprites.Add(player);
 
@@ -288,7 +288,7 @@ public class Main : Game
 
             int tpr = 8; //Tiles per row
             int p_tilesize = 16; //Pixel Tilesize
-            foreach(var item in normal[level])
+            foreach(var item in normal[(int)level.X])
             {
                 if(player.stamina < 500)
                 {
@@ -315,7 +315,7 @@ public class Main : Game
                 Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
             }
 
-            foreach(var item in collision[level])
+            foreach(var item in collision[(int)level.X])
             {
                 if(player.stamina < 500)
                 {
