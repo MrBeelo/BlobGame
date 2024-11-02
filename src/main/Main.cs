@@ -13,6 +13,7 @@ public class Main : Game
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
+    public static Tilemap tilemap {get; set;}
     public static List<Fireball> fireballs;
     public static List<Sprite> sprites;
     public static bool hasF3On = false;
@@ -27,13 +28,7 @@ public class Main : Game
     public PausedSettingsScreen poptions;
     public DeathScreen death;
     public WinScreen win;
-    public static Dictionary<Vector2, int>[] normal;
-    public static Dictionary<Vector2, int>[] collision;
-    public Texture2D textureAtlas;
-    public Texture2D hitboxAtlas;
-    public static int tilesize = 30; //Display Tilesize
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
-    public static Vector3 level = new Vector3(0, 50, 600);
     
     public FollowCamera camera;
     KeyboardState prevkstate;
@@ -59,12 +54,6 @@ public class Main : Game
         Content.RootDirectory = "content";
         IsMouseVisible = true;
 
-        normal = new Dictionary<Vector2, int>[1];
-        collision = new Dictionary<Vector2, int>[1];
-        
-        normal[0] = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
-        collision[0] = LoadMap(Path.Combine(Content.RootDirectory, "..", "data", "testlevel_collision.csv"));
-
         camera = new(Vector2.Zero);
 
         Globals.Graphics.PreferredBackBufferWidth = Globals.WindowSize.X;
@@ -74,32 +63,6 @@ public class Main : Game
         fireballs = new();
 
         //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
-    }
-
-    public Dictionary<Vector2, int> LoadMap(string filepath)
-    {
-        Dictionary<Vector2, int> result = new();
-
-        StreamReader reader = new (filepath);
-        int y = 0;
-        string line;
-        while((line = reader.ReadLine()) != null) {
-            string[] Items = line.Split(',');
-            for(int x = 0; x < Items.Length; x++)
-            {
-                if(int.TryParse(Items[x], out int value)) {
-                    if(value > -1) {
-                        result[new Vector2(x, y)] = value;
-                    }
-
-                }
-            }
-
-            y++;
-        }
-
-        return result;
-
     }
 
     protected override void Initialize()
@@ -121,8 +84,6 @@ public class Main : Game
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
 
         font = Content.Load<SpriteFont>("assets/fonts/font");
-        textureAtlas = Content.Load<Texture2D>("assets/atlas");
-        hitboxAtlas = Content.Load<Texture2D>("assets/collision_atlas");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
@@ -143,7 +104,7 @@ public class Main : Game
         
         //var playerPosition = settings.GetPlayerPos(settings.PlayerPos.ToString.);
         //Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
-        player = new Player(playerTexture, new Rectangle((int)level.Y, (int)level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player = new Player(playerTexture, new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
         player.LoadContent(this);
         sprites.Add(player);
 
@@ -157,6 +118,9 @@ public class Main : Game
 
         fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
         fireball.LoadContent(this);
+
+        tilemap = new Tilemap();
+        tilemap.LoadContent(this);
     }
 
     protected override void Update(GameTime gameTime)
@@ -267,6 +231,8 @@ public class Main : Game
         //Beginning Sprite Batch
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
+        tilemap.Draw(gameTime);
+
         if (currentGameState == GameState.MainMenu)
         {
             mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
@@ -277,73 +243,13 @@ public class Main : Game
             {
                 foreach(var rect in player.horizontalCollisions)
                 {
-                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
+                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach(var rect in player.verticalCollisions)
                 {
-                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * tilesize, rect.Y * tilesize, tilesize, tilesize), 1, Color.DarkBlue);
+                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 DrawRectHollow(Globals.SpriteBatch, player.Drect, 4, Color.Blue);
-            }
-
-            int tpr = 8; //Tiles per row
-            int p_tilesize = 16; //Pixel Tilesize
-            foreach(var item in normal[(int)level.X])
-            {
-                if(player.stamina < 500)
-                {
-                    if(item.Value == 14) continue;
-                }
-
-                Rectangle dest = new(
-                    (int)item.Key.X * tilesize,
-                    (int)item.Key.Y * tilesize,
-                    tilesize,
-                    tilesize
-                );
-
-                int x = item.Value % tpr;
-                int y = item.Value / tpr;
-
-                Rectangle src = new(
-                    x * p_tilesize,
-                    y * p_tilesize,
-                    p_tilesize,
-                    p_tilesize
-                );
-
-                Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
-            }
-
-            foreach(var item in collision[(int)level.X])
-            {
-                if(player.stamina < 500)
-                {
-                    if(item.Value == 5) continue;
-                }
-
-                Rectangle dest = new(
-                    (int)item.Key.X * tilesize,
-                    (int)item.Key.Y * tilesize,
-                    tilesize,
-                    tilesize
-                );
-
-                int x = item.Value % tpr;
-                int y = item.Value / tpr;
-
-                Rectangle src = new(
-                    x * p_tilesize,
-                    y * p_tilesize,
-                    p_tilesize,
-                    p_tilesize
-                );
-
-                if(hasF3On)
-                {
-                    Globals.SpriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
-                    //DrawRectHollow(Globals.SpriteBatch, dest, 2, Color.Orange);
-                }
             }
 
             player.Draw(Globals.SpriteBatch);
@@ -387,7 +293,7 @@ public class Main : Game
                 {
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
-                    "Level: " + level
+                    "Level: " + Tilemap.level
                     //"Level: " + settings.Level
                 };
 

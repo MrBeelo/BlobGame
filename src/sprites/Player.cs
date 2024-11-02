@@ -227,7 +227,7 @@ namespace BlobGame
             {
                 if(Main.collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
                 {
-                    Rectangle collision = new Rectangle(rect.X * Main.tilesize, rect.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                    Rectangle collision = new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
     
                     if(velocity.X > 0.0f)
                     {
@@ -247,7 +247,7 @@ namespace BlobGame
             {
                 if(Main.collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
                 {
-                    Rectangle collision = new Rectangle(rect.X * Main.tilesize, rect.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                    Rectangle collision = new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
     
                     if(velocity.Y > 0.0f)
                     {
@@ -269,11 +269,11 @@ namespace BlobGame
             
             foreach (var tile in horizontalCollisions)
             {
-                if (Main.collision[(int)Main.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 0) //! Solid
                     {
-                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                    Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.X > 0) // Moving Right
                         {
@@ -287,7 +287,7 @@ namespace BlobGame
                     }
                     else if(value == 1) //! Hazard
                     {
-                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                    Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.X > 0) // Moving Right
                         {
@@ -303,7 +303,7 @@ namespace BlobGame
                     }
                     else if (value == 2) //! Win (Nothing happens from sides)
                     {
-                    Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                    Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.X > 0) // Moving Right
                         {
@@ -344,11 +344,11 @@ namespace BlobGame
             isInAir = true;
             foreach (var tile in verticalCollisions)
             {
-                if (Main.collision[(int)Main.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 0) //! Solid
                     {
-                        Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.Y > 0) // Falling Down
                         {
@@ -364,7 +364,7 @@ namespace BlobGame
                     }
                     else if(value == 1) //! Hazard
                     {
-                        Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.Y > 0) // Falling Down
                         {
@@ -382,7 +382,7 @@ namespace BlobGame
                     }
                     else if (value == 2) //! Win
                     {
-                        Rectangle collision = new Rectangle(tile.X * Main.tilesize, tile.Y * Main.tilesize, Main.tilesize, Main.tilesize);
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.Y > 0) // Falling Down
                         {
@@ -621,25 +621,25 @@ namespace BlobGame
     
             List<Rectangle> intersections = new();
     
-            for (int x = 0; x <= Main.playerSizeW; x += Main.tilesize) {
-                for (int y = 0; y <= Main.playerSizeH; y += Main.tilesize) {
+            for (int x = 0; x <= Main.playerSizeW; x += Tilemap.Tilesize) {
+                for (int y = 0; y <= Main.playerSizeH; y += Tilemap.Tilesize) {
     
                     intersections.Add(new Rectangle(
     
-                        (target.X + x) / Main.tilesize,
-                        (target.Y + y / Main.tilesize *(Main.tilesize-1)) / Main.tilesize,
-                        Main.tilesize,
-                        Main.tilesize
+                        (target.X + x) / Tilemap.Tilesize,
+                        (target.Y + y / Tilemap.Tilesize *(Tilemap.Tilesize-1)) / Tilemap.Tilesize,
+                        Tilemap.Tilesize,
+                        Tilemap.Tilesize
                     ));
                 }
             }
     
-            if (Main.playerSizeW % Main.tilesize != 0) {
+            if (Main.playerSizeW % Tilemap.Tilesize != 0) {
             intersections.Add(new Rectangle(
-                (target.X + Main.playerSizeW) / Main.tilesize,
-                (target.Y) / Main.tilesize,
-                Main.tilesize,
-                Main.tilesize
+                (target.X + Main.playerSizeW) / Tilemap.Tilesize,
+                (target.Y) / Tilemap.Tilesize,
+                Tilemap.Tilesize,
+                Tilemap.Tilesize
             ));
             }
     
@@ -649,27 +649,27 @@ namespace BlobGame
     
             List<Rectangle> intersections = new();
     
-            for (int x = 0; x <= Main.playerSizeW; x += Main.tilesize) {
-                for (int y = 0; y <= Main.playerSizeH; y += Main.tilesize) {
+            for (int x = 0; x <= Main.playerSizeW; x += Tilemap.Tilesize) {
+                for (int y = 0; y <= Main.playerSizeH; y += Tilemap.Tilesize) {
     
                     intersections.Add(new Rectangle(
     
-                        (target.X + x / Main.tilesize *(Main.tilesize-1)) / Main.tilesize,
-                        (target.Y + y) / Main.tilesize,
-                        Main.tilesize,
-                        Main.tilesize
+                        (target.X + x / Tilemap.Tilesize *(Tilemap.Tilesize-1)) / Tilemap.Tilesize,
+                        (target.Y + y) / Tilemap.Tilesize,
+                        Tilemap.Tilesize,
+                        Tilemap.Tilesize
     
                     ));
     
                 }
             }
     
-            if (Main.playerSizeH % Main.tilesize != 0) {
+            if (Main.playerSizeH % Tilemap.Tilesize != 0) {
             intersections.Add(new Rectangle(
-                (target.X) / Main.tilesize,
-                (target.Y + Main.playerSizeH) / Main.tilesize,
-                Main.tilesize,
-                Main.tilesize
+                (target.X) / Tilemap.Tilesize,
+                (target.Y + Main.playerSizeH) / Tilemap.Tilesize,
+                Tilemap.Tilesize,
+                Tilemap.Tilesize
             ));
             }
     
@@ -680,10 +680,10 @@ namespace BlobGame
         {
             List<Point> tiles = new List<Point>();
         
-            int leftTile = target.Left / Main.tilesize;
-            int rightTile = (target.Right - 1) / Main.tilesize;
-            int topTile = target.Top / Main.tilesize;
-            int bottomTile = (target.Bottom - 1) / Main.tilesize;
+            int leftTile = target.Left / Tilemap.Tilesize;
+            int rightTile = (target.Right - 1) / Tilemap.Tilesize;
+            int topTile = target.Top / Tilemap.Tilesize;
+            int bottomTile = (target.Bottom - 1) / Tilemap.Tilesize;
         
             for (int x = leftTile; x <= rightTile; x++)
             {
@@ -698,7 +698,7 @@ namespace BlobGame
 
         public static void ResetPos(Player player)
         {
-            player.Drect = new Rectangle((int)Main.level.Y, (int)Main.level.Z, playerSizeW, playerSizeH);
+            player.Drect = new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, playerSizeW, playerSizeH);
         }
 
         public static void ResetState(Player player)
@@ -775,10 +775,10 @@ namespace BlobGame
 
         public static void MoveLevel(Player player, Vector2 newPos)
         {
-            Main.level.X++;
-            Main.level.Y = newPos.X;
-            Main.level.Z = newPos.Y;
-            player.Drect = new Rectangle((int)Main.level.Y, (int)Main.level.Z, playerSizeW, playerSizeH);
+            Tilemap.level.X++;
+            Tilemap.level.Y = newPos.X;
+            Tilemap.level.Z = newPos.Y;
+            player.Drect = new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, playerSizeW, playerSizeH);
         }
     }
 }
