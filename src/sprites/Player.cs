@@ -301,7 +301,7 @@ namespace BlobGame
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
-                    else if (value == 2) //! Win (Nothing happens from sides)
+                    else if (value == 3) //! Win (Nothing happens from sides)
                     {
                     Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
@@ -332,7 +332,32 @@ namespace BlobGame
                         {
                             isSanic = true;
                             speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Tilemap.excludedNormalTiles.Add(new Vector3(14, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
+                    }
+                    else if(value == 6) //! Breakable Block
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+            
+                            if (Velocity.X > 0) // Moving Right
+                            {
+                                Drect.X = collision.Left - Drect.Width;
+                            }
+                            else if (Velocity.X < 0) // Moving Left
+                            {
+                                Drect.X = collision.Right;
+                            }
+                            Velocity.X = 0; // Stop horizontal movement upon collision
+                        }
+                    }
+                } else {
+                    if(stamina == 500 && !isSanic)
+                    {
+                        Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 14);
+                        Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
             }
@@ -380,7 +405,7 @@ namespace BlobGame
                             alive = false;
                         }
                     }
-                    else if (value == 2) //! Win
+                    else if (value == 3) //! Win
                     {
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
@@ -411,7 +436,34 @@ namespace BlobGame
                         {
                             isSanic = true;
                             speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Tilemap.excludedNormalTiles.Add(new Vector3(14, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
+                    }
+                    else if(value == 6) //!Breakable Block
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+            
+                            if (Velocity.Y > 0) // Falling Down
+                            {
+                                Drect.Y = collision.Top - Drect.Height;
+                                Velocity.Y = 0.5f;
+                                isInAir = false;
+                            }
+                            else if (Velocity.Y < 0) // Moving Up
+                            {
+                                Drect.Y = collision.Bottom;
+                                Velocity.Y = 0;
+                            }
+                        }
+                    }
+                } else {
+                    if(stamina == 500 && !isSanic)
+                    {
+                        Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 14);
+                        Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
             }
@@ -524,10 +576,10 @@ namespace BlobGame
 
             if(isDashing && stamina > 0)
             {
-                stamina -= 20;
+                stamina -= 10;
             }
 
-            if(stamina <= 300)
+            if(stamina <= 400)
             {
                 isDashing = false;
             }

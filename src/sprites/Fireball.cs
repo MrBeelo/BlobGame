@@ -66,20 +66,33 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+                    if(value == 5)
+                    {
+                        //!Do nothing
+                    } else if(value == 6)
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            Tilemap.excludedNormalTiles.Add(new Vector3(15, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            FireIsAlive = false;
+                        }
+                    } else {
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
-                    if (Velocity.X > 0) // Moving Right
-                    {
-                        Drect.X = collision.Left - Drect.Width;
-                        Velocity.X = 0;
-                        FireIsAlive = false;
+                        if (Velocity.X > 0) // Moving Right
+                        {
+                            Drect.X = collision.Left - Drect.Width;
+                            Velocity.X = 0;
+                            FireIsAlive = false;
+                        }
+                        else if (Velocity.X < 0) // Moving Left
+                        {
+                            Drect.X = collision.Right;
+                            Velocity.X = 0;
+                            FireIsAlive = false;
+                        }      
                     }
-                    else if (Velocity.X < 0) // Moving Left
-                    {
-                        Drect.X = collision.Right;
-                        Velocity.X = 0;
-                        FireIsAlive = false;
-                    }      
                 }
             }
             
@@ -90,19 +103,32 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+                    if(value == 5)
+                    {
+                        //!Do nothing
+                    } else if(value == 6)
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            Tilemap.excludedNormalTiles.Add(new Vector3(15, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            FireIsAlive = false;
+                        }
+                    } else {
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
-                    if (Velocity.Y > 0) // Falling Down
-                    {
-                        Drect.Y = collision.Top - Drect.Height;
-                        Velocity.Y = 0;
-                        FireIsAlive = false;
-                    }
-                    else if (Velocity.Y < 0) // Moving Up
-                    {
-                        Drect.Y = collision.Bottom;
-                        Velocity.Y = 0;
-                        FireIsAlive = false;
+                        if (Velocity.Y > 0) // Falling Down
+                        {
+                            Drect.Y = collision.Top - Drect.Height;
+                            Velocity.Y = 0;
+                            FireIsAlive = false;
+                        }
+                        else if (Velocity.Y < 0) // Moving Up
+                        {
+                            Drect.Y = collision.Bottom;
+                            Velocity.Y = 0;
+                            FireIsAlive = false;
+                        }
                     }
                 }
             }

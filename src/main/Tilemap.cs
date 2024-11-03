@@ -9,16 +9,26 @@ namespace BlobGame
     public class Tilemap
     {
         public static Vector3 level = new Vector3(0, 50, 600);
-        public static int Tilesize = 30; //Display Tilesize
+        public static int Tilesize = 32; //Display Tilesize
         public static Dictionary<Vector2, int>[] Normal;
         public static Dictionary<Vector2, int>[] Collision;
         public Texture2D textureAtlas;
         public Texture2D hitboxAtlas;
+        public List<Vector3> normalTiles;
+        public List<Vector3> collisionTiles;
+
+        public static List<Vector3> excludedNormalTiles;
+
+        public static List<Vector3> excludedCollisionTiles;
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[1];
-            Collision = new Dictionary<Vector2, int>[1];
+            Normal = new Dictionary<Vector2, int>[1]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[1]; //! Same here
+            normalTiles = new();
+            collisionTiles = new();
+            excludedNormalTiles = new();
+            excludedCollisionTiles = new();
         }
 
         public Dictionary<Vector2, int> LoadMap(string filepath)
@@ -49,11 +59,22 @@ namespace BlobGame
 
         public void LoadContent(Game game)
         {
-            Normal[0] =LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "testlevel_normal.csv"));
-            Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "testlevel_collision.csv"));
-
             textureAtlas = game.Content.Load<Texture2D>("assets/atlas");
             hitboxAtlas = game.Content.Load<Texture2D>("assets/collision_atlas");
+
+            Normal[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_normal.csv"));
+            //! Import all level CSVs for the normal tileset here
+
+            Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_collision.csv"));
+            //! Import all level CSVs for the collision tileset here
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (Main.player.stamina == 500)
+            {
+
+            }
         }
 
         public void Draw(GameTime gameTime)
@@ -61,13 +82,17 @@ namespace BlobGame
             if(Main.currentGameState == Main.GameState.Playing)
             {
                 int tpr = 8; //Tiles per row
-                int p_tilesize = 16; //Pixel Tilesize
+                int p_tilesize = 32; //Pixel Tilesize
+
                 foreach(var item in Normal[(int)level.X])
                 {
-                    if(Main.player.stamina < 500)
+                    normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
+                    if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+
+                    /*if(Main.player.stamina < 500)
                     {
                         if(item.Value == 14) continue;
-                    }
+                    }*/
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -91,10 +116,13 @@ namespace BlobGame
 
                 foreach(var item in Collision[(int)level.X])
                 {
-                    if(Main.player.stamina < 500)
+                    collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
+                    if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+
+                    /*if(Main.player.stamina < 500)
                     {
                         if(item.Value == 5) continue;
-                    }
+                    }*/
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
