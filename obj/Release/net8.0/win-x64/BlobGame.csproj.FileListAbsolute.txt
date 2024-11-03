@@ -418,8 +418,6 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame2\obj\Release\net8.0
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame2\obj\Release\net8.0\win-x64\ref\BlobGame.dll
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\atlas.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\collision_atlas.xnb
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\data\testlevel_collision.csv
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\data\testlevel_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\sprites\player\PlayerIdle1.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\sprites\player\PlayerIdle2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\sprites\player\PlayerJump1.xnb
@@ -433,3 +431,8 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\sprites\fireball\Fireball1.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\sprites\fireball\Fireball2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\sprites\fireball\Fireball3.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\content\assets\bg.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\data\level0_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\data\level0_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\data\level1_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\data\level1_normal.csv

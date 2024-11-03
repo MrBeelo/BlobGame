@@ -60,12 +60,14 @@ namespace BlobGame
                         Main.currentGameState = Main.GameState.MainMenu;
                         Player.ResetPos(Main.player);
                         Player.ResetState(Main.player);
+                        Tilemap.level = new Vector3(0, 50, 600);
                         break;
                     case 1:
                         // Options
                         Main.currentGameState = Main.GameState.Playing;
                         Player.ResetPos(Main.player);
                         Player.ResetState(Main.player);
+                        Tilemap.level = new Vector3(0, 50, 600);
                         break;
                 }
             }

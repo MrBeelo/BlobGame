@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level0.tmx",
+    "activeFile": "collision.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -14,10 +14,18 @@
         },
         "level0.tmx": {
             "scale": 0.5155729166666666,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
                 "x": 960.0969794928782,
-                "y": 544.0549550459642
+                "y": 821.4163046772403
+            }
+        },
+        "level1.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 958,
+                "y": 275
             }
         },
         "normal.tsx": {
@@ -25,7 +33,7 @@
             "scaleInEditor": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/User/Desktop/tiled",
+    "last.exportedFilePath": "C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/src/tiled",
     "last.imagePath": "C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets",
     "map.height": 34,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
@@ -34,13 +42,15 @@
     "openFiles": [
         "level0.tmx",
         "normal.tsx",
-        "collision.tsx"
+        "collision.tsx",
+        "level1.tmx"
     ],
     "project": "blob.tiled-project",
     "recentFiles": [
-        "collision.tsx",
+        "level0.tmx",
         "normal.tsx",
-        "level0.tmx"
+        "level1.tmx",
+        "collision.tsx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

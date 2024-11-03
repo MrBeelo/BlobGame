@@ -433,3 +433,6 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\wi
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\fireball\Fireball3.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level0_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level0_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level1_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level1_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\bg.xnb

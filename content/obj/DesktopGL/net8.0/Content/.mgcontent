@@ -5,6 +5,7 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/atlas.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/bg.png</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/collision_atlas.png</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/debugFont.spritefont</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/jump.wav</File>
@@ -23,6 +24,7 @@
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>assets/fonts/font.spritefont</File>

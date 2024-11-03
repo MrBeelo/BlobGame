@@ -168,6 +168,11 @@ namespace BlobGame
             {
                 ResetPos(this);
                 ResetState(this);
+            }
+
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.N))
+            {
+                MoveLevel(this);
             }*/
             
             if (kstate.IsKeyDown(Keys.A) && !isDashing)
@@ -403,6 +408,21 @@ namespace BlobGame
                             Drect.Y = collision.Bottom;
                             Velocity.Y = 0;
                             alive = false;
+                        }
+                    }
+                    else if(value == 2) //! Pass
+                    {
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+            
+                        if (Velocity.Y > 0) // Falling Down
+                        {
+                            MoveLevel(this);
+                            Main.currentGameState = Main.GameState.Pass;
+                        }
+                        else if (Velocity.Y < 0) // Moving Up
+                        {
+                            Drect.Y = collision.Bottom;
+                            Velocity.Y = 0;
                         }
                     }
                     else if (value == 3) //! Win
@@ -755,6 +775,7 @@ namespace BlobGame
 
         public static void ResetState(Player player)
         {
+            player.Velocity = new Vector2(0, 0.5f);
             player.alive = true;
             player.isLeft = false;
             player.stamina = 500;
@@ -825,12 +846,21 @@ namespace BlobGame
             }
         }
 
-        public static void MoveLevel(Player player, Vector2 newPos)
+        public static void MoveLevel(Player player)
         {
             Tilemap.level.X++;
-            Tilemap.level.Y = newPos.X;
-            Tilemap.level.Z = newPos.Y;
-            player.Drect = new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, playerSizeW, playerSizeH);
+            if(Tilemap.level.X == 0)
+            {
+                Tilemap.level.Y = 50;
+                Tilemap.level.Z = 600;
+            }
+            else
+            if(Tilemap.level.X == 1)
+            {
+                Tilemap.level.Y = 50;
+                Tilemap.level.Z = 200;
+            }
+            ResetState(player);
         }
     }
 }

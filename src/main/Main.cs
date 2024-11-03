@@ -28,6 +28,7 @@ public class Main : Game
     public PausedSettingsScreen poptions;
     public DeathScreen death;
     public WinScreen win;
+    public PassScreen pass;
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
     
     public FollowCamera camera;
@@ -35,6 +36,7 @@ public class Main : Game
     public int frameCounter;
     public TimeSpan timeSpan;
     public int FPS;
+    Texture2D background;
     public enum GameState
     {
         MainMenu,
@@ -44,7 +46,8 @@ public class Main : Game
         Quit,
         POptions,
         Death,
-        Win
+        Win,
+        Pass
     }
     public Main()
     {
@@ -87,6 +90,7 @@ public class Main : Game
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
+        background = Content.Load<Texture2D>("assets/bg");
 
         /*switch(settings.Level)
             {
@@ -115,6 +119,7 @@ public class Main : Game
         poptions = new PausedSettingsScreen(font, Globals.Graphics);
         death = new DeathScreen(font, Globals.Graphics);
         win = new WinScreen(font, Globals.Graphics);
+        pass = new PassScreen(font, Globals.Graphics);
 
         fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
         fireball.LoadContent(this);
@@ -208,6 +213,9 @@ public class Main : Game
         } else if (currentGameState == GameState.Win)
         {
             win.Update(gameTime);
+        } else if (currentGameState == GameState.Pass)
+        {
+            pass.Update(gameTime);
         }
 
         //! Debug
@@ -231,14 +239,16 @@ public class Main : Game
         //Beginning Sprite Batch
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-        tilemap.Draw(gameTime);
-
         if (currentGameState == GameState.MainMenu)
         {
             mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
         else if (currentGameState == GameState.Playing)
         {
+            Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
+
+            tilemap.Draw(gameTime);
+
             if(hasF3On)
             {
                 foreach(var rect in player.horizontalCollisions)
@@ -278,6 +288,9 @@ public class Main : Game
         } else if(currentGameState == GameState.Win)
         {
             win.Draw(Globals.SpriteBatch, Globals.Graphics);
+        } else if(currentGameState == GameState.Pass)
+        {
+            pass.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
 
         if(hasF3On)
@@ -294,7 +307,6 @@ public class Main : Game
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
                     "Level: " + Tilemap.level
-                    //"Level: " + settings.Level
                 };
 
                 string[] otherDebugInfo = otherDebugInfoList.ToArray();

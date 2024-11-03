@@ -23,8 +23,8 @@ namespace BlobGame
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[1]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[1]; //! Same here
+            Normal = new Dictionary<Vector2, int>[2]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[2]; //! Same here
             normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
@@ -63,18 +63,12 @@ namespace BlobGame
             hitboxAtlas = game.Content.Load<Texture2D>("assets/collision_atlas");
 
             Normal[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_normal.csv"));
+            Normal[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_normal.csv"));
             //! Import all level CSVs for the normal tileset here
 
             Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_collision.csv"));
+            Collision[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_collision.csv"));
             //! Import all level CSVs for the collision tileset here
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            if (Main.player.stamina == 500)
-            {
-
-            }
         }
 
         public void Draw(GameTime gameTime)
