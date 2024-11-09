@@ -14,8 +14,8 @@ public class Main : Game
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
     public static Tilemap tilemap {get; set;}
-    public static List<Fireball> fireballs;
-    public static List<Sprite> sprites;
+    public static List<Fireball> fireballs = new();
+    public static List<Sprite> sprites = new();
     public static bool hasF3On = false;
     public static bool hasF11On = false;
     public static Texture2D pixelTexture;
@@ -52,28 +52,20 @@ public class Main : Game
     }
     public Main()
     {
-        //IsFixedTimeStep = false;
+        Window.Title = "Blob Game";
         Globals.Graphics = new GraphicsDeviceManager(this);
 
         Content.RootDirectory = "content";
         IsMouseVisible = true;
 
-        camera = new(Vector2.Zero);
-
         Globals.Graphics.PreferredBackBufferWidth = Globals.WindowSize.X;
         Globals.Graphics.PreferredBackBufferHeight = Globals.WindowSize.Y;
-
-        sprites = new();
-        fireballs = new();
-
-        //TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 240.0); 
     }
 
     protected override void Initialize()
     {
         Settings.LoadSettings(settingsFilePath);
         base.Initialize();
-        //TEST
     }
 
     protected override void LoadContent()
@@ -89,30 +81,10 @@ public class Main : Game
 
         font = Content.Load<SpriteFont>("assets/fonts/font");
         debugFont = Content.Load<SpriteFont>("assets/fonts/debugFont");
+        background = Content.Load<Texture2D>("assets/bg");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
-        background = Content.Load<Texture2D>("assets/bg");
-
-        /*switch(settings.Level)
-            {
-                case 1:
-                levelStartPos.X = 50;
-                levelStartPos.Y = 600;
-                break;
-
-                case 2:
-                levelStartPos.X = 200;
-                levelStartPos.Y = 400;
-                break;
-            }*/
-
-        
-        //var playerPosition = settings.GetPlayerPos(settings.PlayerPos.ToString.);
-        //Rectangle playerDrect = new Rectangle(50, 600, playerSizeW, playerSizeH);
-        player = new Player(playerTexture, new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
-        player.LoadContent(this);
-        sprites.Add(player);
 
         mainMenu = new MainMenuScreen(font, Globals.Graphics);
         paused = new PausedScreen(font, Globals.Graphics);
@@ -122,6 +94,10 @@ public class Main : Game
         death = new DeathScreen(font, Globals.Graphics);
         win = new WinScreen(font, Globals.Graphics);
         pass = new PassScreen(font, Globals.Graphics);
+
+        player = new Player(playerTexture, new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player.LoadContent(this);
+        sprites.Add(player);
 
         fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
         fireball.LoadContent(this);
@@ -219,13 +195,6 @@ public class Main : Game
         {
             pass.Update(gameTime);
         }
-
-        //! Debug
-
-        /*if(IsKeyPressed(kstate, prevkstate, Keys.R))
-        {
-            level++;
-        }*/
 
         prevkstate = kstate;
 
