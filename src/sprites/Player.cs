@@ -43,6 +43,7 @@ namespace BlobGame
         public bool hazardVertColl = false;
         public bool justCollided = false;
         public int coyoteTime = 0;
+        //public int safeSecs = 0;
 
         public enum Direction 
         {
@@ -381,6 +382,7 @@ namespace BlobGame
             // Vertical Collision Resolution
             Drect.Y += (int)Velocity.Y;
             vertColl = false;
+            hazardVertColl = false;
             verticalCollisions = GetIntersectingTiles(Drect);
             
             isInAir = true;
@@ -504,18 +506,6 @@ namespace BlobGame
                 }
             }
 
-            //! Handling Deaths
-
-            if(!horizColl && hazardHorizColl)
-            {
-                alive = false;
-            }
-
-            if(!vertColl && hazardVertColl)
-            {
-                alive = false;
-            }
-
             //! Handling Coyote Time
 
             if(!horizColl && !vertColl && justCollided == true)
@@ -529,6 +519,17 @@ namespace BlobGame
                 coyoteTime--;
             }
 
+            //! Handling Deaths
+
+            if(!horizColl && hazardHorizColl)
+            {
+                alive = false;
+            }
+
+            if(!vertColl && hazardVertColl)
+            {
+                alive = false;
+            }
 
             //! Logic For Direction and all other bools
 

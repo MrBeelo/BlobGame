@@ -77,7 +77,7 @@ namespace BlobGame
         {
             string message = "Blob Game";
             string credits = "Made by MrBeelo";
-            string version = "v0.21";
+            string version = "v0.22";
 
             Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
             Globals.SpriteBatch.DrawString(Main.font, credits, new Vector2(graphics.PreferredBackBufferWidth - menuFont.MeasureString(credits).X - 20, graphics.PreferredBackBufferHeight - 70), Color.Black);
