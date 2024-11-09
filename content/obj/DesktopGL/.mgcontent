@@ -8,6 +8,7 @@
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/bg.png</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/collision_atlas.png</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/debugFont.spritefont</File>
+    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/font.spritefont</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/jump.wav</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedEnd.wav</File>
     <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedStart.wav</File>
@@ -27,7 +28,8 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
-    <File>assets/fonts/font.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

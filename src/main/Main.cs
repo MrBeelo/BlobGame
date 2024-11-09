@@ -20,6 +20,7 @@ public class Main : Game
     public static bool hasF11On = false;
     public static Texture2D pixelTexture;
     public static SpriteFont font;
+    public static SpriteFont debugFont;
     public static GameState currentGameState = GameState.MainMenu;
     private MainMenuScreen mainMenu;
     private PausedScreen paused;
@@ -87,6 +88,7 @@ public class Main : Game
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
 
         font = Content.Load<SpriteFont>("assets/fonts/font");
+        debugFont = Content.Load<SpriteFont>("assets/fonts/debugFont");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
@@ -293,6 +295,8 @@ public class Main : Game
             pass.Draw(Globals.SpriteBatch, Globals.Graphics);
         }
 
+        //! Handle F3 Info
+
         if(hasF3On)
             {
                 List<string> otherDebugInfoList = new List<string>();
@@ -317,8 +321,8 @@ public class Main : Game
 
                 foreach(var info in combinedDebugInfo)
                 {
-                    Globals.SpriteBatch.DrawString(font, info, pos, Color.Black);
-                    pos.Y += 32;
+                    Globals.SpriteBatch.DrawString(debugFont, info, pos, Color.Black);
+                    pos.Y += 20;
                 }
             }
             

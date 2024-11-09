@@ -68,7 +68,7 @@ namespace BlobGame
                 {
                     if(value == 1 || value == 4 || value == 5)
                     {
-                        //!Do nothing
+                        //! Do nothing
                     } else if(value == 6)
                     {
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
@@ -103,9 +103,9 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(value == 5)
+                    if(value == 1 || value == 4 || value == 5)
                     {
-                        //!Do nothing
+                        //! Do nothing
                     } else if(value == 6)
                     {
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
@@ -141,6 +141,7 @@ namespace BlobGame
             if(!FireIsAlive)
             {
                 Main.fireballs.Remove(this);
+                Main.sprites.Remove(this);
             }
         }
 
@@ -172,6 +173,16 @@ namespace BlobGame
             }
         
             return tiles;
+        }
+
+        public override string[] GetDebugInfo()
+        {
+            return new string[] 
+            {
+                "--------------",
+                "Fire Velocity: " + Velocity,
+                "Fire is Alive: " + FireIsAlive,
+            };
         }
     }
 }

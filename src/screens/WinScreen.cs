@@ -56,18 +56,16 @@ namespace BlobGame
                 switch (selectedIndex)
                 {
                     case 0:
-                        // Start Game
                         Main.currentGameState = Main.GameState.MainMenu;
+                        Tilemap.level = new Vector3(0, 50, 600);
                         Player.ResetPos(Main.player);
                         Player.ResetState(Main.player);
-                        Tilemap.level = new Vector3(0, 50, 600);
                         break;
                     case 1:
-                        // Options
                         Main.currentGameState = Main.GameState.Playing;
+                        Tilemap.level = new Vector3(0, 50, 600);
                         Player.ResetPos(Main.player);
                         Player.ResetState(Main.player);
-                        Tilemap.level = new Vector3(0, 50, 600);
                         break;
                 }
             }

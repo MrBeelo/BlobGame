@@ -10,8 +10,8 @@ namespace BlobGame
 {
     public class Player : MoveableSprite
     {
-        public static int playerSizeW = 53;
-        public static int playerSizeH = 80;
+        public static int playerSizeW = 42;
+        public static int playerSizeH = 64;
         public int speed = 3;
         public int stamina = 500;
         private SoundEffect successSound;
@@ -30,7 +30,6 @@ namespace BlobGame
         public List<Point> horizontalCollisions;
         public List<Point> verticalCollisions;
         private float flickerTime;
-
         public bool alive = true;
         public bool isInAir = true;
         public static int gravity = 1;
@@ -38,6 +37,12 @@ namespace BlobGame
         public bool isLeft = false;
         public bool isSanic = false;
         public bool isDashing = false;
+        public bool horizColl = false;
+        public bool vertColl = false;
+        public bool hazardHorizColl = false;
+        public bool hazardVertColl = false;
+        public bool justCollided = false;
+        public int coyoteTime = 0;
 
         public enum Direction 
         {
@@ -195,9 +200,11 @@ namespace BlobGame
                 Velocity.X ++;
             }
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && !isInAir) {
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && (!isInAir || coyoteTime > 0)) {
                 Velocity.Y = -10;
                 jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                coyoteTime = 0;
+                justCollided = false;
             }
 
             if(isSanic && !isDashing)
@@ -270,6 +277,8 @@ namespace BlobGame
             
             // Horizontal Collision Resolution
             Drect.X += (int)Velocity.X;
+            horizColl = false;
+            hazardHorizColl = false;
             horizontalCollisions = GetIntersectingTiles(Drect);
             
             foreach (var tile in horizontalCollisions)
@@ -278,6 +287,9 @@ namespace BlobGame
                 {
                     if(value == 0) //! Solid
                     {
+                    horizColl = true;
+                    justCollided = true;
+                    coyoteTime = 0;
                     Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.X > 0) // Moving Right
@@ -292,17 +304,16 @@ namespace BlobGame
                     }
                     else if(value == 1) //! Hazard
                     {
+                    hazardHorizColl = true;
                     Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.X > 0) // Moving Right
                         {
                             Drect.X = collision.Left - Drect.Width;
-                            alive = false;
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
                             Drect.X = collision.Right;
-                            alive = false;
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
@@ -369,6 +380,7 @@ namespace BlobGame
             
             // Vertical Collision Resolution
             Drect.Y += (int)Velocity.Y;
+            vertColl = false;
             verticalCollisions = GetIntersectingTiles(Drect);
             
             isInAir = true;
@@ -378,6 +390,9 @@ namespace BlobGame
                 {
                     if(value == 0) //! Solid
                     {
+                        vertColl = true;
+                        justCollided = true;
+                        coyoteTime = 0;
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.Y > 0) // Falling Down
@@ -394,6 +409,7 @@ namespace BlobGame
                     }
                     else if(value == 1) //! Hazard
                     {
+                        hazardVertColl = true;
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.Y > 0) // Falling Down
@@ -401,13 +417,11 @@ namespace BlobGame
                             Drect.Y = collision.Top - Drect.Height;
                             Velocity.Y = 0.5f;
                             isInAir = false;
-                            alive = false;
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
                             Drect.Y = collision.Bottom;
                             Velocity.Y = 0;
-                            alive = false;
                         }
                     }
                     else if(value == 2) //! Pass
@@ -435,6 +449,8 @@ namespace BlobGame
                             Velocity.Y = 0.5f;
                             isInAir = false;
                             Main.currentGameState = Main.GameState.Win;
+                            Tilemap.excludedNormalTiles.Clear();
+                            Tilemap.excludedCollisionTiles.Clear();
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
@@ -486,6 +502,31 @@ namespace BlobGame
                         Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
+            }
+
+            //! Handling Deaths
+
+            if(!horizColl && hazardHorizColl)
+            {
+                alive = false;
+            }
+
+            if(!vertColl && hazardVertColl)
+            {
+                alive = false;
+            }
+
+            //! Handling Coyote Time
+
+            if(!horizColl && !vertColl && justCollided == true)
+            {
+                justCollided = false;
+                coyoteTime = 5;
+            }
+
+            if(coyoteTime > 0)
+            {
+                coyoteTime--;
             }
 
 
@@ -577,17 +618,18 @@ namespace BlobGame
 
             //! Fireball
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && stamina >= 500)
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && (stamina >= 500 || isSanic))
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
+                Main.sprites.Add(fireball);
                 stamina -= 100;
                 speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
             }
 
             //! Dash
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && stamina >= 500)
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && (stamina >= 500 || isSanic))
             {
                 Dash(pressedDirection, 15);
                 speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
@@ -685,7 +727,13 @@ namespace BlobGame
                 "Alive: " + alive,
                 "Is Sanic: " + isSanic,
                 "Pressed Direction: " + pressedDirection,
-                "Is Dashing: " + isDashing
+                "Is Dashing: " + isDashing,
+                "Colliding Horizontally: " + horizColl,
+                "Colliding Vertically: " + vertColl,
+                "CollHazard Horizontally: " + hazardHorizColl,
+                "CollHazard Verically: " + hazardVertColl,
+                "Just Collided: " + justCollided,
+                "Coyote Time: " + coyoteTime
             };
         }
         
@@ -782,6 +830,11 @@ namespace BlobGame
             player.speed = 3;
             player.isSanic = false;
             player.isDashing = false;
+            player.horizColl = false;
+            player.vertColl = false;
+            player.hazardHorizColl = false;
+            player.hazardVertColl = false;
+            Main.fireballs.Clear();
         }
 
         public Color PlayerColor()
