@@ -63,11 +63,29 @@
 /processorParam:TextureFormat=Compressed
 /build:assets/fonts/font.spritefont
 
+#begin assets/sounds/explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:assets/sounds/explosion.wav
+
 #begin assets/sounds/jump.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:assets/sounds/jump.wav
+
+#begin assets/sounds/laserShoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:assets/sounds/laserShoot.wav
+
+#begin assets/sounds/powerUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:assets/sounds/powerUp.wav
 
 #begin assets/sounds/speedEnd.wav
 /importer:WavImporter

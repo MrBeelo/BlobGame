@@ -9,7 +9,10 @@
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/collision_atlas.png</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/debugFont.spritefont</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/font.spritefont</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/explosion.wav</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/jump.wav</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/laserShoot.wav</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/powerUp.wav</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedEnd.wav</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedStart.wav</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/success.wav</File>
@@ -25,6 +28,9 @@
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

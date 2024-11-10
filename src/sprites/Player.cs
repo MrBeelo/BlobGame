@@ -14,10 +14,12 @@ namespace BlobGame
         public static int playerSizeH = 64;
         public int speed = 3;
         public int stamina = 500;
-        private SoundEffect successSound;
-        private SoundEffect jumpSound;
-        private SoundEffect speedStartSound;
-        private SoundEffect speedEndSound;
+        private static SoundEffect successSound;
+        private static SoundEffect jumpSound;
+        private static SoundEffect speedStartSound;
+        private static SoundEffect speedEndSound;
+        private static SoundEffect powerUpSound;
+        private static SoundEffect laserShootSound;
         public Texture2D[] idleTextures;
         int idleCounter;
         int idleActiveFrame;
@@ -43,33 +45,11 @@ namespace BlobGame
         public bool hazardVertColl = false;
         public bool justCollided = false;
         public int coyoteTime = 0;
-        //public int safeSecs = 0;
-
+        public static int dashTime = -1;
         public enum Direction 
-        {
-            Up,
-            Down,
-            Left,
-            Right,
-            UpLeft,
-            UpRight,
-            DownLeft,
-            DownRight,
-            NA
-        }
-
+        {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
         public enum PressedDirection 
-        {
-            Up,
-            Down,
-            Left,
-            Right,
-            UpLeft,
-            UpRight,
-            DownLeft,
-            DownRight,
-            NA
-        }
+        {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
 
         KeyboardState prevkstate;
 
@@ -108,6 +88,8 @@ namespace BlobGame
             jumpSound = game.Content.Load<SoundEffect>("assets/sounds/jump");
             speedStartSound = game.Content.Load<SoundEffect>("assets/sounds/speedStart");
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
+            powerUpSound = game.Content.Load<SoundEffect>("assets/sounds/powerUp");
+            laserShootSound = game.Content.Load<SoundEffect>("assets/sounds/laserShoot");
 
             successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
 
@@ -161,13 +143,6 @@ namespace BlobGame
             }
 
             KeyboardState kstate = Keyboard.GetState();
-            if(!isDashing)
-            {
-                Velocity.X = 0;
-                Velocity.Y += 0.5f;
-            }
-
-            Velocity.Y = Math.Min(25.0f, Velocity.Y);
 
             //! Debug
             /*if(Main.IsKeyPressed(kstate, prevkstate, Keys.R))
@@ -180,6 +155,13 @@ namespace BlobGame
             {
                 MoveLevel(this);
             }*/
+
+            //! Handling X Movement
+
+            if(!isDashing)
+            {
+                Velocity.X = 0;
+            }
             
             if (kstate.IsKeyDown(Keys.A) && !isDashing)
             {
@@ -199,13 +181,6 @@ namespace BlobGame
             if (kstate.IsKeyDown(Keys.D) && isDashing)
             {
                 Velocity.X ++;
-            }
-
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && (!isInAir || coyoteTime > 0)) {
-                Velocity.Y = -10;
-                jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                coyoteTime = 0;
-                justCollided = false;
             }
 
             if(isSanic && !isDashing)
@@ -230,51 +205,22 @@ namespace BlobGame
                 speed = 3;
                 stamina++;
             }
-            
-            //! Previous logic from main for moving and hitboxes
-            
-            /*Drect.X += (int)velocity.X;
-            Main.intersections = getIntersectingTilesHorizontal(Drect);
-    
-            foreach (var rect in Main.intersections)
+
+            //! Handling Y Movement
+
+            if(!isDashing)
             {
-                if(Main.collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
-                {
-                    Rectangle collision = new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
-    
-                    if(velocity.X > 0.0f)
-                    {
-                        Drect.X = collision.Left - Drect.Width;
-                    } else if(velocity.X < 0.0f)
-                    {
-                        Drect.X = collision.Right;
-                    }
-                }
+                Velocity.Y += 0.5f;
             }
-    
-            Drect.Y += (int)velocity.Y;
-            Main.intersections = getIntersectingTilesVertical(Drect);
-    
-            isInAir = true;
-            foreach (var rect in Main.intersections)
-            {
-                if(Main.collision.TryGetValue(new Vector2(rect.X, rect.Y), out int value))
-                {
-                    Rectangle collision = new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
-    
-                    if(velocity.Y > 0.0f)
-                    {
-                        Drect.Y = collision.Top - Drect.Height;
-                        velocity.Y = 0.0f;
-                        isInAir = false;
-                    } else if(velocity.Y < 0.0f)
-                    {
-                        Drect.Y = collision.Bottom;
-                    } else {
-                    }
-    
-                }
-            }*/
+
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && (!isInAir || coyoteTime > 0)) {
+                Velocity.Y = -10;
+                jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                coyoteTime = 0;
+                justCollided = false;
+            }
+
+            Velocity.Y = Math.Min(25.0f, Velocity.Y);
             
             // Horizontal Collision Resolution
             Drect.X += (int)Velocity.X;
@@ -531,6 +477,38 @@ namespace BlobGame
                 alive = false;
             }
 
+            //! Handling the Fireball
+
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && (stamina >= 500 || isSanic))
+            {
+                Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
+                Main.fireballs.Add(fireball);
+                Main.sprites.Add(fireball);
+                stamina -= 100;
+                laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            }
+
+            //! Handling the Dash
+
+            if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && stamina >= 500 && dashTime < 0)
+            {
+                Dash(pressedDirection, 15, 10);
+                powerUpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                isDashing = true;
+                stamina -= 100;
+            }
+
+            if(dashTime > -1)
+            {
+                dashTime --;
+            }
+
+            if(dashTime == 0)
+            {
+                isDashing = false;
+                Velocity.Y = -2.5f;
+            }
+
             //! Logic For Direction and all other bools
 
             if(Velocity.Y > 0.5 && Velocity.X > 0)
@@ -615,36 +593,6 @@ namespace BlobGame
             } else if(Velocity.X > 0)
             {
                 isLeft = false;
-            }
-
-            //! Fireball
-
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && (stamina >= 500 || isSanic))
-            {
-                Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
-                Main.fireballs.Add(fireball);
-                Main.sprites.Add(fireball);
-                stamina -= 100;
-                speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-            }
-
-            //! Dash
-
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && (stamina >= 500 || isSanic))
-            {
-                Dash(pressedDirection, 15);
-                speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                isDashing = true;
-            }
-
-            if(isDashing && stamina > 0)
-            {
-                stamina -= 10;
-            }
-
-            if(stamina <= 400)
-            {
-                isDashing = false;
             }
 
             prevkstate = kstate; //Used for one-shot
@@ -734,69 +682,10 @@ namespace BlobGame
                 "CollHazard Horizontally: " + hazardHorizColl,
                 "CollHazard Verically: " + hazardVertColl,
                 "Just Collided: " + justCollided,
-                "Coyote Time: " + coyoteTime
+                "Coyote Time: " + coyoteTime,
+                "Dash Time: " + dashTime
             };
         }
-        
-        /*public List<Rectangle> getIntersectingTilesHorizontal(Rectangle target) {
-    
-            List<Rectangle> intersections = new();
-    
-            for (int x = 0; x <= Main.playerSizeW; x += Tilemap.Tilesize) {
-                for (int y = 0; y <= Main.playerSizeH; y += Tilemap.Tilesize) {
-    
-                    intersections.Add(new Rectangle(
-    
-                        (target.X + x) / Tilemap.Tilesize,
-                        (target.Y + y / Tilemap.Tilesize *(Tilemap.Tilesize-1)) / Tilemap.Tilesize,
-                        Tilemap.Tilesize,
-                        Tilemap.Tilesize
-                    ));
-                }
-            }
-    
-            if (Main.playerSizeW % Tilemap.Tilesize != 0) {
-            intersections.Add(new Rectangle(
-                (target.X + Main.playerSizeW) / Tilemap.Tilesize,
-                (target.Y) / Tilemap.Tilesize,
-                Tilemap.Tilesize,
-                Tilemap.Tilesize
-            ));
-            }
-    
-            return intersections;
-        }
-        public List<Rectangle> getIntersectingTilesVertical(Rectangle target) {
-    
-            List<Rectangle> intersections = new();
-    
-            for (int x = 0; x <= Main.playerSizeW; x += Tilemap.Tilesize) {
-                for (int y = 0; y <= Main.playerSizeH; y += Tilemap.Tilesize) {
-    
-                    intersections.Add(new Rectangle(
-    
-                        (target.X + x / Tilemap.Tilesize *(Tilemap.Tilesize-1)) / Tilemap.Tilesize,
-                        (target.Y + y) / Tilemap.Tilesize,
-                        Tilemap.Tilesize,
-                        Tilemap.Tilesize
-    
-                    ));
-    
-                }
-            }
-    
-            if (Main.playerSizeH % Tilemap.Tilesize != 0) {
-            intersections.Add(new Rectangle(
-                (target.X) / Tilemap.Tilesize,
-                (target.Y + Main.playerSizeH) / Tilemap.Tilesize,
-                Tilemap.Tilesize,
-                Tilemap.Tilesize
-            ));
-            }
-    
-            return intersections;
-        }*/
-        
         public List<Point> GetIntersectingTiles(Rectangle target)
         {
             List<Point> tiles = new List<Point>();
@@ -853,17 +742,18 @@ namespace BlobGame
             return Color.White;
         }
 
-        public static void Dash(PressedDirection pressedDirection, int power)
+        public static void Dash(PressedDirection pressedDirection, int power, int DashTime)
         {
-            double dPower = power * 0.6;
+            dashTime = DashTime;
+            double hpower = power * 0.6; //! Horizontal Power
             if(pressedDirection == PressedDirection.Right)
             {
-                Main.player.Velocity.X = power;
+                Main.player.Velocity.X = (int)hpower;
                 Main.player.Velocity.Y = 0.5f;
             }
             else if(pressedDirection == PressedDirection.Left)
             {
-                Main.player.Velocity.X = -power;
+                Main.player.Velocity.X = (int)-hpower;
                 Main.player.Velocity.Y = 0.5f;
             }
             else if(pressedDirection == PressedDirection.Down)
@@ -876,27 +766,28 @@ namespace BlobGame
             }
             else if(pressedDirection == PressedDirection.DownRight)
             {
-                Main.player.Velocity.X = (int)dPower;
-                Main.player.Velocity.Y = (int)dPower;
+                Main.player.Velocity.X = (int)hpower;
+                Main.player.Velocity.Y = power;
             }
             else if(pressedDirection == PressedDirection.DownLeft)
             {
-                Main.player.Velocity.X = (int)-dPower;
-                Main.player.Velocity.Y = (int)dPower;
+                Main.player.Velocity.X = (int)-hpower;
+                Main.player.Velocity.Y = power;
             }
             else if(pressedDirection == PressedDirection.UpRight)
             {
-                Main.player.Velocity.X = (int)dPower;
-                Main.player.Velocity.Y = (int)-dPower;
+                Main.player.Velocity.X = (int)hpower;
+                Main.player.Velocity.Y = -power;
             }
             else if(pressedDirection == PressedDirection.UpLeft)
             {
-                Main.player.Velocity.X = (int)-dPower;
-                Main.player.Velocity.Y = (int)-dPower;
+                Main.player.Velocity.X = (int)-hpower;
+                Main.player.Velocity.Y = -power;
             }
             else if(pressedDirection == PressedDirection.NA) //!When not holding anything, go right.
             {
-                Main.player.Velocity.X = power;
+                Main.player.Velocity.X = (int)hpower;
+                Main.player.Velocity.Y = 0.5f;
             }
         }
 

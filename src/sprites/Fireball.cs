@@ -12,6 +12,7 @@ namespace BlobGame
         int fireCounter;
         int fireActiveFrame;
         public static Texture2D[] fireTextures;
+        private static SoundEffect explosionSound;
         public bool FireIsLeft;
         public bool FireIsAlive = true;
         public List<Point> horizontalCollisions;
@@ -29,6 +30,8 @@ namespace BlobGame
 
         public override void LoadContent(Game game)
         {
+            explosionSound = game.Content.Load<SoundEffect>("assets/sounds/explosion");
+
             fireTextures = new Texture2D[3];
 
             fireTextures[0] = game.Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
@@ -76,6 +79,7 @@ namespace BlobGame
                             Tilemap.excludedNormalTiles.Add(new Vector3(15, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             FireIsAlive = false;
+                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     } else {
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
@@ -85,12 +89,14 @@ namespace BlobGame
                             Drect.X = collision.Left - Drect.Width;
                             Velocity.X = 0;
                             FireIsAlive = false;
+                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
                             Drect.X = collision.Right;
                             Velocity.X = 0;
                             FireIsAlive = false;
+                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }      
                     }
                 }
@@ -113,6 +119,7 @@ namespace BlobGame
                             Tilemap.excludedNormalTiles.Add(new Vector3(15, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             FireIsAlive = false;
+                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     } else {
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
@@ -122,12 +129,14 @@ namespace BlobGame
                             Drect.Y = collision.Top - Drect.Height;
                             Velocity.Y = 0;
                             FireIsAlive = false;
+                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
                             Drect.Y = collision.Bottom;
                             Velocity.Y = 0;
                             FireIsAlive = false;
+                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     }
                 }
