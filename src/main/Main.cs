@@ -149,51 +149,61 @@ public class Main : Game
                     hasF3On = false;
                 }
 
-        if (currentGameState == GameState.MainMenu)
+        switch (currentGameState) 
         {
-            mainMenu.Update(gameTime);
-            if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
-            {
-                currentGameState = GameState.Quit;
-            }
-        }
-        else if (currentGameState == GameState.Playing)
-        {
-        player.Update(gameTime);
+            case GameState.MainMenu:
+                mainMenu.Update(gameTime);
+                if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                {
+                    currentGameState = GameState.Quit;
+                }
+                break;
 
-        foreach(Fireball fireball in fireballs.ToList())
-        {
-            fireball.Update(gameTime);
-        }
+            case GameState.Playing:
+                player.Update(gameTime);
 
-            if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
-            {
-                currentGameState = GameState.Paused;
-            }
-        } else if (currentGameState == GameState.Paused) {
-            if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
-            {
-                currentGameState = GameState.MainMenu;
-            }
-            paused.Update(gameTime);
-        } else if (currentGameState == GameState.Quit)
-        {
-            quit.Update(gameTime);
-        } else if (currentGameState == GameState.Options)
-        {
-            options.Update(gameTime);
-        } else if (currentGameState == GameState.POptions)
-        {
-            poptions.Update(gameTime);
-        } else if (currentGameState == GameState.Death)
-        {
-            death.Update(gameTime);
-        } else if (currentGameState == GameState.Win)
-        {
-            win.Update(gameTime);
-        } else if (currentGameState == GameState.Pass)
-        {
-            pass.Update(gameTime);
+                foreach(Fireball fireball in fireballs.ToList())
+                {
+                    fireball.Update(gameTime);
+                }
+
+                if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                {
+                    currentGameState = GameState.Paused;
+                }
+                break;
+
+            case GameState.Paused:
+                if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                {
+                    currentGameState = GameState.MainMenu;
+                }
+                paused.Update(gameTime);
+                break;
+
+            case GameState.Options:
+                options.Update(gameTime);
+                break;
+            
+            case GameState.Quit:
+                quit.Update(gameTime);
+                break;
+            
+            case GameState.POptions:
+                poptions.Update(gameTime);
+                break;
+
+            case GameState.Death:
+                death.Update(gameTime);
+                break;
+
+            case GameState.Win:
+                win.Update(gameTime);
+                break;
+            
+            case GameState.Pass:
+                pass.Update(gameTime);
+                break;
         }
 
         prevkstate = kstate;
@@ -210,58 +220,65 @@ public class Main : Game
         //Beginning Sprite Batch
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-        if (currentGameState == GameState.MainMenu)
+        switch (currentGameState) 
         {
-            mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
-        }
-        else if (currentGameState == GameState.Playing)
-        {
-            Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
+            case GameState.MainMenu:
+                mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
 
-            tilemap.Draw(gameTime);
+            case GameState.Playing:
+                Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
 
-            if(hasF3On)
-            {
-                foreach(var rect in player.horizontalCollisions)
+                tilemap.Draw(gameTime);
+
+                if(hasF3On)
                 {
-                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    foreach(var rect in player.horizontalCollisions)
+                    {
+                        DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    }
+                    foreach(var rect in player.verticalCollisions)
+                    {
+                        DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    }
+                    DrawRectHollow(Globals.SpriteBatch, player.Drect, 4, Color.Blue);
                 }
-                foreach(var rect in player.verticalCollisions)
+
+                player.Draw(Globals.SpriteBatch);
+
+                foreach(Fireball fireball in fireballs.ToList())
                 {
-                    DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    fireball.Draw(Globals.SpriteBatch);
                 }
-                DrawRectHollow(Globals.SpriteBatch, player.Drect, 4, Color.Blue);
-            }
+                break;
 
-            player.Draw(Globals.SpriteBatch);
+            case GameState.Paused:
+                paused.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
 
-            foreach(Fireball fireball in fireballs.ToList())
-            {
-                fireball.Draw(Globals.SpriteBatch);
-            }
-           
-        }
-        else if (currentGameState == GameState.Paused)
-        {
-            paused.Draw(Globals.SpriteBatch, Globals.Graphics);
-        } else if (currentGameState == GameState.Quit)
-        {
-            quit.Draw(Globals.SpriteBatch, Globals.Graphics);
-        } else if(currentGameState == GameState.Options)
-        {
-            options.Draw(Globals.SpriteBatch, Globals.Graphics);
-        } else if(currentGameState == GameState.POptions)
-        {
-            poptions.Draw(Globals.SpriteBatch, Globals.Graphics);
-        } else if(currentGameState == GameState.Death)
-        {
-            death.Draw(Globals.SpriteBatch, Globals.Graphics);
-        } else if(currentGameState == GameState.Win)
-        {
-            win.Draw(Globals.SpriteBatch, Globals.Graphics);
-        } else if(currentGameState == GameState.Pass)
-        {
-            pass.Draw(Globals.SpriteBatch, Globals.Graphics);
+            case GameState.Options:
+                options.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+            
+            case GameState.Quit:
+                quit.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+            
+            case GameState.POptions:
+                poptions.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+
+            case GameState.Death:
+                death.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+
+            case GameState.Win:
+                win.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+            
+            case GameState.Pass:
+                pass.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
         }
 
         //! Handle F3 Info
