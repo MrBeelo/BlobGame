@@ -796,70 +796,85 @@ namespace BlobGame
         {
             dashTime = DashTime;
             double hpower = power * 0.6; //! Horizontal Power
-            if(pressedDirection == PressedDirection.Right)
+
+            switch(pressedDirection)
             {
-                Main.player.Velocity.X = (int)hpower;
-                Main.player.Velocity.Y = 0.5f;
-            }
-            else if(pressedDirection == PressedDirection.Left)
-            {
-                Main.player.Velocity.X = (int)-hpower;
-                Main.player.Velocity.Y = 0.5f;
-            }
-            else if(pressedDirection == PressedDirection.Down)
-            {
-                Main.player.Velocity.Y = power;
-            }
-            else if(pressedDirection == PressedDirection.Up)
-            {
-                Main.player.Velocity.Y = -power;
-            }
-            else if(pressedDirection == PressedDirection.DownRight)
-            {
-                Main.player.Velocity.X = (int)hpower;
-                Main.player.Velocity.Y = power;
-            }
-            else if(pressedDirection == PressedDirection.DownLeft)
-            {
-                Main.player.Velocity.X = (int)-hpower;
-                Main.player.Velocity.Y = power;
-            }
-            else if(pressedDirection == PressedDirection.UpRight)
-            {
-                Main.player.Velocity.X = (int)hpower;
-                Main.player.Velocity.Y = -power;
-            }
-            else if(pressedDirection == PressedDirection.UpLeft)
-            {
-                Main.player.Velocity.X = (int)-hpower;
-                Main.player.Velocity.Y = -power;
-            }
-            else if(pressedDirection == PressedDirection.NA) //!When not holding anything, go right.
-            {
-                Main.player.Velocity.X = (int)hpower;
-                Main.player.Velocity.Y = 0.5f;
+                case PressedDirection.Right:
+                    Main.player.Velocity.X = (int)hpower;
+                    Main.player.Velocity.Y = 0.5f;
+                    break;
+
+                case PressedDirection.Left:
+                    Main.player.Velocity.X = (int)-hpower;
+                    Main.player.Velocity.Y = 0.5f;
+                    break;
+
+                case PressedDirection.Down:
+                    Main.player.Velocity.Y = power;
+                    break;
+
+                case PressedDirection.Up:
+                    Main.player.Velocity.Y = -power;
+                    break;
+
+                case PressedDirection.DownRight:
+                    Main.player.Velocity.X = (int)hpower;
+                    Main.player.Velocity.Y = power;
+                    break;
+
+                case PressedDirection.DownLeft:
+                    Main.player.Velocity.X = (int)-hpower;
+                    Main.player.Velocity.Y = power;
+                    break;
+                
+                case PressedDirection.UpRight:
+                    Main.player.Velocity.X = (int)hpower;
+                    Main.player.Velocity.Y = -power;
+                    break;
+
+                case PressedDirection.UpLeft:
+                    Main.player.Velocity.X = (int)-hpower;
+                    Main.player.Velocity.Y = -power;
+                    break;
+                
+                case PressedDirection.NA:
+                    if(!Main.player.isLeft)
+                    {
+                        Main.player.Velocity.X = (int)hpower;
+                        Main.player.Velocity.Y = 0.5f;
+                    }
+                    else if(Main.player.isLeft)
+                    {
+                        Main.player.Velocity.X = (int)-hpower;
+                        Main.player.Velocity.Y = 0.5f;
+                    }
+                    break;
             }
         }
 
         public static void MoveLevel(Player player)
         {
             Tilemap.level.X++;
-            if(Tilemap.level.X == 0)
+
+            switch(Tilemap.level.X)
             {
-                Tilemap.level.Y = 50;
-                Tilemap.level.Z = 600;
+                case 0:
+                    Tilemap.level.Y = 50;
+                    Tilemap.level.Z = 600;
+                    break;
+
+                case 1:
+                    Tilemap.level.Y = 50;
+                    Tilemap.level.Z = 200;
+                    break;
+
+                case 2:
+                    Tilemap.level.Y = 220;
+                    Tilemap.level.Z = 150;
+                    break;
+
             }
-            else
-            if(Tilemap.level.X == 1)
-            {
-                Tilemap.level.Y = 50;
-                Tilemap.level.Z = 200;
-            }
-            else if(Tilemap.level.X == 2)
-            {
-                Tilemap.level.Y = 220;
-                Tilemap.level.Z = 150;
-            }
+
             ResetState(player);
         }
     }
