@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "collision.tsx",
+    "activeFile": "level1.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -16,16 +16,24 @@
             "scale": 0.5155729166666666,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 960.0969794928782,
-                "y": 821.4163046772403
+                "x": 960.0969794928783,
+                "y": 543.0851601171836
             }
         },
         "level1.tmx": {
             "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 968,
+                "y": 543
+            }
+        },
+        "level2.tmx": {
+            "scale": 0.5155729166666666,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 958,
-                "y": 275
+                "x": 1051.2577027982627,
+                "y": 994.0398020002023
             }
         },
         "normal.tsx": {
@@ -43,14 +51,16 @@
         "level0.tmx",
         "normal.tsx",
         "collision.tsx",
-        "level1.tmx"
+        "level1.tmx",
+        "level2.tmx"
     ],
     "project": "blob.tiled-project",
     "recentFiles": [
         "level0.tmx",
         "normal.tsx",
-        "level1.tmx",
-        "collision.tsx"
+        "collision.tsx",
+        "level2.tmx",
+        "level1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

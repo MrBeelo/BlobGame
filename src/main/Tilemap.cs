@@ -23,8 +23,8 @@ namespace BlobGame
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[2]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[2]; //! Same here
+            Normal = new Dictionary<Vector2, int>[3]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[3]; //! Same here
             normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
@@ -64,10 +64,12 @@ namespace BlobGame
 
             Normal[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_normal.csv"));
             Normal[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_normal.csv"));
+            Normal[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_normal.csv"));
             //! Import all level CSVs for the normal tileset here
 
             Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_collision.csv"));
             Collision[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_collision.csv"));
+            Collision[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_collision.csv"));
             //! Import all level CSVs for the collision tileset here
         }
 
@@ -82,11 +84,6 @@ namespace BlobGame
                 {
                     normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
-
-                    /*if(Main.player.stamina < 500)
-                    {
-                        if(item.Value == 14) continue;
-                    }*/
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -112,11 +109,6 @@ namespace BlobGame
                 {
                     collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
-
-                    /*if(Main.player.stamina < 500)
-                    {
-                        if(item.Value == 5) continue;
-                    }*/
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,

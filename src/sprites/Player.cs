@@ -316,6 +316,30 @@ namespace BlobGame
                             Velocity.X = 0; // Stop horizontal movement upon collision
                         }
                     }
+                    else if(value == 7) //! Dash Block
+                    {
+                        if(!isDashing)
+                        {
+                            horizColl = true;
+                            justCollided = true;
+                            coyoteTime = 0;
+                            Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+            
+                            if (Velocity.X > 0) // Moving Right
+                            {
+                                Drect.X = collision.Left - Drect.Width;
+                            }
+                            else if (Velocity.X < 0) // Moving Left
+                            {
+                                Drect.X = collision.Right;
+                            }
+                            Velocity.X = 0; // Stop horizontal movement upon collision
+                        }
+                        else if(isDashing)
+                        {
+                            dashTime = 10;
+                        }
+                    }
                 } else {
                     if(stamina == 500 && !isSanic)
                     {
@@ -443,6 +467,32 @@ namespace BlobGame
                             }
                         }
                     }
+                    else if(value == 7) //! Dash Block
+                    {
+                        if(!isDashing)
+                        {
+                            vertColl = true;
+                            justCollided = true;
+                            coyoteTime = 0;
+                            Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+            
+                            if (Velocity.Y > 0) // Falling Down
+                            {
+                                Drect.Y = collision.Top - Drect.Height;
+                                Velocity.Y = 0.5f;
+                                isInAir = false;
+                            }
+                            else if (Velocity.Y < 0) // Moving Up
+                            {
+                                Drect.Y = collision.Bottom;
+                                Velocity.Y = 0;
+                            }
+                        }
+                        else if(isDashing)
+                        {
+                            dashTime = 10;
+                        }
+                    }
                 } else {
                     if(stamina == 500 && !isSanic)
                     {
@@ -492,7 +542,7 @@ namespace BlobGame
 
             if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && stamina >= 500 && dashTime < 0)
             {
-                Dash(pressedDirection, 15, 10);
+                Dash(pressedDirection, 25, 10);
                 powerUpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 isDashing = true;
                 stamina -= 100;
@@ -804,6 +854,11 @@ namespace BlobGame
             {
                 Tilemap.level.Y = 50;
                 Tilemap.level.Z = 200;
+            }
+            else if(Tilemap.level.X == 2)
+            {
+                Tilemap.level.Y = 220;
+                Tilemap.level.Z = 150;
             }
             ResetState(player);
         }
