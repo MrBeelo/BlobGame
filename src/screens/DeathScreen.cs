@@ -8,7 +8,7 @@ namespace BlobGame
     public class DeathScreen : Screen
     {
         public override string[] MenuItems() {
-            return new string[] {"Back to Main Menu", "Retry"};
+            return new string[] {"Retry", "Back to Main Menu"};
         }
 
         public DeathScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
@@ -27,13 +27,13 @@ namespace BlobGame
                 {
                     case 0:
                         // Start Game
-                        Main.currentGameState = Main.GameState.MainMenu;
+                        Main.currentGameState = Main.GameState.Playing;
                         Player.ResetPos(Main.player);
                         Player.ResetState(Main.player);
                         break;
                     case 1:
                         // Options
-                        Main.currentGameState = Main.GameState.Playing;
+                        Main.currentGameState = Main.GameState.MainMenu;
                         Player.ResetPos(Main.player);
                         Player.ResetState(Main.player);
                         break;

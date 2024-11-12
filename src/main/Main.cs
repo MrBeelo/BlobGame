@@ -25,8 +25,7 @@ public class Main : Game
     private MainMenuScreen mainMenu;
     private PausedScreen paused;
     private QuitScreen quit;
-    public SettingsScreen options;
-    public PausedSettingsScreen poptions;
+    public static SettingsScreen options;
     public DeathScreen death;
     public WinScreen win;
     public PassScreen pass;
@@ -45,7 +44,6 @@ public class Main : Game
         Paused,
         Options,
         Quit,
-        POptions,
         Death,
         Win,
         Pass
@@ -90,7 +88,6 @@ public class Main : Game
         paused = new PausedScreen(font, Globals.Graphics);
         quit = new QuitScreen(font, Globals.Graphics);
         options = new SettingsScreen(font, Globals.Graphics);
-        poptions = new PausedSettingsScreen(font, Globals.Graphics);
         death = new DeathScreen(font, Globals.Graphics);
         win = new WinScreen(font, Globals.Graphics);
         pass = new PassScreen(font, Globals.Graphics);
@@ -188,10 +185,6 @@ public class Main : Game
             case GameState.Quit:
                 quit.Update(gameTime);
                 break;
-            
-            case GameState.POptions:
-                poptions.Update(gameTime);
-                break;
 
             case GameState.Death:
                 death.Update(gameTime);
@@ -262,10 +255,6 @@ public class Main : Game
             
             case GameState.Quit:
                 quit.Draw(Globals.SpriteBatch, Globals.Graphics);
-                break;
-            
-            case GameState.POptions:
-                poptions.Draw(Globals.SpriteBatch, Globals.Graphics);
                 break;
 
             case GameState.Death:

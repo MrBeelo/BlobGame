@@ -10,6 +10,12 @@ namespace BlobGame
 {
     public class SettingsScreen : Screen
     {
+        public enum CameFrom
+        {
+            MainMenu,
+            Paused
+        }
+        public CameFrom cameFrom = CameFrom.MainMenu;
         public override string[] MenuItems() {
             return menuItems ?? new string[] {"PLACEHOLDER","Back"};
         }
@@ -43,7 +49,16 @@ namespace BlobGame
                         }
                         break;
                     case 1:
-                        Main.currentGameState = Main.GameState.MainMenu;
+                        switch(cameFrom)
+                        {
+                            case CameFrom.MainMenu:
+                                Main.currentGameState = Main.GameState.MainMenu;
+                                break;
+
+                            case CameFrom.Paused:
+                                Main.currentGameState = Main.GameState.Playing;
+                                break;
+                        }
                         break;
                 }
                 

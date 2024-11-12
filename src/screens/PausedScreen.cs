@@ -30,8 +30,9 @@ namespace BlobGame
                         break;
                     case 1:
                         // Paused Options
-                        Main.currentGameState = Main.GameState.POptions;
+                        Main.options.cameFrom = SettingsScreen.CameFrom.Paused;
                         Globals.Settings = Settings.LoadSettings(Main.settingsFilePath);
+                        Main.currentGameState = Main.GameState.Options;
                         break;
                     case 2:
                         // Save and Exit
