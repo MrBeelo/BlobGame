@@ -21,7 +21,7 @@ namespace BlobGame
 
             base.Update(gameTime);
 
-            if (Main.IsKeyPressed(kstate, prevkstate, Keys.Enter))
+            if (Main.keyManager.PConfirm)
             {
                 switch (selectedIndex)
                 {

@@ -51,8 +51,6 @@ namespace BlobGame
         public enum PressedDirection 
         {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
 
-        KeyboardState prevkstate;
-
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
             Texture = texture;
@@ -142,8 +140,6 @@ namespace BlobGame
                 }
             }
 
-            KeyboardState kstate = Keyboard.GetState();
-
             //! Debug
             /*if(Main.IsKeyPressed(kstate, prevkstate, Keys.R))
             {
@@ -163,22 +159,22 @@ namespace BlobGame
                 Velocity.X = 0;
             }
             
-            if (kstate.IsKeyDown(Keys.A) && !isDashing)
+            if (Main.keyManager.DLeft && !isDashing)
             {
                 Velocity.X = -speed;
             } 
             else 
-            if (kstate.IsKeyDown(Keys.A) && isDashing)
+            if (Main.keyManager.DLeft && isDashing)
             {
                 Velocity.X --;
             }
             
-            if (kstate.IsKeyDown(Keys.D) && !isDashing)
+            if (Main.keyManager.DRight && !isDashing)
             {
                 Velocity.X = speed;
             }
             else 
-            if (kstate.IsKeyDown(Keys.D) && isDashing)
+            if (Main.keyManager.DRight && isDashing)
             {
                 Velocity.X ++;
             }
@@ -213,7 +209,7 @@ namespace BlobGame
                 Velocity.Y += 0.5f;
             }
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.Space) && (!isInAir || coyoteTime > 0)) {
+            if(Main.keyManager.PJump) {
                 Velocity.Y = -10;
                 jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 coyoteTime = 0;
@@ -529,7 +525,7 @@ namespace BlobGame
 
             //! Handling the Fireball
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.F) && (stamina >= 500 || isSanic))
+            if(Main.keyManager.PFireball && (stamina >= 500 || isSanic))
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
@@ -540,7 +536,7 @@ namespace BlobGame
 
             //! Handling the Dash
 
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.J) && stamina >= 500 && dashTime < 0)
+            if(Main.keyManager.PDash && stamina >= 500 && dashTime < 0)
             {
                 Dash(pressedDirection, 25, 10);
                 powerUpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
@@ -598,6 +594,8 @@ namespace BlobGame
                 direction = Direction.NA;
             }
 
+            KeyboardState kstate = Keyboard.GetState();
+
             if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.D))
             {
                 pressedDirection = PressedDirection.DownRight;
@@ -644,8 +642,6 @@ namespace BlobGame
             {
                 isLeft = false;
             }
-
-            prevkstate = kstate; //Used for one-shot
         } 
         public override void Draw(SpriteBatch spriteBatch)
         {

@@ -37,6 +37,7 @@ public class Main : Game
     public TimeSpan timeSpan;
     public int FPS;
     Texture2D background;
+    public static KeyManager keyManager = new KeyManager();
     public enum GameState
     {
         MainMenu,
@@ -107,6 +108,8 @@ public class Main : Game
     {
         KeyboardState kstate = Keyboard.GetState();
 
+        keyManager.Update(gameTime);
+
         LoweredVolume = Globals.Settings.Volume * 0.6;
 
         timeSpan += gameTime.ElapsedGameTime;
@@ -130,18 +133,18 @@ public class Main : Game
             Globals.Graphics.ApplyChanges();
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
+        if(KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
         {
             hasF11On = true;
-        } else if(IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == true)
+        } else if(KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == true)
         {
             hasF11On = false;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
+        if(KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
                 {
                     hasF3On = true;
-                } else if (IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
+                } else if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
                 {
                     hasF3On = false;
                 }
@@ -150,7 +153,7 @@ public class Main : Game
         {
             case GameState.MainMenu:
                 mainMenu.Update(gameTime);
-                if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
                 {
                     currentGameState = GameState.Quit;
                 }
@@ -164,14 +167,14 @@ public class Main : Game
                     fireball.Update(gameTime);
                 }
 
-                if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
                 {
                     currentGameState = GameState.Paused;
                 }
                 break;
 
             case GameState.Paused:
-                if (IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
                 {
                     currentGameState = GameState.MainMenu;
                 }
@@ -306,11 +309,6 @@ public class Main : Game
         
         base.Draw(gameTime);
     }
-
-    public static bool IsKeyPressed(KeyboardState kstate, KeyboardState prevkstate, Keys key)
-        {
-            return kstate.IsKeyDown(key) && !prevkstate.IsKeyDown(key);
-        }
 
     public static void ExitGame()
     {

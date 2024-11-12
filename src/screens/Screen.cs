@@ -14,6 +14,7 @@ namespace BlobGame
         public Vector2[] itemPosition = {Vector2.Zero, Vector2.Zero, Vector2.Zero};
         public Color normalColor = Color.White;
         public Color selectedColor = Color.Yellow;
+        public Main main;
 
         public virtual string[] MenuItems()
         {
@@ -34,9 +35,8 @@ namespace BlobGame
         public virtual void Update(GameTime gameTime)
         {
             Settings.LoadSettings(Main.settingsFilePath);
-            KeyboardState kstate = Keyboard.GetState();
 
-            if (Main.IsKeyPressed(kstate, prevkstate, Keys.Down) || Main.IsKeyPressed(kstate, prevkstate, Keys.S))
+            if (Main.keyManager.PDown)
             {
                 selectedIndex++;
                 if (selectedIndex >= MenuItems().Length)
@@ -45,7 +45,7 @@ namespace BlobGame
                 }
             }
 
-            if (Main.IsKeyPressed(kstate, prevkstate, Keys.Up) || Main.IsKeyPressed(kstate, prevkstate, Keys.W))
+            if (Main.keyManager.PUp)
             {
                 selectedIndex--;
                 if (selectedIndex < 0)
