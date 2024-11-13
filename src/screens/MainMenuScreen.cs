@@ -22,7 +22,7 @@ namespace BlobGame
 
             base.Update(gameTime);
 
-            if (Main.keyManager.PConfirm)
+            if (Main.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
@@ -51,12 +51,10 @@ namespace BlobGame
             base.Draw(spriteBatch, graphics);
 
             string message = "Blob Game";
-            string credits = "Made by MrBeelo";
-            string version = "v0.24";
 
             Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
-            Globals.SpriteBatch.DrawString(Main.font, credits, new Vector2(graphics.PreferredBackBufferWidth - menuFont.MeasureString(credits).X - 20, graphics.PreferredBackBufferHeight - 70), Color.Black);
-            Globals.SpriteBatch.DrawString(Main.font, version, new Vector2(20, graphics.PreferredBackBufferHeight - 70), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, Main.credits, new Vector2(graphics.PreferredBackBufferWidth - menuFont.MeasureString(Main.credits).X - 20, graphics.PreferredBackBufferHeight - 70), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, Main.version, new Vector2(20, graphics.PreferredBackBufferHeight - 70), Color.Black);
         }
     }
 }

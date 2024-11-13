@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BlobGame;
 
-public class KeyManager
+public class InputManager
 {
     public bool DLeft {get; set;} = false;
     public bool DRight {get; set;} = false;
@@ -22,7 +22,7 @@ public class KeyManager
     {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
     public PressedDirection pressedDirection {get; set;} = PressedDirection.NA;
 
-    public KeyManager()
+    public InputManager()
     {
     }
 
@@ -147,43 +147,6 @@ public class KeyManager
             PDown = true;
         }
         }
-
-        /*if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.D))
-            {
-                pressedDirection = PressedDirection.DownRight;
-            }
-            else if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.A))
-            {
-                pressedDirection = PressedDirection.DownLeft;
-            }
-            else if(kstate.IsKeyDown(Keys.W) && kstate.IsKeyDown(Keys.D))
-            {
-                pressedDirection = PressedDirection.UpRight;
-            }
-            else if(kstate.IsKeyDown(Keys.W) && kstate.IsKeyDown(Keys.A))
-            {
-                pressedDirection = PressedDirection.UpLeft;
-            }
-            else if(kstate.IsKeyDown(Keys.D))
-            {
-                pressedDirection = PressedDirection.Right;
-            }
-            else if(kstate.IsKeyDown(Keys.A))
-            {
-                pressedDirection = PressedDirection.Left;
-            }
-            else if(kstate.IsKeyDown(Keys.S))
-            {
-                pressedDirection = PressedDirection.Down;
-            }
-            else if(kstate.IsKeyDown(Keys.W))
-            {
-                pressedDirection = PressedDirection.Up;
-            }
-            else
-            {
-                pressedDirection = PressedDirection.NA;
-            }*/
 
         switch(DLeft, DRight, DUp, DDown)
         {

@@ -36,7 +36,7 @@ namespace BlobGame
         {
             Settings.LoadSettings(Main.settingsFilePath);
 
-            if (Main.keyManager.PDown)
+            if (Main.inputManager.PDown)
             {
                 selectedIndex++;
                 if (selectedIndex >= MenuItems().Length)
@@ -45,7 +45,7 @@ namespace BlobGame
                 }
             }
 
-            if (Main.keyManager.PUp)
+            if (Main.inputManager.PUp)
             {
                 selectedIndex--;
                 if (selectedIndex < 0)

@@ -156,22 +156,22 @@ namespace BlobGame
                 Velocity.X = 0;
             }
             
-            if (Main.keyManager.DLeft && !isDashing)
+            if (Main.inputManager.DLeft && !isDashing)
             {
                 Velocity.X = -speed;
             } 
             else 
-            if (Main.keyManager.DLeft && isDashing)
+            if (Main.inputManager.DLeft && isDashing)
             {
                 Velocity.X --;
             }
             
-            if (Main.keyManager.DRight && !isDashing)
+            if (Main.inputManager.DRight && !isDashing)
             {
                 Velocity.X = speed;
             }
             else 
-            if (Main.keyManager.DRight && isDashing)
+            if (Main.inputManager.DRight && isDashing)
             {
                 Velocity.X ++;
             }
@@ -206,7 +206,7 @@ namespace BlobGame
                 Velocity.Y += 0.5f;
             }
 
-            if(Main.keyManager.PJump && !isInAir) {
+            if(Main.inputManager.PJump && !isInAir) {
                 Velocity.Y = -10;
                 jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 coyoteTime = 0;
@@ -522,7 +522,7 @@ namespace BlobGame
 
             //! Handling the Fireball
 
-            if(Main.keyManager.PFireball && (stamina >= 500 || isSanic))
+            if(Main.inputManager.PFireball && (stamina >= 500 || isSanic))
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
@@ -533,9 +533,9 @@ namespace BlobGame
 
             //! Handling the Dash
 
-            if(Main.keyManager.PDash && stamina >= 500 && dashTime < 0)
+            if(Main.inputManager.PDash && stamina >= 500 && dashTime < 0)
             {
-                Dash(Main.keyManager.pressedDirection, 25, 10);
+                Dash(Main.inputManager.pressedDirection, 25, 10);
                 powerUpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 isDashing = true;
                 stamina -= 100;
@@ -785,52 +785,52 @@ namespace BlobGame
             return Color.White;
         }
 
-        public static void Dash(KeyManager.PressedDirection pressedDirection, int power, int DashTime)
+        public static void Dash(InputManager.PressedDirection pressedDirection, int power, int DashTime)
         {
             dashTime = DashTime;
             double hpower = power * 0.6; //! Horizontal Power
 
             switch(pressedDirection)
             {
-                case KeyManager.PressedDirection.Right:
+                case InputManager.PressedDirection.Right:
                     Main.player.Velocity.X = (int)hpower;
                     Main.player.Velocity.Y = 0.5f;
                     break;
 
-                case KeyManager.PressedDirection.Left:
+                case InputManager.PressedDirection.Left:
                     Main.player.Velocity.X = (int)-hpower;
                     Main.player.Velocity.Y = 0.5f;
                     break;
 
-                case KeyManager.PressedDirection.Down:
+                case InputManager.PressedDirection.Down:
                     Main.player.Velocity.Y = power;
                     break;
 
-                case KeyManager.PressedDirection.Up:
+                case InputManager.PressedDirection.Up:
                     Main.player.Velocity.Y = -power;
                     break;
 
-                case KeyManager.PressedDirection.DownRight:
+                case InputManager.PressedDirection.DownRight:
                     Main.player.Velocity.X = (int)hpower;
                     Main.player.Velocity.Y = power;
                     break;
 
-                case KeyManager.PressedDirection.DownLeft:
+                case InputManager.PressedDirection.DownLeft:
                     Main.player.Velocity.X = (int)-hpower;
                     Main.player.Velocity.Y = power;
                     break;
                 
-                case KeyManager.PressedDirection.UpRight:
+                case InputManager.PressedDirection.UpRight:
                     Main.player.Velocity.X = (int)hpower;
                     Main.player.Velocity.Y = -power;
                     break;
 
-                case KeyManager.PressedDirection.UpLeft:
+                case InputManager.PressedDirection.UpLeft:
                     Main.player.Velocity.X = (int)-hpower;
                     Main.player.Velocity.Y = -power;
                     break;
                 
-                case KeyManager.PressedDirection.NA:
+                case InputManager.PressedDirection.NA:
                     if(!Main.player.isLeft)
                     {
                         Main.player.Velocity.X = (int)hpower;

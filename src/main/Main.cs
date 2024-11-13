@@ -10,6 +10,8 @@ namespace BlobGame;
 
 public class Main : Game
 {
+    public static string credits = "Made by MrBeelo";
+    public static string version = "v0.25";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -37,7 +39,7 @@ public class Main : Game
     public TimeSpan timeSpan;
     public int FPS;
     Texture2D background;
-    public static KeyManager keyManager = new KeyManager();
+    public static InputManager inputManager = new InputManager();
     public enum GameState
     {
         MainMenu,
@@ -108,7 +110,7 @@ public class Main : Game
     {
         KeyboardState kstate = Keyboard.GetState();
 
-        keyManager.Update(gameTime);
+        inputManager.Update(gameTime);
 
         LoweredVolume = Globals.Settings.Volume * 0.6;
 
@@ -133,18 +135,18 @@ public class Main : Game
             Globals.Graphics.ApplyChanges();
         }
 
-        if(KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
+        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
         {
             hasF11On = true;
-        } else if(KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == true)
+        } else if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == true)
         {
             hasF11On = false;
         }
 
-        if(KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
+        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
                 {
                     hasF3On = true;
-                } else if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
+                } else if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
                 {
                     hasF3On = false;
                 }
@@ -153,7 +155,7 @@ public class Main : Game
         {
             case GameState.MainMenu:
                 mainMenu.Update(gameTime);
-                if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
                 {
                     currentGameState = GameState.Quit;
                 }
@@ -167,14 +169,14 @@ public class Main : Game
                     fireball.Update(gameTime);
                 }
 
-                if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
                 {
                     currentGameState = GameState.Paused;
                 }
                 break;
 
             case GameState.Paused:
-                if (KeyManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
                 {
                     currentGameState = GameState.MainMenu;
                 }
@@ -289,7 +291,7 @@ public class Main : Game
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
                     "Level: " + Tilemap.level,
-                    "Pressed Direction: " + keyManager.pressedDirection
+                    "Pressed Direction: " + inputManager.pressedDirection
                 };
 
                 string[] otherDebugInfo = otherDebugInfoList.ToArray();

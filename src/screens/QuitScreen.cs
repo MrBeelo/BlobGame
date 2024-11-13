@@ -19,7 +19,7 @@ namespace BlobGame
 
             base.Update(gameTime);
 
-            if (Main.keyManager.PConfirm)
+            if (Main.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
