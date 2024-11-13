@@ -76,7 +76,7 @@ namespace BlobGame
                     {
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
-                            Tilemap.excludedNormalTiles.Add(new Vector3(15, tile.X, tile.Y));
+                            Tilemap.excludedNormalTiles.Add(new Vector3(29, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             FireIsAlive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
@@ -116,7 +116,7 @@ namespace BlobGame
                     {
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
-                            Tilemap.excludedNormalTiles.Add(new Vector3(15, tile.X, tile.Y));
+                            Tilemap.excludedNormalTiles.Add(new Vector3(29, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             FireIsAlive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);

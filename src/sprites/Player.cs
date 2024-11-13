@@ -137,18 +137,6 @@ namespace BlobGame
                 }
             }
 
-            //! Debug
-            /*if(Main.IsKeyPressed(kstate, prevkstate, Keys.R))
-            {
-                ResetPos(this);
-                ResetState(this);
-            }
-
-            if(Main.IsKeyPressed(kstate, prevkstate, Keys.N))
-            {
-                MoveLevel(this);
-            }*/
-
             //! Handling X Movement
 
             if(!isDashing)
@@ -288,7 +276,7 @@ namespace BlobGame
                         {
                             isSanic = true;
                             speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                            Tilemap.excludedNormalTiles.Add(new Vector3(14, tile.X, tile.Y));
+                            Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
                     }
@@ -330,13 +318,13 @@ namespace BlobGame
                         }
                         else if(isDashing)
                         {
-                            dashTime = 10;
+                            dashTime = 1;
                         }
                     }
                 } else {
                     if(stamina == 500 && !isSanic)
                     {
-                        Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 14);
+                        Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 26);
                         Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
@@ -437,7 +425,7 @@ namespace BlobGame
                         {
                             isSanic = true;
                             speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                            Tilemap.excludedNormalTiles.Add(new Vector3(14, tile.X, tile.Y));
+                            Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
                     }
@@ -483,13 +471,13 @@ namespace BlobGame
                         }
                         else if(isDashing)
                         {
-                            dashTime = 10;
+                            dashTime = 1;
                         }
                     }
                 } else {
                     if(stamina == 500 && !isSanic)
                     {
-                        Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 14);
+                        Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 26);
                         Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
@@ -868,6 +856,8 @@ namespace BlobGame
 
             }
 
+            Tilemap.excludedNormalTiles.Clear();
+            Tilemap.excludedCollisionTiles.Clear();
             ResetState(player);
         }
     }

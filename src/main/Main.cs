@@ -11,7 +11,7 @@ namespace BlobGame;
 public class Main : Game
 {
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.25";
+    public static string version = "v0.26";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}

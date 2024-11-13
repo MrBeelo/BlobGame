@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -185,6 +186,24 @@ public class InputManager
             case (false, false, false, false):
                 pressedDirection = PressedDirection.NA;
                 break;
+        }
+
+        //! Debug
+        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.R))
+        {
+            Player.ResetPos(Main.player);
+            Player.ResetState(Main.player);
+        }
+
+        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.N))
+        {
+            if(Tilemap.level.X < Tilemap.Collision.Length - 1)
+            {
+                Player.MoveLevel(Main.player);
+            }
+
+            Player.ResetPos(Main.player);
+            Player.ResetState(Main.player);
         }
 
         prevkstate = kstate;
