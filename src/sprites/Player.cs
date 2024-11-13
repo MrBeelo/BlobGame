@@ -28,7 +28,6 @@ namespace BlobGame
         int walkingActiveFrame;
         public Texture2D[] jumpingTextures;
         public Direction direction = Direction.NA;
-        public PressedDirection pressedDirection = PressedDirection.NA;
         public List<Point> horizontalCollisions;
         public List<Point> verticalCollisions;
         private float flickerTime;
@@ -47,8 +46,6 @@ namespace BlobGame
         public int coyoteTime = 0;
         public static int dashTime = -1;
         public enum Direction 
-        {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
-        public enum PressedDirection 
         {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
@@ -209,7 +206,7 @@ namespace BlobGame
                 Velocity.Y += 0.5f;
             }
 
-            if(Main.keyManager.PJump) {
+            if(Main.keyManager.PJump && !isInAir) {
                 Velocity.Y = -10;
                 jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 coyoteTime = 0;
@@ -538,7 +535,7 @@ namespace BlobGame
 
             if(Main.keyManager.PDash && stamina >= 500 && dashTime < 0)
             {
-                Dash(pressedDirection, 25, 10);
+                Dash(Main.keyManager.pressedDirection, 25, 10);
                 powerUpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 isDashing = true;
                 stamina -= 100;
@@ -596,7 +593,7 @@ namespace BlobGame
 
             KeyboardState kstate = Keyboard.GetState();
 
-            if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.D))
+            /*if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.D))
             {
                 pressedDirection = PressedDirection.DownRight;
             }
@@ -631,7 +628,7 @@ namespace BlobGame
             else
             {
                 pressedDirection = PressedDirection.NA;
-            }
+            }*/
 
             isMoving = Velocity.X != 0;
 
@@ -642,7 +639,8 @@ namespace BlobGame
             {
                 isLeft = false;
             }
-        } 
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects spriteEffects = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
@@ -721,7 +719,6 @@ namespace BlobGame
                 "Direction: " + direction,
                 "Alive: " + alive,
                 "Is Sanic: " + isSanic,
-                "Pressed Direction: " + pressedDirection,
                 "Is Dashing: " + isDashing,
                 "Colliding Horizontally: " + horizColl,
                 "Colliding Vertically: " + vertColl,
@@ -788,52 +785,52 @@ namespace BlobGame
             return Color.White;
         }
 
-        public static void Dash(PressedDirection pressedDirection, int power, int DashTime)
+        public static void Dash(KeyManager.PressedDirection pressedDirection, int power, int DashTime)
         {
             dashTime = DashTime;
             double hpower = power * 0.6; //! Horizontal Power
 
             switch(pressedDirection)
             {
-                case PressedDirection.Right:
+                case KeyManager.PressedDirection.Right:
                     Main.player.Velocity.X = (int)hpower;
                     Main.player.Velocity.Y = 0.5f;
                     break;
 
-                case PressedDirection.Left:
+                case KeyManager.PressedDirection.Left:
                     Main.player.Velocity.X = (int)-hpower;
                     Main.player.Velocity.Y = 0.5f;
                     break;
 
-                case PressedDirection.Down:
+                case KeyManager.PressedDirection.Down:
                     Main.player.Velocity.Y = power;
                     break;
 
-                case PressedDirection.Up:
+                case KeyManager.PressedDirection.Up:
                     Main.player.Velocity.Y = -power;
                     break;
 
-                case PressedDirection.DownRight:
+                case KeyManager.PressedDirection.DownRight:
                     Main.player.Velocity.X = (int)hpower;
                     Main.player.Velocity.Y = power;
                     break;
 
-                case PressedDirection.DownLeft:
+                case KeyManager.PressedDirection.DownLeft:
                     Main.player.Velocity.X = (int)-hpower;
                     Main.player.Velocity.Y = power;
                     break;
                 
-                case PressedDirection.UpRight:
+                case KeyManager.PressedDirection.UpRight:
                     Main.player.Velocity.X = (int)hpower;
                     Main.player.Velocity.Y = -power;
                     break;
 
-                case PressedDirection.UpLeft:
+                case KeyManager.PressedDirection.UpLeft:
                     Main.player.Velocity.X = (int)-hpower;
                     Main.player.Velocity.Y = -power;
                     break;
                 
-                case PressedDirection.NA:
+                case KeyManager.PressedDirection.NA:
                     if(!Main.player.isLeft)
                     {
                         Main.player.Velocity.X = (int)hpower;

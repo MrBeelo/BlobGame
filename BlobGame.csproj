@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <SelfContained>true</SelfContained>
     <RollForward>Major</RollForward>
-    <PublishSingleFile>true</PublishSingleFile>
     <PublishReadyToRun>false</PublishReadyToRun>
     <TieredCompilation>false</TieredCompilation>
   </PropertyGroup>

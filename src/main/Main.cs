@@ -288,7 +288,8 @@ public class Main : Game
                 {
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
-                    "Level: " + Tilemap.level
+                    "Level: " + Tilemap.level,
+                    "Pressed Direction: " + keyManager.pressedDirection
                 };
 
                 string[] otherDebugInfo = otherDebugInfoList.ToArray();
