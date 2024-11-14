@@ -441,3 +441,10 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\wi
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sounds\powerUp.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level2_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level2_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleIdle1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleIdle2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleJump1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleJump2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleWalk1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleWalk2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\triangle\TriangleWalk3.xnb

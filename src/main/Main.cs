@@ -32,7 +32,6 @@ public class Main : Game
     public WinScreen win;
     public PassScreen pass;
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
-    
     public FollowCamera camera;
     KeyboardState prevkstate;
     public int frameCounter;

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace BlobGame
 {
-    public class Player : MoveableSprite
+    public class Player : CollMoveableSprite
     {
         public static int playerSizeW = 42;
         public static int playerSizeH = 64;
@@ -27,15 +27,10 @@ namespace BlobGame
         int walkingCounter;
         int walkingActiveFrame;
         public Texture2D[] jumpingTextures;
-        public Direction direction = Direction.NA;
-        public List<Point> horizontalCollisions;
-        public List<Point> verticalCollisions;
         private float flickerTime;
         public bool alive = true;
         public bool isInAir = true;
         public static int gravity = 1;
-        public bool isMoving = false;
-        public bool isLeft = false;
         public bool isSanic = false;
         public bool isDashing = false;
         public bool horizColl = false;
@@ -45,8 +40,6 @@ namespace BlobGame
         public bool justCollided = false;
         public int coyoteTime = 0;
         public static int dashTime = -1;
-        public enum Direction 
-        {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -87,9 +80,6 @@ namespace BlobGame
             laserShootSound = game.Content.Load<SoundEffect>("assets/sounds/laserShoot");
 
             successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-
-            horizontalCollisions = GetIntersectingTiles(Drect);
-            verticalCollisions = GetIntersectingTiles(Drect);
         }
 
         public override void Update(GameTime gameTime)
@@ -539,94 +529,6 @@ namespace BlobGame
                 isDashing = false;
                 Velocity.Y = -2.5f;
             }
-
-            //! Logic For Direction and all other bools
-
-            if(Velocity.Y > 0.5 && Velocity.X > 0)
-            {
-                direction = Direction.DownRight;
-            }
-            else if(Velocity.Y > 0.5 && Velocity.X < 0)
-            {
-                direction = Direction.DownLeft;
-            }
-            else if(Velocity.Y < 0 && Velocity.X > 0)
-            {
-                direction = Direction.UpRight;
-            }
-            else if(Velocity.Y < 0 && Velocity.X < 0)
-            {
-                direction = Direction.UpLeft;
-            }
-            else if(Velocity.X > 0)
-            {
-                direction = Direction.Right;
-            }
-            else if(Velocity.X < 0)
-            {
-                direction = Direction.Left;
-            }
-            else if(Velocity.Y > 0.5)
-            {
-                direction = Direction.Down;
-            }
-            else if(Velocity.Y < 0)
-            {
-                direction = Direction.Up;
-            }
-            else if(Velocity.X == 0 && Velocity.Y == 0.5)
-            {
-                direction = Direction.NA;
-            }
-
-            KeyboardState kstate = Keyboard.GetState();
-
-            /*if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.D))
-            {
-                pressedDirection = PressedDirection.DownRight;
-            }
-            else if(kstate.IsKeyDown(Keys.S) && kstate.IsKeyDown(Keys.A))
-            {
-                pressedDirection = PressedDirection.DownLeft;
-            }
-            else if(kstate.IsKeyDown(Keys.W) && kstate.IsKeyDown(Keys.D))
-            {
-                pressedDirection = PressedDirection.UpRight;
-            }
-            else if(kstate.IsKeyDown(Keys.W) && kstate.IsKeyDown(Keys.A))
-            {
-                pressedDirection = PressedDirection.UpLeft;
-            }
-            else if(kstate.IsKeyDown(Keys.D))
-            {
-                pressedDirection = PressedDirection.Right;
-            }
-            else if(kstate.IsKeyDown(Keys.A))
-            {
-                pressedDirection = PressedDirection.Left;
-            }
-            else if(kstate.IsKeyDown(Keys.S))
-            {
-                pressedDirection = PressedDirection.Down;
-            }
-            else if(kstate.IsKeyDown(Keys.W))
-            {
-                pressedDirection = PressedDirection.Up;
-            }
-            else
-            {
-                pressedDirection = PressedDirection.NA;
-            }*/
-
-            isMoving = Velocity.X != 0;
-
-            if(Velocity.X < 0)
-            {
-                isLeft = true;
-            } else if(Velocity.X > 0)
-            {
-                isLeft = false;
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -704,7 +606,7 @@ namespace BlobGame
                 "Is in Air: " + isInAir,
                 "Is Moving: " + isMoving,
                 "Is looking Left: " + isLeft,
-                "Direction: " + direction,
+                "Direction: " + Direction,
                 "Alive: " + alive,
                 "Is Sanic: " + isSanic,
                 "Is Dashing: " + isDashing,
@@ -716,25 +618,6 @@ namespace BlobGame
                 "Coyote Time: " + coyoteTime,
                 "Dash Time: " + dashTime
             };
-        }
-        public List<Point> GetIntersectingTiles(Rectangle target)
-        {
-            List<Point> tiles = new List<Point>();
-        
-            int leftTile = target.Left / Tilemap.Tilesize;
-            int rightTile = (target.Right - 1) / Tilemap.Tilesize;
-            int topTile = target.Top / Tilemap.Tilesize;
-            int bottomTile = (target.Bottom - 1) / Tilemap.Tilesize;
-        
-            for (int x = leftTile; x <= rightTile; x++)
-            {
-                for (int y = topTile; y <= bottomTile; y++)
-                {
-                    tiles.Add(new Point(x, y));
-                }
-            }
-        
-            return tiles;
         }
 
         public static void ResetPos(Player player)
