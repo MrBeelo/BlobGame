@@ -16,6 +16,8 @@ public class Main : Game
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
     public static Tilemap tilemap {get; set;}
+    public static Triangle triangle {get; set;}
+    public static List<Triangle> triangles = new();
     public static List<Fireball> fireballs = new();
     public static List<Sprite> sprites = new();
     public static bool hasF3On = false;
@@ -85,6 +87,7 @@ public class Main : Game
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
+        Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
 
         mainMenu = new MainMenuScreen(font, Globals.Graphics);
         paused = new PausedScreen(font, Globals.Graphics);
@@ -103,6 +106,9 @@ public class Main : Game
 
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
+
+        triangle = new Triangle(triangleTexture, new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        triangle.LoadContent(this);
     }
 
     protected override void Update(GameTime gameTime)
@@ -166,6 +172,11 @@ public class Main : Game
                 foreach(Fireball fireball in fireballs.ToList())
                 {
                     fireball.Update(gameTime);
+                }
+
+                foreach(Triangle triangle in triangles.ToList())
+                {
+                    triangle.Update(gameTime);
                 }
 
                 if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
@@ -246,6 +257,11 @@ public class Main : Game
                 foreach(Fireball fireball in fireballs.ToList())
                 {
                     fireball.Draw(Globals.SpriteBatch);
+                }
+
+                foreach(Triangle triangle in triangles.ToList())
+                {
+                    triangle.Draw(Globals.SpriteBatch);
                 }
                 break;
 

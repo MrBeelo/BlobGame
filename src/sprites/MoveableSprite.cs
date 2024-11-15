@@ -8,6 +8,8 @@ namespace BlobGame
         public Vector2 Velocity =  Vector2.Zero;
         public bool isMoving = false;
         public bool isLeft = false;
+        public int speed = 3;
+        public bool isInAir = true;
         public DirectionEnum Direction = DirectionEnum.NA;
         public enum DirectionEnum 
         {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}

@@ -130,10 +130,37 @@ namespace BlobGame
                     if(Main.hasF3On)
                     {
                         Globals.SpriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
-                        //DrawRectHollow(Globals.SpriteBatch, dest, 2, Color.Orange);
                     }
                 }
             }
+        }
+
+        public static void MoveLevel(Player player)
+        {
+            level.X++;
+
+            switch(level.X)
+            {
+                case 0:
+                    level.Y = 50;
+                    level.Z = 600;
+                    break;
+
+                case 1:
+                    level.Y = 50;
+                    level.Z = 200;
+                    break;
+
+                case 2:
+                    level.Y = 220;
+                    level.Z = 150;
+                    break;
+
+            }
+
+            excludedNormalTiles.Clear();
+            excludedCollisionTiles.Clear();
+            Player.ResetState(player);
         }
     }
 }

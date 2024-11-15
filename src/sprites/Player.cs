@@ -12,7 +12,9 @@ namespace BlobGame
     {
         public static int playerSizeW = 42;
         public static int playerSizeH = 64;
-        public int speed = 3;
+        public int Health {get; set;} = 100;
+        string health;
+        string level;
         public int stamina = 500;
         private static SoundEffect successSound;
         private static SoundEffect jumpSound;
@@ -20,6 +22,7 @@ namespace BlobGame
         private static SoundEffect speedEndSound;
         private static SoundEffect powerUpSound;
         private static SoundEffect laserShootSound;
+        public static SoundEffect hitSound;
         public Texture2D[] idleTextures;
         int idleCounter;
         int idleActiveFrame;
@@ -29,7 +32,6 @@ namespace BlobGame
         public Texture2D[] jumpingTextures;
         private float flickerTime;
         public bool alive = true;
-        public bool isInAir = true;
         public static int gravity = 1;
         public bool isSanic = false;
         public bool isDashing = false;
@@ -78,6 +80,7 @@ namespace BlobGame
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
             powerUpSound = game.Content.Load<SoundEffect>("assets/sounds/powerUp");
             laserShootSound = game.Content.Load<SoundEffect>("assets/sounds/laserShoot");
+            hitSound = game.Content.Load<SoundEffect>("assets/sounds/hitBlob");
 
             successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
         }
@@ -308,7 +311,7 @@ namespace BlobGame
                         }
                         else if(isDashing)
                         {
-                            dashTime = 1;
+                            dashTime = 3;
                         }
                     }
                 } else {
@@ -373,7 +376,7 @@ namespace BlobGame
             
                         if (Velocity.Y > 0) // Falling Down
                         {
-                            MoveLevel(this);
+                            Tilemap.MoveLevel(this);
                             Main.currentGameState = Main.GameState.Pass;
                         }
                         else if (Velocity.Y < 0) // Moving Up
@@ -461,7 +464,7 @@ namespace BlobGame
                         }
                         else if(isDashing)
                         {
-                            dashTime = 1;
+                            dashTime = 3;
                         }
                     }
                 } else {
@@ -529,6 +532,11 @@ namespace BlobGame
                 isDashing = false;
                 Velocity.Y = -2.5f;
             }
+
+            if(Health <= 0)
+            {
+                alive = false;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -592,6 +600,12 @@ namespace BlobGame
                     0f
                 );
             }
+
+            health = "Health: " + Health.ToString() + "/100";
+            level = "Level: " + Tilemap.level.X;
+
+            Globals.SpriteBatch.DrawString(Main.font, health, new Vector2(Graphics.PreferredBackBufferWidth - Main.font.MeasureString(health).X - 20, 10), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, level, new Vector2(Graphics.PreferredBackBufferWidth - Main.font.MeasureString(level).X - 20, 60), Color.Black);
         }
 
         public override string[] GetDebugInfo()
@@ -638,7 +652,9 @@ namespace BlobGame
             player.vertColl = false;
             player.hazardHorizColl = false;
             player.hazardVertColl = false;
+            player.Health = 100;
             Main.fireballs.Clear();
+            Main.triangles.Clear();
         }
 
         public Color PlayerColor()
@@ -714,34 +730,6 @@ namespace BlobGame
                     }
                     break;
             }
-        }
-
-        public static void MoveLevel(Player player)
-        {
-            Tilemap.level.X++;
-
-            switch(Tilemap.level.X)
-            {
-                case 0:
-                    Tilemap.level.Y = 50;
-                    Tilemap.level.Z = 600;
-                    break;
-
-                case 1:
-                    Tilemap.level.Y = 50;
-                    Tilemap.level.Z = 200;
-                    break;
-
-                case 2:
-                    Tilemap.level.Y = 220;
-                    Tilemap.level.Z = 150;
-                    break;
-
-            }
-
-            Tilemap.excludedNormalTiles.Clear();
-            Tilemap.excludedCollisionTiles.Clear();
-            ResetState(player);
         }
     }
 }

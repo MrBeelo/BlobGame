@@ -199,11 +199,18 @@ public class InputManager
         {
             if(Tilemap.level.X < Tilemap.Collision.Length - 1)
             {
-                Player.MoveLevel(Main.player);
+                Tilemap.MoveLevel(Main.player);
             }
 
             Player.ResetPos(Main.player);
             Player.ResetState(Main.player);
+        }
+
+        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.T))
+        {
+            Triangle triangle = new Triangle(Triangle.idleTextures[1], new Rectangle(Main.player.Drect.X, Main.player.Drect.Y, Triangle.triangleSizeW, Triangle.triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
+            Main.triangles.Add(triangle);
+            Main.sprites.Add(triangle);
         }
 
         prevkstate = kstate;

@@ -69,6 +69,12 @@
 /processorParam:Quality=Best
 /build:assets/sounds/explosion.wav
 
+#begin assets/sounds/hitBlob.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:assets/sounds/hitBlob.wav
+
 #begin assets/sounds/jump.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

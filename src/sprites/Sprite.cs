@@ -30,5 +30,10 @@ namespace BlobGame
         public virtual string[] GetDebugInfo() {
             return new string[] {};
         }
+
+        public void Remove()
+        {
+            
+        }
     }
 }

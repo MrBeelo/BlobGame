@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace BlobGame
 {
-    public class Fireball : MoveableSprite
+    public class Fireball : CollMoveableSprite
     {
         int fireCounter;
         int fireActiveFrame;
@@ -15,8 +15,6 @@ namespace BlobGame
         private static SoundEffect explosionSound;
         public bool FireIsLeft;
         public bool FireIsAlive = true;
-        public List<Point> horizontalCollisions;
-        public List<Point> verticalCollisions;
 
         public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics, bool fireIsLeft) : base(texture, drect, srect)
         {
@@ -162,26 +160,6 @@ namespace BlobGame
                 Srect,
                 Color.White
             );
-        }
-
-        public List<Point> GetIntersectingTiles(Rectangle target)
-        {
-            List<Point> tiles = new List<Point>();
-        
-            int leftTile = target.Left / Tilemap.Tilesize;
-            int rightTile = (target.Right - 1) / Tilemap.Tilesize;
-            int topTile = target.Top / Tilemap.Tilesize;
-            int bottomTile = (target.Bottom - 1) / Tilemap.Tilesize;
-        
-            for (int x = leftTile; x <= rightTile; x++)
-            {
-                for (int y = topTile; y <= bottomTile; y++)
-                {
-                    tiles.Add(new Point(x, y));
-                }
-            }
-        
-            return tiles;
         }
 
         public override string[] GetDebugInfo()
