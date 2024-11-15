@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using System.Diagnostics;
 
 namespace BlobGame
 {
@@ -142,34 +143,48 @@ namespace BlobGame
             level.X++;
             //Main.player.Immunity = 100;
 
+            excludedNormalTiles.Clear();
+            excludedCollisionTiles.Clear();
+            Player.ResetState(player);
+            Triangle.ClearAll();
+
             switch(level.X)
             {
                 case 0:
                     level.Y = 50;
                     level.Z = 600;
+                    Player.ResetPos(Main.player);
                     break;
 
                 case 1:
-                    level.Y = 50;
-                    level.Z = 200;
+                    level.Y = 100;
+                    level.Z = 250;
+                    Player.ResetPos(Main.player);
                     break;
 
                 case 2:
                     level.Y = 220;
-                    level.Z = 150;
+                    level.Z = 190;
+                    Player.ResetPos(Main.player);
                     break;
 
                 case 3:
-                    //Triangle.Summon(new Vector2(400, 100));
                     level.Y = 200;
                     level.Z = 100;
+                    Triangle.Summon(new Vector2(1400, 400));
+                    Triangle.Summon(new Vector2(750, 250));
+                    Player.ResetPos(Main.player);
                     break;
-
             }
+        }
 
+        public static void Reset(Player player)
+        {
+            level = new Vector3(0, 50, 600);
             excludedNormalTiles.Clear();
             excludedCollisionTiles.Clear();
-            Player.ResetState(player);
+            Player.Respawn(player);
+            Triangle.ClearAll();
         }
     }
 }

@@ -27,7 +27,6 @@ namespace BlobGame
                 {
                     case 0:
                         Main.currentGameState = Main.GameState.Playing;
-                        Player.ResetPos(Main.player);
                         break;
                 }
             }

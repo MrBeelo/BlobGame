@@ -137,7 +137,7 @@ namespace BlobGame
                                 isLeft = true;
                             } else if(!randomBool && delay == 0) {
                                 Velocity.Y = -10;
-                                delay = 70;
+                                delay = 40;
                             }
                         }
                         else if (Velocity.X < 0) // Moving Left
@@ -149,7 +149,7 @@ namespace BlobGame
                                 isLeft = false;
                             } else if(!randomBool && delay == 0) {
                                 Velocity.Y = -10;
-                                delay = 70;
+                                delay = 40;
                             }
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
@@ -321,6 +321,11 @@ namespace BlobGame
             Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
             Main.triangles.Add(triangle);
             Main.sprites.Add(triangle);
+        }
+
+        public static void ClearAll()
+        {
+            Main.triangles.Clear();
         }
     }
 }

@@ -13,8 +13,6 @@ namespace BlobGame
         int fireActiveFrame;
         public static Texture2D[] fireTextures;
         private static SoundEffect explosionSound;
-        //public bool FireIsLeft;
-        //public bool FireIsAlive = true;
         public bool alive = true;
 
         public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics, bool fireIsLeft) : base(texture, drect, srect)

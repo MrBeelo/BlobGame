@@ -201,9 +201,6 @@ public class InputManager
             {
                 Tilemap.MoveLevel(Main.player);
             }
-
-            Player.ResetPos(Main.player);
-            Player.ResetState(Main.player);
         }
 
         if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.T))

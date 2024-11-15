@@ -543,19 +543,21 @@ namespace BlobGame
             if(!horizColl && hazardHorizColl)
             {
                 alive = false;
+                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
+                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
+                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
+                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
+                ResetState(this);
             }
 
             if(!vertColl && hazardVertColl)
             {
                 alive = false;
-            }
-
-            if(!alive)
-            {
                 Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
                 Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
                 Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
                 Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
+                ResetState(this);
             }
 
             //! Handling the Fireball
@@ -714,7 +716,6 @@ namespace BlobGame
         public static void ResetState(Player player)
         {
             player.Velocity = new Vector2(0, 0.5f);
-            player.alive = true;
             player.isLeft = false;
             player.stamina = 500;
             player.speed = 3;
@@ -724,9 +725,15 @@ namespace BlobGame
             player.vertColl = false;
             player.hazardHorizColl = false;
             player.hazardVertColl = false;
-            player.Health = 100;
             Main.fireballs.Clear();
-            Main.triangles.Clear();
+        }
+
+        public static void Respawn(Player player)
+        {
+            player.alive = true;
+            player.Health = 100;
+            ResetPos(player);
+            ResetState(player);
         }
 
         public Color PlayerColor()

@@ -11,7 +11,7 @@ namespace BlobGame;
 public class Main : Game
 {
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.28";
+    public static string version = "v0.29";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -169,12 +169,12 @@ public class Main : Game
             case GameState.Playing:
                 player.Update(gameTime);
 
-                foreach(Fireball fireball in fireballs.ToList())
+                foreach(var fireball in fireballs.ToList())
                 {
                     fireball.Update(gameTime);
                 }
 
-                foreach(Triangle triangle in triangles.ToList())
+                foreach(var triangle in triangles.ToList())
                 {
                     triangle.Update(gameTime);
                 }
@@ -254,12 +254,12 @@ public class Main : Game
 
                 player.Draw(Globals.SpriteBatch);
 
-                foreach(Fireball fireball in fireballs.ToList())
+                foreach(var fireball in fireballs.ToList())
                 {
                     fireball.Draw(Globals.SpriteBatch);
                 }
 
-                foreach(Triangle triangle in triangles.ToList())
+                foreach(var triangle in triangles.ToList())
                 {
                     triangle.Draw(Globals.SpriteBatch);
                 }
