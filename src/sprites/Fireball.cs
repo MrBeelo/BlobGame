@@ -13,8 +13,9 @@ namespace BlobGame
         int fireActiveFrame;
         public static Texture2D[] fireTextures;
         private static SoundEffect explosionSound;
-        public bool FireIsLeft;
-        public bool FireIsAlive = true;
+        //public bool FireIsLeft;
+        //public bool FireIsAlive = true;
+        public bool alive = true;
 
         public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics, bool fireIsLeft) : base(texture, drect, srect)
         {
@@ -23,7 +24,7 @@ namespace BlobGame
             Srect = srect;
             Graphics = graphics;
             Velocity = new();
-            FireIsLeft = fireIsLeft;
+            isLeft = fireIsLeft;
         }
 
         public override void LoadContent(Game game)
@@ -53,10 +54,10 @@ namespace BlobGame
                 }
             }
 
-            if(FireIsLeft)
+            if(isLeft)
             {
                 Velocity.X = -5;
-            } else if(!FireIsLeft)
+            } else if(!isLeft)
             {
                 Velocity.X = 5;
             }
@@ -76,7 +77,7 @@ namespace BlobGame
                         {
                             Tilemap.excludedNormalTiles.Add(new Vector3(29, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
-                            FireIsAlive = false;
+                            alive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     } else {
@@ -86,14 +87,14 @@ namespace BlobGame
                         {
                             Drect.X = collision.Left - Drect.Width;
                             Velocity.X = 0;
-                            FireIsAlive = false;
+                            alive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
                             Drect.X = collision.Right;
                             Velocity.X = 0;
-                            FireIsAlive = false;
+                            alive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }      
                     }
@@ -116,7 +117,7 @@ namespace BlobGame
                         {
                             Tilemap.excludedNormalTiles.Add(new Vector3(29, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
-                            FireIsAlive = false;
+                            alive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     } else {
@@ -126,14 +127,14 @@ namespace BlobGame
                         {
                             Drect.Y = collision.Top - Drect.Height;
                             Velocity.Y = 0;
-                            FireIsAlive = false;
+                            alive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
                             Drect.Y = collision.Bottom;
                             Velocity.Y = 0;
-                            FireIsAlive = false;
+                            alive = false;
                             explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                         }
                     }
@@ -142,10 +143,10 @@ namespace BlobGame
 
             if(Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
             {
-                FireIsAlive = false;
+                alive = false;
             }
 
-            if(!FireIsAlive)
+            if(!alive)
             {
                 Main.fireballs.Remove(this);
                 Main.sprites.Remove(this);
@@ -166,9 +167,9 @@ namespace BlobGame
         {
             return new string[] 
             {
-                "--------------",
-                "Fire Velocity: " + Velocity,
-                "Fire is Alive: " + FireIsAlive,
+                "---FIREBALL---",
+                "Velocity: " + Velocity,
+                "Is Alive: " + alive,
             };
         }
     }

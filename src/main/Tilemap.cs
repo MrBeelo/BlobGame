@@ -23,8 +23,8 @@ namespace BlobGame
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[3]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[3]; //! Same here
+            Normal = new Dictionary<Vector2, int>[3 + 1]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[3 + 1]; //! Same here
             normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
@@ -65,11 +65,13 @@ namespace BlobGame
             Normal[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_normal.csv"));
             Normal[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_normal.csv"));
             Normal[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_normal.csv"));
+            Normal[3] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level3_normal.csv"));
             //! Import all level CSVs for the normal tileset here
 
             Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_collision.csv"));
             Collision[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_collision.csv"));
             Collision[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_collision.csv"));
+            Collision[3] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level3_collision.csv"));
             //! Import all level CSVs for the collision tileset here
         }
 
@@ -138,6 +140,7 @@ namespace BlobGame
         public static void MoveLevel(Player player)
         {
             level.X++;
+            //Main.player.Immunity = 100;
 
             switch(level.X)
             {
@@ -154,6 +157,12 @@ namespace BlobGame
                 case 2:
                     level.Y = 220;
                     level.Z = 150;
+                    break;
+
+                case 3:
+                    //Triangle.Summon(new Vector2(400, 100));
+                    level.Y = 200;
+                    level.Z = 100;
                     break;
 
             }

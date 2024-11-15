@@ -25,7 +25,6 @@ namespace BlobGame
         int delay = 0;
         int onGroundDelay = 0;
         bool TriangleIsAlive = true;
-        int spawnImmunity = 100;
 
         public Triangle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -101,11 +100,6 @@ namespace BlobGame
             if(onGroundDelay > 0)
             {
                 onGroundDelay--;
-            }
-
-            if(spawnImmunity > 0)
-            {
-                spawnImmunity--;
             }
 
             Velocity.Y += 0.5f;
@@ -232,12 +226,11 @@ namespace BlobGame
                 TriangleIsAlive = false;
             }
 
-            if(Drect.Intersects(Main.player.Drect) && spawnImmunity == 0)
+            if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0)
             {
-                //TriangleIsAlive = false;
-                spawnImmunity = 150;
                 Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 Main.player.Health -= 20;
+                Main.player.Immunity = 50;
             }
 
             if(!TriangleIsAlive)
@@ -314,12 +307,20 @@ namespace BlobGame
         {
             return new string[] 
             {
-                "--------------",
+                "---TRIANGLE---",
                 "Random Bool: " + randomBool,
                 "Delay: " + delay,
                 "Is In Air: " + isInAir,
-                "Is Left: " + isLeft
+                "Is Left: " + isLeft,
+                "Drect: " + Drect
             };
+        }
+
+        public static void Summon(Vector2 pos)
+        {
+            Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
+            Main.triangles.Add(triangle);
+            Main.sprites.Add(triangle);
         }
     }
 }

@@ -42,6 +42,8 @@ namespace BlobGame
         public bool justCollided = false;
         public int coyoteTime = 0;
         public static int dashTime = -1;
+        public bool doubleJump = false;
+        public int Immunity = 0;
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -187,11 +189,12 @@ namespace BlobGame
                 Velocity.Y += 0.5f;
             }
 
-            if(Main.inputManager.PJump && !isInAir) {
+            if((Main.inputManager.PJump && !isInAir) || (Main.inputManager.PJump && isInAir && doubleJump)) {
                 Velocity.Y = -10;
                 jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 coyoteTime = 0;
                 justCollided = false;
+                doubleJump = false;
             }
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
@@ -263,7 +266,7 @@ namespace BlobGame
                             Velocity.X = -1;
                         }
                     }
-                    else if(value == 5) //! Crystal
+                    else if(value == 5) //! Boost Crystal
                     {
                         if(stamina >= 500)
                         {
@@ -312,6 +315,29 @@ namespace BlobGame
                         else if(isDashing)
                         {
                             dashTime = 3;
+                        }
+                    }
+                    else if(value == 8) //! Double Jump Crystal
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            doubleJump = true;
+                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Tilemap.excludedNormalTiles.Add(new Vector3(31, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                        }
+                    }
+                    else if(value == 9)
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            if(Health < 100)
+                            {
+                                Health += 50;
+                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            }
                         }
                     }
                 } else {
@@ -467,6 +493,29 @@ namespace BlobGame
                             dashTime = 3;
                         }
                     }
+                    else if(value == 8) //! Double Jump Crystal
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            doubleJump = true;
+                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Tilemap.excludedNormalTiles.Add(new Vector3(31, tile.X, tile.Y));
+                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                        }
+                    }
+                    else if(value == 9)
+                    {
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            if(Health < 100)
+                            {
+                                Health += 50;
+                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
+                                Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            }
+                        }
+                    }
                 } else {
                     if(stamina == 500 && !isSanic)
                     {
@@ -501,6 +550,14 @@ namespace BlobGame
                 alive = false;
             }
 
+            if(!alive)
+            {
+                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
+                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
+                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
+                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
+            }
+
             //! Handling the Fireball
 
             if(Main.inputManager.PFireball && (stamina >= 500 || isSanic))
@@ -533,10 +590,22 @@ namespace BlobGame
                 Velocity.Y = -2.5f;
             }
 
+            //! Handling Health
+
+            if(Health > 100)
+            {
+                Health = 100;
+            }
+
             if(Health <= 0)
             {
                 alive = false;
             }
+
+            if(Immunity > 0)
+            {
+                Immunity--;
+            } 
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -612,6 +681,7 @@ namespace BlobGame
         {
             return new string[] 
             {
+                "----PLAYER----",
                 "Position: " + Position,
                 "Tile Position: " + TilePosition,
                 "Velocity: " + Velocity,
@@ -630,7 +700,9 @@ namespace BlobGame
                 "CollHazard Verically: " + hazardVertColl,
                 "Just Collided: " + justCollided,
                 "Coyote Time: " + coyoteTime,
-                "Dash Time: " + dashTime
+                "Dash Time: " + dashTime,
+                "Double Jump: " + doubleJump,
+                "Immunity: " + Immunity
             };
         }
 
@@ -668,6 +740,12 @@ namespace BlobGame
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
                 return Color.Lerp(Color.White, Color.LightBlue, t); // Blends from white to red based on t
+            }
+
+            if(Immunity > 0)
+            {
+                float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
+                return Color.Lerp(Color.White, Color.Red, t); // Blends from white to red based on t
             }
             return Color.White;
         }
