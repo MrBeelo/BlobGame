@@ -26,13 +26,11 @@ namespace BlobGame
                 switch (selectedIndex)
                 {
                     case 0:
-                        // Start Game
                         Main.currentGameState = Main.GameState.Playing;
                         Player.ResetPos(Main.player);
                         Player.Respawn(Main.player);
                         break;
                     case 1:
-                        // Options
                         Main.currentGameState = Main.GameState.MainMenu;
                         Player.ResetPos(Main.player);
                         Player.Respawn(Main.player);

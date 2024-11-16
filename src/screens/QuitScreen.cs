@@ -24,11 +24,9 @@ namespace BlobGame
                 switch (selectedIndex)
                 {
                     case 0:
-                        // Start Game
                         Main.ExitGame();
                         break;
                     case 1:
-                        // Options
                         Main.currentGameState = Main.GameState.MainMenu;
                         break;
                 }

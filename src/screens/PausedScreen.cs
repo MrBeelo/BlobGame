@@ -25,17 +25,14 @@ namespace BlobGame
                 switch (selectedIndex)
                 {
                     case 0:
-                        // Start Game
                         Main.currentGameState = Main.GameState.Playing;
                         break;
                     case 1:
-                        // Paused Options
                         Main.options.cameFrom = SettingsScreen.CameFrom.Paused;
                         Globals.Settings = Settings.LoadSettings(Main.settingsFilePath);
                         Main.currentGameState = Main.GameState.Options;
                         break;
                     case 2:
-                        // Save and Exit
                         Main.currentGameState = Main.GameState.MainMenu;
                         break;
                 }

@@ -124,45 +124,48 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(value == 0 || value == 1 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
+                    if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                     {
-                    Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+                        if(value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
+                        {
+                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
-                        if (Velocity.X > 0) // Moving Right
-                        {
-                            Drect.X = collision.Left - Drect.Width;
-
-                            if(randomBool)
+                            if (Velocity.X > 0) // Moving Right
                             {
-                                isLeft = true;
-                            } else if(!randomBool && delay == 0) {
-                                Velocity.Y = -10;
-                                delay = 40;
-                            }
-                        }
-                        else if (Velocity.X < 0) // Moving Left
-                        {
-                            Drect.X = collision.Right;
+                                Drect.X = collision.Left - Drect.Width;
 
-                            if(randomBool)
-                            {
-                                isLeft = false;
-                            } else if(!randomBool && delay == 0) {
-                                Velocity.Y = -10;
-                                delay = 40;
+                                if(randomBool)
+                                {
+                                    isLeft = true;
+                                } else if(!randomBool && delay == 0) {
+                                    Velocity.Y = -10;
+                                    delay = 40;
+                                }
                             }
+                            else if (Velocity.X < 0) // Moving Left
+                            {
+                                Drect.X = collision.Right;
+
+                                if(randomBool)
+                                {
+                                    isLeft = false;
+                                } else if(!randomBool && delay == 0) {
+                                    Velocity.Y = -10;
+                                    delay = 40;
+                                }
+                            }
+                            Velocity.X = 0; // Stop horizontal movement upon collision
                         }
-                        Velocity.X = 0; // Stop horizontal movement upon collision
-                    }
-                    else if (value == 4) //! Water
-                    {
-                        if(Velocity.X > 1)
+                        else if (value == 4) //! Water
                         {
-                            Velocity.X = 1;
-                        }
-                        else if(Velocity.X < -1)
-                        {
-                            Velocity.X = -1;
+                            if(Velocity.X > 1)
+                            {
+                                Velocity.X = 1;
+                            }
+                            else if(Velocity.X < -1)
+                            {
+                                Velocity.X = -1;
+                            }
                         }
                     }
                 }
@@ -176,47 +179,32 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
+                    if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                     {
-                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+                        if(value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
+                        {
+                            Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
-                        if (Velocity.Y > 0) // Falling Down
-                        {
-                            Drect.Y = collision.Top - Drect.Height;
-                            Velocity.Y = 0.5f;
-                            isInAir = false;
+                            if (Velocity.Y > 0) // Falling Down
+                            {
+                                Drect.Y = collision.Top - Drect.Height;
+                                Velocity.Y = 0.5f;
+                                isInAir = false;
+                            }
+                            else if (Velocity.Y < 0) // Moving Up
+                            {
+                                Drect.Y = collision.Bottom;
+                                Velocity.Y = 0;
+                            }
                         }
-                        else if (Velocity.Y < 0) // Moving Up
+                        else if (value == 4) //! Water
                         {
-                            Drect.Y = collision.Bottom;
-                            Velocity.Y = 0;
+                            if(Velocity.Y > 0)
+                            {
+                                Velocity.Y = 1;
+                            }
+                            isInAir = true;
                         }
-                    }
-                    else if(value == 1)
-                    {
-                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
-            
-                        if (Velocity.Y > 0) // Falling Down
-                        {
-                            Drect.Y = collision.Top - Drect.Height;
-                            Velocity.Y = 0.5f;
-                            isInAir = false;
-                            TriangleIsAlive = false;
-                        }
-                        else if (Velocity.Y < 0) // Moving Up
-                        {
-                            Drect.Y = collision.Bottom;
-                            Velocity.Y = 0;
-                            TriangleIsAlive = false;
-                        }
-                    }
-                    else if (value == 4) //! Water
-                    {
-                        if(Velocity.Y > 0)
-                        {
-                            Velocity.Y = 1;
-                        }
-                        isInAir = true;
                     }
                 }
             }
@@ -226,7 +214,7 @@ namespace BlobGame
                 TriangleIsAlive = false;
             }
 
-            if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0)
+            if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune)
             {
                 Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 Main.player.Health -= 20;
@@ -236,7 +224,7 @@ namespace BlobGame
             if(!TriangleIsAlive)
             {
                 Main.triangles.Remove(this);
-                Main.sprites.Remove(this);
+                //Main.sprites.Remove(this);
             }
         }
 
@@ -320,7 +308,6 @@ namespace BlobGame
         {
             Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
             Main.triangles.Add(triangle);
-            Main.sprites.Add(triangle);
         }
 
         public static void ClearAll()

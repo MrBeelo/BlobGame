@@ -39,7 +39,6 @@ namespace BlobGame
                     case 2:
                         // Exit
                         Main.currentGameState = Main.GameState.Quit;
-                        //settings.PlayerPos = Main.player.Position;
                         break;
                 }
             }

@@ -40,10 +40,14 @@ namespace BlobGame
         public bool hazardHorizColl = false;
         public bool hazardVertColl = false;
         public bool justCollided = false;
+        public int justDrankMilk = 0;
         public int coyoteTime = 0;
         public static int dashTime = -1;
+        public int sanicTime = 500;
         public bool doubleJump = false;
+        public int djReset = 0;
         public int Immunity = 0;
+        public bool Immune = false;
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -162,23 +166,28 @@ namespace BlobGame
             if(isSanic && !isDashing)
             {
                 speed = 6;
-                stamina--;
+                sanicTime--;
             }
 
-            if(stamina == 0 && isSanic && !isDashing)
+            if(sanicTime == 0 && isSanic && !isDashing)
             {
                 speed = 3;
                 isSanic = false;
                 speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-            } else if(stamina < 0 && isSanic && !isDashing)
+            } else if(sanicTime < 0 && isSanic && !isDashing)
             {
                 speed = 3;
                 isSanic = false;
             }
 
-            if(stamina < 500 && !isSanic && !isDashing)
+            if(sanicTime < 500 && !isSanic && !isDashing)
             {
                 speed = 3;
+                sanicTime++;
+            }
+
+            if(stamina < 500)
+            {
                 stamina++;
             }
 
@@ -226,7 +235,7 @@ namespace BlobGame
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
-                    else if(value == 1) //! Hazard
+                    else if(value == 1 && !Immune) //! Hazard
                     {
                     hazardHorizColl = true;
                     Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
@@ -257,23 +266,29 @@ namespace BlobGame
                     }
                     else if (value == 4) //! Water
                     {
-                        if(Velocity.X > 1)
+                        if(!horizColl)
                         {
-                            Velocity.X = 1;
-                        }
-                        else if(Velocity.X < -1)
-                        {
-                            Velocity.X = -1;
+                            if(Velocity.X > 1)
+                            {   
+                                Velocity.X = 1;
+                            }
+                            else if(Velocity.X < -1)
+                            {
+                                Velocity.X = -1;
+                            }
                         }
                     }
                     else if(value == 5) //! Boost Crystal
                     {
-                        if(stamina >= 500)
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
-                            isSanic = true;
-                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                            Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
-                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            if(sanicTime >= 500)
+                            {
+                                isSanic = true;
+                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
+                                Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            }
                         }
                     }
                     else if(value == 6) //! Breakable Block
@@ -322,12 +337,13 @@ namespace BlobGame
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
                             doubleJump = true;
+                            djReset = 250;
                             speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                             Tilemap.excludedNormalTiles.Add(new Vector3(31, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
                     }
-                    else if(value == 9)
+                    else if(value == 9) //! Milk
                     {
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
@@ -335,8 +351,9 @@ namespace BlobGame
                             {
                                 Health += 50;
                                 speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                            Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
-                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                                Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
+                                Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                                justDrankMilk = 50;
                             }
                         }
                     }
@@ -379,7 +396,7 @@ namespace BlobGame
                             Velocity.Y = 0;
                         }
                     }
-                    else if(value == 1) //! Hazard
+                    else if(value == 1 && !Immune) //! Hazard
                     {
                         hazardVertColl = true;
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
@@ -432,20 +449,26 @@ namespace BlobGame
                     }
                     else if (value == 4) //! Water
                     {
-                        if(Velocity.Y > 0)
+                        if(!vertColl)
                         {
-                            Velocity.Y = 1;
+                            if(Velocity.Y > 0)
+                            {
+                                Velocity.Y = 1;
+                            }
+                            isInAir = true;
                         }
-                        isInAir = true;
                     }
                     else if(value == 5) //! Crystal
                     {
-                        if(stamina >= 500)
+                        if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
-                            isSanic = true;
-                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                            Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
-                            Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            if(sanicTime >= 500)
+                            {
+                                isSanic = true;
+                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
+                                Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            }
                         }
                     }
                     else if(value == 6) //!Breakable Block
@@ -498,12 +521,13 @@ namespace BlobGame
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
                             doubleJump = true;
+                            djReset = 250;
                             speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                             Tilemap.excludedNormalTiles.Add(new Vector3(31, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
                     }
-                    else if(value == 9)
+                    else if(value == 9) //! Milk
                     {
                         if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                         {
@@ -517,12 +541,30 @@ namespace BlobGame
                         }
                     }
                 } else {
-                    if(stamina == 500 && !isSanic)
+                    if(sanicTime == 500 && !isSanic)
                     {
                         Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 26);
                         Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
+            }
+
+            //! Handling Double Jump
+
+            if(djReset > 0)
+            {
+                djReset--;
+            }
+
+            if(djReset == 1)
+            {
+                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
+                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
+            }
+
+            if(djReset == 0)
+            {
+                djReset = 500;
             }
 
             //! Handling Coyote Time
@@ -566,7 +608,6 @@ namespace BlobGame
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
-                Main.sprites.Add(fireball);
                 stamina -= 100;
                 laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
             }
@@ -608,6 +649,13 @@ namespace BlobGame
             {
                 Immunity--;
             } 
+
+            //! Handling Milk
+
+            if(justDrankMilk > 0)
+            {
+                justDrankMilk--;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -704,7 +752,10 @@ namespace BlobGame
                 "Coyote Time: " + coyoteTime,
                 "Dash Time: " + dashTime,
                 "Double Jump: " + doubleJump,
-                "Immunity: " + Immunity
+                "Immunity: " + Immunity,
+                "Immune: " + Immune,
+                "Sanic Time: " + sanicTime,
+                "Double Jump Reset: " + djReset
             };
         }
 
@@ -725,6 +776,7 @@ namespace BlobGame
             player.vertColl = false;
             player.hazardHorizColl = false;
             player.hazardVertColl = false;
+            player.sanicTime = 500;
             Main.fireballs.Clear();
         }
 
@@ -745,15 +797,22 @@ namespace BlobGame
             }
             else if(isSanic)
             {
-                float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
-                return Color.Lerp(Color.White, Color.LightBlue, t); // Blends from white to red based on t
+                float t = (MathF.Sin(flickerTime) + 1) / 2;
+                return Color.Lerp(Color.White, Color.LightBlue, t);
             }
 
             if(Immunity > 0)
             {
-                float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
-                return Color.Lerp(Color.White, Color.Red, t); // Blends from white to red based on t
+                float t = (MathF.Sin(flickerTime) + 1) / 2;
+                return Color.Lerp(Color.White, Color.Red, t);
             }
+
+            if(justDrankMilk > 0)
+            {
+                float t = (MathF.Sin(flickerTime) + 1) / 2;
+                return Color.Lerp(Color.White, Color.LightGreen, t);
+            }
+
             return Color.White;
         }
 

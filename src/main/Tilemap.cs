@@ -24,8 +24,8 @@ namespace BlobGame
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[3 + 1]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[3 + 1]; //! Same here
+            Normal = new Dictionary<Vector2, int>[5 + 1]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[5 + 1]; //! Same here
             normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
@@ -67,12 +67,16 @@ namespace BlobGame
             Normal[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_normal.csv"));
             Normal[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_normal.csv"));
             Normal[3] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level3_normal.csv"));
+            Normal[4] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level4_normal.csv"));
+            Normal[5] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level5_normal.csv"));
             //! Import all level CSVs for the normal tileset here
 
             Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_collision.csv"));
             Collision[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_collision.csv"));
             Collision[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_collision.csv"));
             Collision[3] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level3_collision.csv"));
+            Collision[4] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level4_collision.csv"));
+            Collision[5] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level5_collision.csv"));
             //! Import all level CSVs for the collision tileset here
         }
 
@@ -141,11 +145,9 @@ namespace BlobGame
         public static void MoveLevel(Player player)
         {
             level.X++;
-            //Main.player.Immunity = 100;
 
             excludedNormalTiles.Clear();
             excludedCollisionTiles.Clear();
-            Player.ResetState(player);
             Triangle.ClearAll();
 
             switch(level.X)
@@ -153,19 +155,19 @@ namespace BlobGame
                 case 0:
                     level.Y = 50;
                     level.Z = 600;
-                    Player.ResetPos(Main.player);
+                    Player.Respawn(Main.player);
                     break;
 
                 case 1:
                     level.Y = 100;
                     level.Z = 250;
-                    Player.ResetPos(Main.player);
+                    Player.Respawn(Main.player);
                     break;
 
                 case 2:
                     level.Y = 220;
                     level.Z = 190;
-                    Player.ResetPos(Main.player);
+                    Player.Respawn(Main.player);
                     break;
 
                 case 3:
@@ -173,7 +175,36 @@ namespace BlobGame
                     level.Z = 100;
                     Triangle.Summon(new Vector2(1400, 400));
                     Triangle.Summon(new Vector2(750, 250));
-                    Player.ResetPos(Main.player);
+                    Player.Respawn(Main.player);
+                    break;
+
+                case 4:
+                    level.Y = 160;
+                    level.Z = 65;
+                    Triangle.Summon(new Vector2(1600, 130));
+                    Triangle.Summon(new Vector2(1090, 1000));
+                    Triangle.Summon(new Vector2(580, 1025));
+                    Player.Respawn(Main.player);
+                    break;
+
+                case 5:
+                    level.Y = 100;
+                    level.Z = 65;
+                    Triangle.Summon(new Vector2(800, 65));
+                    Triangle.Summon(new Vector2(1400, 130));
+                    Triangle.Summon(new Vector2(1890, 130));
+                    Triangle.Summon(new Vector2(380, 320));
+                    Triangle.Summon(new Vector2(960, 320));
+                    Triangle.Summon(new Vector2(1540, 320));
+                    Triangle.Summon(new Vector2(1800, 320));
+                    Triangle.Summon(new Vector2(290, 580));
+                    Triangle.Summon(new Vector2(770, 580));
+                    Triangle.Summon(new Vector2(1570, 580));
+                    Triangle.Summon(new Vector2(670, 830));
+                    Triangle.Summon(new Vector2(1180, 830));
+                    Triangle.Summon(new Vector2(1150, 1000));
+                    Triangle.Summon(new Vector2(1630, 1000));
+                    Player.Respawn(Main.player);
                     break;
             }
         }

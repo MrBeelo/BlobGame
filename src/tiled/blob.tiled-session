@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level2.tmx",
+    "activeFile": "level5.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -32,16 +32,32 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 678.6666666666667,
-                "y": 639.3333333333333
+                "x": 1173.3333333333333,
+                "y": 803.3333333333333
             }
         },
         "level3.tmx": {
             "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1002,
+                "y": 379
+            }
+        },
+        "level4.tmx": {
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 884,
-                "y": 409
+                "x": 2076,
+                "y": 853.9999999999999
+            }
+        },
+        "level5.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 990,
+                "y": 319
             }
         },
         "normal.tsx": {
@@ -56,12 +72,14 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
     "openFiles": [
-        "level2.tmx"
+        "level5.tmx"
     ],
     "project": "blob.tiled-project",
     "recentFiles": [
-        "level2.tmx",
+        "level5.tmx",
+        "level4.tmx",
         "level3.tmx",
+        "level2.tmx",
         "level1.tmx",
         "level0.tmx",
         "collision.tsx",

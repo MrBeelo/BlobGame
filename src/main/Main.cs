@@ -11,7 +11,7 @@ namespace BlobGame;
 public class Main : Game
 {
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.29";
+    public static string version = "v0.30";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -42,16 +42,7 @@ public class Main : Game
     Texture2D background;
     public static InputManager inputManager = new InputManager();
     public enum GameState
-    {
-        MainMenu,
-        Playing,
-        Paused,
-        Options,
-        Quit,
-        Death,
-        Win,
-        Pass
-    }
+    {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass}
     public Main()
     {
         Window.Title = "Blob Game";
@@ -216,7 +207,6 @@ public class Main : Game
 
         prevkstate = kstate;
 
-        //camera.Follow(player.Drect, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
         Globals.Update(gameTime);
         base.Update(gameTime);
     }
@@ -301,6 +291,19 @@ public class Main : Game
                     string[] spriteDebugInfo = sprite.GetDebugInfo();
                     otherDebugInfoList.AddRange(spriteDebugInfo);
                 }
+
+                foreach(var fireball in fireballs)
+                {
+                    string[] fireballDebugInfo = fireball.GetDebugInfo();
+                    otherDebugInfoList.AddRange(fireballDebugInfo);
+                }
+
+                foreach(var triangle in triangles)
+                {
+                    string[] triangleDebugInfo = triangle.GetDebugInfo();
+                    otherDebugInfoList.AddRange(triangleDebugInfo);
+                }
+
                 string[] mainDebugInfo = 
                 {
                     "Current Game State: " + currentGameState,

@@ -203,6 +203,17 @@ public class InputManager
             }
         }
 
+        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.I))
+        {
+            if(!Main.player.Immune)
+            {
+                Main.player.Immune = true;
+            } else if(Main.player.Immune)
+            {
+                Main.player.Immune = false;
+            }
+        }
+
         if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.T))
         {
             Triangle.Summon(new Vector2(Main.player.Drect.X, Main.player.Drect.Y));
