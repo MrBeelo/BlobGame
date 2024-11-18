@@ -13,7 +13,7 @@ public static class Globals
     public static GraphicsDeviceManager Graphics {get; set;}
     public static GraphicsDevice GraphicsDevice {get; set;}
     public static Settings Settings = new Settings(); 
-    public static Point WindowSize {get; set;} = new Point(x: 1920, y: 1080);
+    public static Point WindowSize {get; set;} = new Point(1920, 1080);
 
     public static void Update(GameTime gameTime)
     {

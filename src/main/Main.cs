@@ -11,7 +11,7 @@ namespace BlobGame;
 public class Main : Game
 {
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.30";
+    public static string version = "v0.31";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -158,7 +158,9 @@ public class Main : Game
                 break;
 
             case GameState.Playing:
+                tilemap.Update(this);
                 player.Update(gameTime);
+                player.CalculateTranslation();
 
                 foreach(var fireball in fireballs.ToList())
                 {
@@ -215,18 +217,17 @@ public class Main : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        //Beginning Sprite Batch
-        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        if(currentGameState == GameState.Playing)
+        {
+            DrawBG();
+        }
+
+        //!Beggining Play Sprite Batch
+        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: player.translation);
 
         switch (currentGameState) 
         {
-            case GameState.MainMenu:
-                mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
-                break;
-
             case GameState.Playing:
-                Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
-
                 tilemap.Draw(gameTime);
 
                 if(hasF3On)
@@ -253,6 +254,27 @@ public class Main : Game
                 {
                     triangle.Draw(Globals.SpriteBatch);
                 }
+                break;
+        }
+
+        //!Ending Play Sprite Batch
+        Globals.SpriteBatch.End();
+
+        //!Beginning UI Sprite Batch
+        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+        switch (currentGameState) 
+        {
+            case GameState.MainMenu:
+                mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+
+            case GameState.Playing:
+                string health = "Health: " + player.Health.ToString() + "/100";
+                string level = "Level: " + Tilemap.level.X;
+
+                Globals.SpriteBatch.DrawString(font, health, new Vector2(Globals.Graphics.PreferredBackBufferWidth - font.MeasureString(health).X - 20, 10), Color.Black);
+                Globals.SpriteBatch.DrawString(font, level, new Vector2(Globals.Graphics.PreferredBackBufferWidth - font.MeasureString(level).X - 20, 60), Color.Black);
                 break;
 
             case GameState.Paused:
@@ -309,6 +331,7 @@ public class Main : Game
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
                     "Level: " + Tilemap.level,
+                    "Mapsize: " + tilemap.Mapsize,
                     "Pressed Direction: " + inputManager.pressedDirection
                 };
 
@@ -325,7 +348,7 @@ public class Main : Game
                 }
             }
             
-        //Ending Sprite Batch
+        //!Ending UI Sprite Batch
         Globals.SpriteBatch.End();
         
         base.Draw(gameTime);
@@ -377,5 +400,12 @@ public class Main : Game
             ),
             color
         );
+    }
+
+    public void DrawBG()
+    {
+        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
+        Globals.SpriteBatch.End();
     }
 }

@@ -199,7 +199,7 @@ public class InputManager
         {
             if(Tilemap.level.X < Tilemap.Collision.Length - 1)
             {
-                Tilemap.MoveLevel(Main.player);
+                Tilemap.MoveLevel();
             }
         }
 

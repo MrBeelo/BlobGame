@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using System.Diagnostics;
 
 
 namespace BlobGame
@@ -13,8 +14,6 @@ namespace BlobGame
         public static int playerSizeW = 42;
         public static int playerSizeH = 64;
         public int Health {get; set;} = 100;
-        string health;
-        string level;
         public int stamina = 500;
         private static SoundEffect successSound;
         private static SoundEffect jumpSound;
@@ -48,6 +47,8 @@ namespace BlobGame
         public int djReset = 0;
         public int Immunity = 0;
         public bool Immune = false;
+        public Matrix translation;
+        
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -207,6 +208,9 @@ namespace BlobGame
             }
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
+
+            SetBounds();
+            Drect.Location = PointClamp(Drect.Location, minPos, maxPos);
             
             // Horizontal Collision Resolution
             Drect.X += (int)Velocity.X;
@@ -419,7 +423,7 @@ namespace BlobGame
             
                         if (Velocity.Y > 0) // Falling Down
                         {
-                            Tilemap.MoveLevel(this);
+                            Tilemap.MoveLevel();
                             Main.currentGameState = Main.GameState.Pass;
                         }
                         else if (Velocity.Y < 0) // Moving Up
@@ -547,6 +551,11 @@ namespace BlobGame
                         Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 5);
                     }
                 }
+            }
+
+            if(Drect.Y >= maxPos.Y)
+            {
+                isInAir = false;
             }
 
             //! Handling Double Jump
@@ -719,12 +728,6 @@ namespace BlobGame
                     0f
                 );
             }
-
-            health = "Health: " + Health.ToString() + "/100";
-            level = "Level: " + Tilemap.level.X;
-
-            Globals.SpriteBatch.DrawString(Main.font, health, new Vector2(Graphics.PreferredBackBufferWidth - Main.font.MeasureString(health).X - 20, 10), Color.Black);
-            Globals.SpriteBatch.DrawString(Main.font, level, new Vector2(Graphics.PreferredBackBufferWidth - Main.font.MeasureString(level).X - 20, 60), Color.Black);
         }
 
         public override string[] GetDebugInfo()
@@ -874,6 +877,15 @@ namespace BlobGame
                     }
                     break;
             }
+        }
+
+        public void CalculateTranslation()
+        {
+            var dx = (Globals.WindowSize.X / 2) - Main.player.Drect.X - Main.player.Drect.Width;
+            dx = MathHelper.Clamp(dx, -Main.tilemap.Mapsize.X + Globals.WindowSize.X, 0);
+            var dy = (Globals.WindowSize.Y / 2) - Main.player.Drect.Y - Main.player.Drect.Height;
+            dy = MathHelper.Clamp(dy, -Main.tilemap.Mapsize.Y + Globals.WindowSize.Y, 0);
+            translation = Matrix.CreateTranslation(dx, dy, 0f);
         }
     }
 }

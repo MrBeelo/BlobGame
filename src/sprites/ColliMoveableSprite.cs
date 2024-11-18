@@ -9,6 +9,7 @@ namespace BlobGame
     {
         public List<Point> horizontalCollisions;
         public List<Point> verticalCollisions;
+        public Vector2 minPos, maxPos;
         public CollMoveableSprite(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
             Texture = texture;
@@ -41,6 +42,20 @@ namespace BlobGame
             }
         
             return tiles;
+        }
+
+        public static Point PointClamp(Point position, Vector2 minPos, Vector2 maxPos)
+        {
+            Vector2 clampedVector = Vector2.Clamp(position.ToVector2(), minPos, maxPos);
+            return clampedVector.ToPoint();
+        }
+
+        public void SetBounds()
+        {
+            minPos = Vector2.Zero;
+            maxPos = Main.tilemap.Mapsize.ToVector2();
+            maxPos.X -= Drect.Width;
+            maxPos.Y -= Drect.Height;
         }
     }
 }

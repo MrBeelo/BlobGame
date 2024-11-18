@@ -11,6 +11,7 @@ namespace BlobGame
     {
         public static Vector3 level = new Vector3(0, 50, 600);
         public static int Tilesize = 32; //Display Tilesize
+        public Point Mapsize {get; private set;}
         public static Dictionary<Vector2, int>[] Normal;
         public static Dictionary<Vector2, int>[] Collision;
         public Texture2D textureAtlas;
@@ -41,21 +42,36 @@ namespace BlobGame
             string line;
             while((line = reader.ReadLine()) != null) {
                 string[] Items = line.Split(',');
-                for(int x = 0; x < Items.Length; x++)
+                for(int i = 0; i < Items.Length; i++)
                 {
-                    if(int.TryParse(Items[x], out int value)) {
+                    if(int.TryParse(Items[i], out int value)) {
                         if(value > -1) {
-                            result[new Vector2(x, y)] = value;
+                            result[new Vector2(i, y)] = value;
                         }
 
                     }
                 }
+                y++;
+            }
+            return result;
+        }
 
+        public static void GetMapSize(string filepath, Tilemap tilemap)
+        {
+            StreamReader reader = new (filepath);
+            int y = 0;
+            string line;
+            int x = 0; // Variable to store the number of columns
+            while((line = reader.ReadLine()) != null) {
+                string[] Items = line.Split(',');
+                if (y == 0)
+                {
+                    x = Items.Length;
+                }
                 y++;
             }
 
-            return result;
-
+            tilemap.Mapsize = new Point(x * Tilesize, y * Tilesize);
         }
 
         public void LoadContent(Game game)
@@ -63,21 +79,20 @@ namespace BlobGame
             textureAtlas = game.Content.Load<Texture2D>("assets/atlas");
             hitboxAtlas = game.Content.Load<Texture2D>("assets/collision_atlas");
 
-            Normal[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_normal.csv"));
-            Normal[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_normal.csv"));
-            Normal[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_normal.csv"));
-            Normal[3] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level3_normal.csv"));
-            Normal[4] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level4_normal.csv"));
-            Normal[5] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level5_normal.csv"));
-            //! Import all level CSVs for the normal tileset here
+            for(int i = 0; i < Normal.Length; i++)
+            {
+                Normal[i] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + i + "_normal.csv"));
+            }
 
-            Collision[0] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level0_collision.csv"));
-            Collision[1] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level1_collision.csv"));
-            Collision[2] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level2_collision.csv"));
-            Collision[3] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level3_collision.csv"));
-            Collision[4] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level4_collision.csv"));
-            Collision[5] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level5_collision.csv"));
-            //! Import all level CSVs for the collision tileset here
+            for(int i = 0; i < Collision.Length; i++)
+            {
+                Collision[i] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + i + "_collision.csv"));
+            }
+        }
+
+        public void Update(Game game)
+        {
+            GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + level.X + "_normal.csv"), this);
         }
 
         public void Draw(GameTime gameTime)
@@ -142,7 +157,7 @@ namespace BlobGame
             }
         }
 
-        public static void MoveLevel(Player player)
+        public static void MoveLevel()
         {
             level.X++;
 
