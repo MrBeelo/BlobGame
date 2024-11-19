@@ -51,9 +51,9 @@ namespace BlobGame
 
             string message = "Blob Game";
 
-            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
-            Globals.SpriteBatch.DrawString(Main.font, Main.credits, new Vector2(graphics.PreferredBackBufferWidth - menuFont.MeasureString(Main.credits).X - 20, graphics.PreferredBackBufferHeight - 70), Color.Black);
-            Globals.SpriteBatch.DrawString(Main.font, Main.version, new Vector2(20, graphics.PreferredBackBufferHeight - 70), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(Settings.SimulationSize.X / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, Main.credits, new Vector2(Settings.SimulationSize.X - menuFont.MeasureString(Main.credits).X - 20, Settings.SimulationSize.Y - 70), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, Main.version, new Vector2(20, Settings.SimulationSize.Y - 70), Color.Black);
         }
     }
 }

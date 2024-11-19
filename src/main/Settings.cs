@@ -10,8 +10,8 @@ namespace BlobGame
     public class Settings
     {
         public float Volume { get; set; } = 0.5f; // Default volume
-        public Point WindowSize = new Point(1920, 1080); // Default Resolution
-        //public Point VWindowSize = new Point(1920, 1080);
+        public static Point SimulationSize = new Point(1920, 1080); // Default Resolution
+        public Point WindowSize = new Point(1920, 1080);
         public void ChangeVolume(float delta)
         {
             Volume = MathHelper.Clamp(Volume + delta, 0f, 1.0f); // Clamp between 0 and 1
@@ -24,7 +24,7 @@ namespace BlobGame
             WindowSize.X = height;
             WindowSize.Y = width;
             Globals.Graphics.ApplyChanges();
-            //Main.canvas.SetDestinationRectangle();
+            Main.main.canvas.SetDestinationRectangle();
         }
 
         public void SetFullScreen()
@@ -34,14 +34,11 @@ namespace BlobGame
                 SetResolution(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
                 Main.main.Window.IsBorderless = true;
                 Main.main.IsMouseVisible = false;
-                Globals.Graphics.ApplyChanges();
-                //Main.canvas.SetDestinationRectangle();
-                
+                Globals.Graphics.ApplyChanges(); 
             } else if(Main.main.Window.IsBorderless) {
                 SetResolution(1920, 1080);
-                //Main.canvas.SetDestinationRectangle();
             }
-            
+            Main.main.canvas.SetDestinationRectangle();  
         }
         public static Settings LoadSettings(string filePath)
         {

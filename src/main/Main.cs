@@ -13,7 +13,7 @@ public class Main : Game
 {
     public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.32";
+    public static string version = "v0.33";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -41,7 +41,7 @@ public class Main : Game
     public int FPS;
     Texture2D background;
     public static InputManager inputManager = new InputManager();
-    //public static Canvas canvas =  new Canvas(1920, 1080);
+    public Canvas canvas;
     public enum GameState
     {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass}
     public Main()
@@ -61,6 +61,8 @@ public class Main : Game
 
         Globals.Graphics.PreferredBackBufferWidth = Globals.Settings.WindowSize.X;
         Globals.Graphics.PreferredBackBufferHeight = Globals.Settings.WindowSize.Y;
+
+        canvas = new Canvas(GraphicsDevice, 1920, 1080);
 
         base.Initialize();
     }
@@ -208,9 +210,9 @@ public class Main : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        canvas.Activate();
 
-        //canvas.Activate();
+        GraphicsDevice.Clear(Color.CornflowerBlue);
 
         if(currentGameState == GameState.Playing)
         {
@@ -268,8 +270,8 @@ public class Main : Game
                 string health = "Health: " + player.Health.ToString() + "/100";
                 string level = "Level: " + Tilemap.level.X;
 
-                Globals.SpriteBatch.DrawString(font, health, new Vector2(Globals.Graphics.PreferredBackBufferWidth - font.MeasureString(health).X - 20, 10), Color.Black);
-                Globals.SpriteBatch.DrawString(font, level, new Vector2(Globals.Graphics.PreferredBackBufferWidth - font.MeasureString(level).X - 20, 60), Color.Black);
+                Globals.SpriteBatch.DrawString(font, health, new Vector2(Settings.SimulationSize.X - font.MeasureString(health).X - 20, 10), Color.Black);
+                Globals.SpriteBatch.DrawString(font, level, new Vector2(Settings.SimulationSize.X - font.MeasureString(level).X - 20, 60), Color.Black);
                 break;
 
             case GameState.Paused:
@@ -345,10 +347,10 @@ public class Main : Game
             
         //!Ending UI Sprite Batch
         Globals.SpriteBatch.End();
-
-        //canvas.Draw(Globals.SpriteBatch);
         
         base.Draw(gameTime);
+
+        canvas.Draw(Globals.SpriteBatch);
     }
 
     public static void ExitGame()

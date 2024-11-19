@@ -41,7 +41,7 @@ namespace BlobGame
             
             string message = "Want to quit?";
 
-            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.font, message, new Vector2(Settings.SimulationSize.X / 2 - (menuFont.MeasureString(message).X / 2f), 30), Color.Black);
         }
     }
 }

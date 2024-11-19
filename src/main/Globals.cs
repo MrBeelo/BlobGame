@@ -21,5 +21,6 @@ public static class Globals
         Graphics.PreferredBackBufferWidth = Settings.WindowSize.X;
         Graphics.PreferredBackBufferHeight = Settings.WindowSize.Y;
         Graphics.ApplyChanges();
+        Main.main.canvas.SetDestinationRectangle();
     }
 }

@@ -881,10 +881,10 @@ namespace BlobGame
 
         public void CalculateTranslation()
         {
-            var dx = (Globals.Settings.WindowSize.X / 2) - Main.player.Drect.X - Main.player.Drect.Width;
-            dx = MathHelper.Clamp(dx, -Main.tilemap.Mapsize.X + Globals.Settings.WindowSize.X, 0);
-            var dy = (Globals.Settings.WindowSize.Y / 2) - Main.player.Drect.Y - Main.player.Drect.Height;
-            dy = MathHelper.Clamp(dy, -Main.tilemap.Mapsize.Y + Globals.Settings.WindowSize.Y, 0);
+            var dx = (Settings.SimulationSize.X / 2) - Main.player.Drect.X - Main.player.Drect.Width;
+            dx = MathHelper.Clamp(dx, -Main.tilemap.Mapsize.X + Settings.SimulationSize.X, 0);
+            var dy = (Settings.SimulationSize.Y / 2) - Main.player.Drect.Y - Main.player.Drect.Height;
+            dy = MathHelper.Clamp(dy, -Main.tilemap.Mapsize.Y + Settings.SimulationSize.Y, 0);
             translation = Matrix.CreateTranslation(dx, dy, 0f);
         }
     }

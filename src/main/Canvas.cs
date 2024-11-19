@@ -6,17 +6,19 @@ namespace BlobGame;
 
 public class Canvas
 {
+    private GraphicsDevice GraphicsDevice;
     private readonly RenderTarget2D target;
     private Rectangle destinationRectangle;
 
-    public Canvas(int width, int height)
+    public Canvas(GraphicsDevice graphicsDevice, int width, int height)
     {
-        target = new(Globals.GraphicsDevice, width, height);
+        GraphicsDevice = graphicsDevice;
+        target = new(GraphicsDevice, width, height);
     }
 
     public void SetDestinationRectangle()
     {
-        var screenSize = Globals.GraphicsDevice.PresentationParameters.Bounds;
+        var screenSize = GraphicsDevice.PresentationParameters.Bounds;
 
         float scaleX = (float)screenSize.Width / target.Width;
         float scaleY = (float)screenSize.Height / target.Height;
@@ -33,14 +35,14 @@ public class Canvas
 
     public void Activate()
     {
-        Globals.GraphicsDevice.SetRenderTarget(target);
-        Globals.GraphicsDevice.Clear(Color.DarkGray);
+        GraphicsDevice.SetRenderTarget(target);
+        GraphicsDevice.Clear(Color.CornflowerBlue);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        Globals.GraphicsDevice.SetRenderTarget(null);
-        Globals.GraphicsDevice.Clear(Color.Black);
+        GraphicsDevice.SetRenderTarget(null);
+        GraphicsDevice.Clear(Color.CornflowerBlue);
         spriteBatch.Begin();
         spriteBatch.Draw(target, destinationRectangle, Color.White);
         spriteBatch.End();
