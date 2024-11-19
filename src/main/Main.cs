@@ -5,13 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace BlobGame;
 
 public class Main : Game
 {
+    public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.31";
+    public static string version = "v0.32";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -21,7 +23,6 @@ public class Main : Game
     public static List<Fireball> fireballs = new();
     public static List<Sprite> sprites = new();
     public static bool hasF3On = false;
-    public static bool hasF11On = false;
     public static Texture2D pixelTexture;
     public static SpriteFont font;
     public static SpriteFont debugFont;
@@ -34,13 +35,13 @@ public class Main : Game
     public WinScreen win;
     public PassScreen pass;
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
-    public FollowCamera camera;
     KeyboardState prevkstate;
     public int frameCounter;
     public TimeSpan timeSpan;
     public int FPS;
     Texture2D background;
     public static InputManager inputManager = new InputManager();
+    //public static Canvas canvas =  new Canvas(1920, 1080);
     public enum GameState
     {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass}
     public Main()
@@ -51,13 +52,16 @@ public class Main : Game
         Content.RootDirectory = "content";
         IsMouseVisible = true;
 
-        Globals.Graphics.PreferredBackBufferWidth = Globals.WindowSize.X;
-        Globals.Graphics.PreferredBackBufferHeight = Globals.WindowSize.Y;
+        main = this;
     }
 
     protected override void Initialize()
     {
         Settings.LoadSettings(settingsFilePath);
+
+        Globals.Graphics.PreferredBackBufferWidth = Globals.Settings.WindowSize.X;
+        Globals.Graphics.PreferredBackBufferHeight = Globals.Settings.WindowSize.Y;
+
         base.Initialize();
     }
 
@@ -104,6 +108,10 @@ public class Main : Game
 
     protected override void Update(GameTime gameTime)
     {
+        main = this;
+
+        Globals.Update(gameTime);
+
         KeyboardState kstate = Keyboard.GetState();
 
         inputManager.Update(gameTime);
@@ -120,23 +128,9 @@ public class Main : Game
             frameCounter = 0;
         }
 
-        if(hasF11On)
+        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11))
         {
-            Globals.Graphics.IsFullScreen = true;
-            IsMouseVisible = false;
-            Globals.Graphics.ApplyChanges();
-        } else {
-            Globals.Graphics.IsFullScreen = false;
-            IsMouseVisible = true;
-            Globals.Graphics.ApplyChanges();
-        }
-
-        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == false)
-        {
-            hasF11On = true;
-        } else if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11) && hasF11On == true)
-        {
-            hasF11On = false;
+            Globals.Settings.SetFullScreen();
         }
 
         if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
@@ -209,13 +203,14 @@ public class Main : Game
 
         prevkstate = kstate;
 
-        Globals.Update(gameTime);
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
+
+        //canvas.Activate();
 
         if(currentGameState == GameState.Playing)
         {
@@ -350,6 +345,8 @@ public class Main : Game
             
         //!Ending UI Sprite Batch
         Globals.SpriteBatch.End();
+
+        //canvas.Draw(Globals.SpriteBatch);
         
         base.Draw(gameTime);
     }

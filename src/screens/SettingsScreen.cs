@@ -17,7 +17,7 @@ namespace BlobGame
         }
         public CameFrom cameFrom = CameFrom.MainMenu;
         public override string[] MenuItems() {
-            return menuItems ?? new string[] {"PLACEHOLDER","Back"};
+            return menuItems ?? new string[] {"PLACEHOLDER", "PLACEHOLDER", "Back"};
         }
 
         private string[] menuItems;
@@ -49,6 +49,18 @@ namespace BlobGame
                         }
                         break;
                     case 1:
+                        switch(Globals.Settings.WindowSize)
+                        {
+                            case Point(1920, 1080):
+                                Globals.Settings.SetResolution(800, 480);
+                                break;
+
+                            case Point(800, 480):
+                                Globals.Settings.SetResolution(1920, 1080);
+                                break;
+                        }
+                        break;
+                    case 2:
                         switch(cameFrom)
                         {
                             case CameFrom.MainMenu:
@@ -63,8 +75,11 @@ namespace BlobGame
                 }
                 
                 Globals.Settings.SaveSettings(Main.settingsFilePath); // Save changes to the file
-                UpdateMenuItems();
             }
+
+            Globals.Settings = Settings.LoadSettings(Main.settingsFilePath);
+            UpdateMenuItems();
+
             prevkstate = kstate;
         }
 
@@ -79,7 +94,7 @@ namespace BlobGame
 
         public void UpdateMenuItems()
         {
-            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}","Back"};
+            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {Globals.Graphics.PreferredBackBufferWidth:F0} x {Globals.Graphics.PreferredBackBufferHeight:F0}", "Back"};
         }
     }
 }

@@ -28,13 +28,19 @@ namespace BlobGame
             for (int i = 0; i < MenuItems().Length; i++)
             {
                 string item = MenuItems()[i];
-                itemPosition[i] = new Vector2(graphics.PreferredBackBufferWidth / 2f - (menuFont.MeasureString(item).X / 2f), 400); // Set the position of the menu
+                itemPosition[i] = new Vector2(graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(item).X / 2), graphics.PreferredBackBufferHeight / 3); // Set the position of the menu
             }
         }
 
         public virtual void Update(GameTime gameTime)
         {
             Settings.LoadSettings(Main.settingsFilePath);
+
+            for (int i = 0; i < MenuItems().Length; i++)
+            {
+                string item = MenuItems()[i];
+                itemPosition[i] = new Vector2(Globals.Graphics.PreferredBackBufferWidth / 2 - (menuFont.MeasureString(item).X / 2), Globals.Graphics.PreferredBackBufferHeight / 3); // Set the position of the menu
+            }
 
             if (Main.inputManager.PDown)
             {
