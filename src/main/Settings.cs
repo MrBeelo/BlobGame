@@ -10,7 +10,7 @@ namespace BlobGame
     public class Settings
     {
         public float Volume { get; set; } = 0.5f; // Default volume
-        public Point WindowSize = new ();
+        public Point WindowSize = new Point(1920, 1080); // Default Resolution
         //public Point VWindowSize = new Point(1920, 1080);
         public void ChangeVolume(float delta)
         {
