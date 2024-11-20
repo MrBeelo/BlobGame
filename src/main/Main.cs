@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System.Linq;
-using System.Diagnostics;
 
 namespace BlobGame;
 
@@ -13,7 +12,7 @@ public class Main : Game
 {
     public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.33";
+    public static string version = "v0.34";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -42,6 +41,8 @@ public class Main : Game
     Texture2D background;
     public static InputManager inputManager = new InputManager();
     public Canvas canvas;
+    public bool TypingMode = false;
+    public string InputText = "";
     public enum GameState
     {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass}
     public Main()
@@ -63,6 +64,8 @@ public class Main : Game
         Globals.Graphics.PreferredBackBufferHeight = Globals.Settings.WindowSize.Y;
 
         canvas = new Canvas(GraphicsDevice, 1920, 1080);
+
+        Window.TextInput += TextInputHandler;
 
         base.Initialize();
     }
@@ -118,6 +121,30 @@ public class Main : Game
 
         inputManager.Update(gameTime);
 
+        if(TypingMode)
+        {
+            foreach (var key in kstate.GetPressedKeys())
+            {
+                if (InputManager.IsKeyPressed(kstate, prevkstate, key))
+                {
+                    if (key == Keys.Back && InputText.Length > 0)
+                    {
+                        // Handle Backspace
+                        InputText = InputText.Substring(0, InputText.Length - 1);
+                    }
+                    else
+                    {
+                        // Add the character for the pressed key
+                        char? character = InputManager.KeyToChar(key, kstate.IsKeyDown(Keys.LeftShift) || kstate.IsKeyDown(Keys.RightShift));
+                        if (character != null)
+                        {
+                            InputText += character.Value;
+                        }
+                    }
+                }
+            }
+        }
+
         LoweredVolume = Globals.Settings.Volume * 0.6;
 
         timeSpan += gameTime.ElapsedGameTime;
@@ -136,18 +163,92 @@ public class Main : Game
         }
 
         if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
-                {
-                    hasF3On = true;
-                } else if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
-                {
-                    hasF3On = false;
-                }
+        {
+            hasF3On = true;
+        } else if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
+        {
+            hasF3On = false;
+        }
+
+        //! Handling Typing Mode
+
+        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.OemTilde))
+        {
+            if(!TypingMode)
+            {
+                TypingMode = true;
+            } else if (TypingMode)
+            {
+                TypingMode = false;
+            }
+        }
+
+        if(TypingMode && InputManager.IsKeyPressed(kstate, prevkstate, Keys.Enter))
+        {
+            switch(InputText)
+            {
+                case "/kill":
+                    player.alive = false;
+                    break;
+
+                case "/resetState":
+                    Player.ResetState(player);
+                    break;
+
+                case "/resetPos":
+                    Player.ResetPos(player);
+                    break;
+
+                case "/respawn":
+                    Player.Respawn(player);
+                    break;
+
+                case "/triangleClear":
+                    Triangle.ClearAll();
+                    break;
+
+                case "/moveLevel":
+                    if(Tilemap.level.X < Tilemap.Collision.Length - 1)
+                    {
+                        Tilemap.MoveLevel();
+                    }
+                    break;
+
+                case "/immune":
+                    if(!player.Immune)
+                    {
+                        player.Immune = true;
+                    } else if(player.Immune)
+                    {
+                        player.Immune = false;
+                    }
+                    break;
+
+                case "/summonTriangle":
+                    Triangle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    break;
+
+                case "/yipee":
+                    Player.successSound.Play((float)LoweredVolume, 0.0f, 0.0f);
+                    break;
+            }
+            InputText = "";
+            TypingMode = false;
+        }
+
+        if(TypingMode && InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+        {
+            InputText = "";
+            TypingMode = false;
+        }
+
+        //! Updating for all Game States
 
         switch (currentGameState) 
         {
             case GameState.MainMenu:
                 mainMenu.Update(gameTime);
-                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && TypingMode)
                 {
                     currentGameState = GameState.Quit;
                 }
@@ -168,14 +269,14 @@ public class Main : Game
                     triangle.Update(gameTime);
                 }
 
-                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && TypingMode)
                 {
                     currentGameState = GameState.Paused;
                 }
                 break;
 
             case GameState.Paused:
-                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && TypingMode)
                 {
                     currentGameState = GameState.MainMenu;
                 }
@@ -329,7 +430,8 @@ public class Main : Game
                     "FPS: " + FPS,
                     "Level: " + Tilemap.level,
                     "Mapsize: " + tilemap.Mapsize,
-                    "Pressed Direction: " + inputManager.pressedDirection
+                    "Pressed Direction: " + inputManager.pressedDirection,
+                    "Typing Mode: " + TypingMode
                 };
 
                 string[] otherDebugInfo = otherDebugInfoList.ToArray();
@@ -344,6 +446,13 @@ public class Main : Game
                     pos.Y += 20;
                 }
             }
+
+        //! Handling Typing Mode
+
+        if(TypingMode)
+        {
+            DrawTypingZone();
+        }
             
         //!Ending UI Sprite Batch
         Globals.SpriteBatch.End();
@@ -406,5 +515,19 @@ public class Main : Game
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
         Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
         Globals.SpriteBatch.End();
+    }
+
+    public void DrawTypingZone()
+    {
+        Globals.SpriteBatch.Draw(pixelTexture, new Rectangle(Globals.Settings.WindowSize.X / 20, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10, Globals.Settings.WindowSize.X - Globals.Settings.WindowSize.X / 10, Globals.Settings.WindowSize.Y / 20), new Color(Color.Black, 0.35f));
+        Globals.SpriteBatch.DrawString(font, InputText, new Vector2(Globals.Settings.WindowSize.X / 20 + 10, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10 + 5), Color.White);
+    }
+
+    public void TextInputHandler(object sender, TextInputEventArgs args)
+    {
+        var pressedKey = args.Key;
+        var character = args.Character;
+        // do something with the character (and optionally the key)
+        // ...
     }
 }

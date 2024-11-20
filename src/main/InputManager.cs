@@ -44,8 +44,12 @@ public class InputManager
         PUp = false;
         PDown = false;
 
+        if(!Main.main.TypingMode)
+        {
+
         if(Joystick.LastConnectedIndex == 0)
         {
+        
         if(kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left) || jstate.Axes[0] < -16384 || gstate.IsButtonDown(Buttons.DPadLeft))
         {
             DLeft = true;
@@ -188,35 +192,6 @@ public class InputManager
                 break;
         }
 
-        //! Debug
-        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.R))
-        {
-            Player.ResetPos(Main.player);
-            Player.ResetState(Main.player);
-        }
-
-        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.N))
-        {
-            if(Tilemap.level.X < Tilemap.Collision.Length - 1)
-            {
-                Tilemap.MoveLevel();
-            }
-        }
-
-        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.I))
-        {
-            if(!Main.player.Immune)
-            {
-                Main.player.Immune = true;
-            } else if(Main.player.Immune)
-            {
-                Main.player.Immune = false;
-            }
-        }
-
-        if(Main.hasF3On && IsKeyPressed(kstate, prevkstate, Keys.T))
-        {
-            Triangle.Summon(new Vector2(Main.player.Drect.X, Main.player.Drect.Y));
         }
 
         prevkstate = kstate;
@@ -230,5 +205,55 @@ public class InputManager
     public static bool IsButtonPressed(GamePadState gstate, GamePadState prevgstate, Buttons button)
     {
         return gstate.IsButtonDown(button) && !prevgstate.IsButtonDown(button);
+    }
+
+    public static char? KeyToChar(Keys key, bool shift)
+    {
+        bool isCapsLock = Keyboard.GetState().CapsLock;
+
+        // Handle A-Z
+        if (key >= Keys.A && key <= Keys.Z)
+        {
+            // Uppercase if either Shift or Caps Lock is active, but not both
+            bool isUpperCase = shift ^ isCapsLock; // XOR to toggle case
+            return isUpperCase ? (char)key : char.ToLower((char)key);
+        }
+
+        // Handle 0-9 (D0-D9)
+        if (key >= Keys.D0 && key <= Keys.D9)
+        {
+            return shift ? key switch
+            {
+                Keys.D1 => '!',
+                Keys.D2 => '@',
+                Keys.D3 => '#',
+                Keys.D4 => '$',
+                Keys.D5 => '%',
+                Keys.D6 => '^',
+                Keys.D7 => '&',
+                Keys.D8 => '*',
+                Keys.D9 => '(',
+                Keys.D0 => ')',
+                _ => null
+            } : (char)('0' + (key - Keys.D0));
+        }
+
+        // Handle common punctuation and symbols
+        return key switch
+        {
+            Keys.Space => ' ',
+            Keys.OemComma => shift ? '<' : ',', // Comma or Less-than
+            Keys.OemPeriod => shift ? '>' : '.', // Period or Greater-than
+            Keys.OemQuestion => shift ? '?' : '/', // Slash or Question Mark
+            Keys.OemSemicolon => shift ? ':' : ';', // Semicolon or Colon
+            Keys.OemQuotes => shift ? '"' : '\'', // Quote or Double Quote
+            Keys.OemOpenBrackets => shift ? '{' : '[', // Open Bracket or Curly Brace
+            Keys.OemCloseBrackets => shift ? '}' : ']', // Close Bracket or Curly Brace
+            Keys.OemPipe => shift ? '|' : '\\', // Pipe or Backslash
+            Keys.OemPlus => shift ? '+' : '=', // Plus or Equal
+            Keys.OemMinus => shift ? '_' : '-', // Underscore or Hyphen
+            //Keys.OemTilde => shift ? '~' : '`', // Tilde or Backtick
+            _ => null // Unhandled key
+        };
     }
 }

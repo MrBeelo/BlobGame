@@ -15,7 +15,7 @@ namespace BlobGame
         public static int playerSizeH = 64;
         public int Health {get; set;} = 100;
         public int stamina = 500;
-        private static SoundEffect successSound;
+        public static SoundEffect successSound;
         private static SoundEffect jumpSound;
         private static SoundEffect speedStartSound;
         private static SoundEffect speedEndSound;
