@@ -30,8 +30,8 @@ namespace BlobGame
                         Main.currentGameState = Main.GameState.MainMenu;
                         break;
                 }
+                selectedIndex = 0;
             }
-            
             prevkstate = kstate;
         }
 

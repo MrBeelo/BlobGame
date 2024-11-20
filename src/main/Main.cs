@@ -12,7 +12,7 @@ public class Main : Game
 {
     public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.34";
+    public static string version = "v0.35";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -145,7 +145,7 @@ public class Main : Game
             }
         }
 
-        LoweredVolume = Globals.Settings.Volume * 0.6;
+        LoweredVolume = Globals.Settings.Volume * 0.4;
 
         timeSpan += gameTime.ElapsedGameTime;
         frameCounter++;
@@ -248,7 +248,7 @@ public class Main : Game
         {
             case GameState.MainMenu:
                 mainMenu.Update(gameTime);
-                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && TypingMode)
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && !TypingMode)
                 {
                     currentGameState = GameState.Quit;
                 }
@@ -269,14 +269,14 @@ public class Main : Game
                     triangle.Update(gameTime);
                 }
 
-                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && TypingMode)
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && !TypingMode)
                 {
                     currentGameState = GameState.Paused;
                 }
                 break;
 
             case GameState.Paused:
-                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && TypingMode)
+                if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && !TypingMode)
                 {
                     currentGameState = GameState.MainMenu;
                 }

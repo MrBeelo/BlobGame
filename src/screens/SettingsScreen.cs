@@ -73,7 +73,7 @@ namespace BlobGame
                         }
                         break;
                 }
-                
+                selectedIndex = 0;
                 Globals.Settings.SaveSettings(Main.settingsFilePath); // Save changes to the file
             }
 

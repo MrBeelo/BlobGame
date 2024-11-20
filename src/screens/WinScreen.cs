@@ -34,6 +34,7 @@ namespace BlobGame
                         Tilemap.Reset(Main.player);
                         break;
                 }
+                selectedIndex = 0;
             }
             prevkstate = kstate;
         }
