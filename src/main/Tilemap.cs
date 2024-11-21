@@ -22,15 +22,20 @@ namespace BlobGame
         public static List<Vector3> excludedNormalTiles;
 
         public static List<Vector3> excludedCollisionTiles;
+        public static List<Vector3> permaExcludedNormalTiles;
+
+        public static List<Vector3> permaExcludedCollisionTiles;
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[5 + 1]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[5 + 1]; //! Same here
+            Normal = new Dictionary<Vector2, int>[6 + 1]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[6 + 1]; //! Same here
             normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
             excludedCollisionTiles = new();
+            permaExcludedNormalTiles = new();
+            permaExcludedCollisionTiles = new();
         }
 
         public Dictionary<Vector2, int> LoadMap(string filepath)
@@ -106,6 +111,7 @@ namespace BlobGame
                 {
                     normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+                    if(permaExcludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -131,6 +137,7 @@ namespace BlobGame
                 {
                     collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+                    if(permaExcludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -219,6 +226,12 @@ namespace BlobGame
                     Triangle.Summon(new Vector2(1180, 830));
                     Triangle.Summon(new Vector2(1150, 1000));
                     Triangle.Summon(new Vector2(1630, 1000));
+                    Player.Respawn(Main.player);
+                    break;
+
+                case 6:
+                    level.Y = 200;
+                    level.Z = 100;
                     Player.Respawn(Main.player);
                     break;
             }

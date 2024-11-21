@@ -12,7 +12,7 @@ public class Main : Game
 {
     public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.35";
+    public static string version = "v0.36";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
@@ -57,7 +57,7 @@ public class Main : Game
     }
 
     protected override void Initialize()
-    {
+    { 
         Settings.LoadSettings(settingsFilePath);
 
         Globals.Graphics.PreferredBackBufferWidth = Globals.Settings.WindowSize.X;
@@ -230,6 +230,11 @@ public class Main : Game
 
                 case "/yipee":
                     Player.successSound.Play((float)LoweredVolume, 0.0f, 0.0f);
+                    break;
+
+                case "/execute as @a at @s run kill @s":
+                    player.alive = false;
+                    Triangle.ClearAll();
                     break;
             }
             InputText = "";

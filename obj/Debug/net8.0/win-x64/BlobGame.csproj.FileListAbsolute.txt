@@ -455,3 +455,5 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\wi
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level4_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level5_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level5_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level6_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level6_normal.csv
