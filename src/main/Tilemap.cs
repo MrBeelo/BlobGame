@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using System.Diagnostics;
 
 namespace BlobGame
 {
@@ -81,8 +80,32 @@ namespace BlobGame
 
         public void LoadContent(Game game)
         {
-            textureAtlas = game.Content.Load<Texture2D>("assets/atlas");
-            hitboxAtlas = game.Content.Load<Texture2D>("assets/collision_atlas");
+            string atlasPath = Path.Combine(AppContext.BaseDirectory, "data", "atlas.png");
+            string collAtlasPath = Path.Combine(AppContext.BaseDirectory, "data", "collision_atlas.png");
+
+            if (File.Exists(atlasPath))
+            {
+                using (var atlasTex = File.OpenRead(atlasPath))
+                {
+                    textureAtlas = Texture2D.FromStream(Globals.GraphicsDevice, atlasTex);
+                }
+            }
+            else if (!File.Exists(atlasPath))
+            {
+                textureAtlas = game.Content.Load<Texture2D>("assets/atlas");
+            }
+
+            if (File.Exists(collAtlasPath))
+            {
+                using (var collAtlasTex = File.OpenRead(collAtlasPath))
+                {
+                    hitboxAtlas = Texture2D.FromStream(Globals.GraphicsDevice, collAtlasTex);
+                }
+            }
+            else if (!File.Exists(collAtlasPath))
+            {
+                hitboxAtlas = game.Content.Load<Texture2D>("assets/collision_atlas");
+            }
 
             for(int i = 0; i < Normal.Length; i++)
             {
@@ -111,7 +134,7 @@ namespace BlobGame
                 {
                     normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
-                    if(Globals.SaveFile.permaExcludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+                    if(permaExcludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -137,7 +160,7 @@ namespace BlobGame
                 {
                     collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
-                    if(Globals.SaveFile.permaExcludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+                    if(permaExcludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,

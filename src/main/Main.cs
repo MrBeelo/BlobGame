@@ -13,7 +13,7 @@ public class Main : Game
 {
     public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.37";
+    public static string version = "v0.38";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player {get; set;}
@@ -74,6 +74,7 @@ public class Main : Game
     protected override void LoadContent()
     {
         Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
+        Globals.GraphicsDevice = GraphicsDevice;
 
         pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
         pixelTexture.SetData(new[] { Color.White });
@@ -378,9 +379,11 @@ public class Main : Game
             case GameState.Playing:
                 string health = "Health: " + player.Health.ToString() + "/100";
                 string level = "Level: " + Tilemap.level.X;
+                string xartomantila = "Xartomantila: " + Player.xartomantila;
 
                 Globals.SpriteBatch.DrawString(font, health, new Vector2(Settings.SimulationSize.X - font.MeasureString(health).X - 20, 10), Color.Black);
                 Globals.SpriteBatch.DrawString(font, level, new Vector2(Settings.SimulationSize.X - font.MeasureString(level).X - 20, 60), Color.Black);
+                Globals.SpriteBatch.DrawString(font, xartomantila, new Vector2(Settings.SimulationSize.X - font.MeasureString(xartomantila).X - 20, 110), Color.Black);
                 break;
 
             case GameState.Paused:
