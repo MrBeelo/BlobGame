@@ -7,8 +7,8 @@ namespace BlobGame
 {
     public class CollMoveableSprite : MoveableSprite
     {
-        public List<Point> horizontalCollisions;
-        public List<Point> verticalCollisions;
+        public List<Point> horizontalCollisions = new();
+        public List<Point> verticalCollisions = new();
         public Vector2 minPos, maxPos;
         public CollMoveableSprite(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {

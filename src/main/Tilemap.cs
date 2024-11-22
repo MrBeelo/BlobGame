@@ -97,7 +97,7 @@ namespace BlobGame
 
         public void Update(Game game)
         {
-            GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + level.X + "_normal.csv"), this);
+            GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level.X + "_normal.csv"), this);
         }
 
         public void Draw(GameTime gameTime)
@@ -107,11 +107,11 @@ namespace BlobGame
                 int tpr = 8; //Tiles per row
                 int p_tilesize = 32; //Pixel Tilesize
 
-                foreach(var item in Normal[(int)level.X])
+                foreach(var item in Normal[(int)Globals.SaveFile.Level.X])
                 {
                     normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
-                    if(permaExcludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+                    if(Globals.SaveFile.permaExcludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -133,11 +133,11 @@ namespace BlobGame
                     Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
                 }
 
-                foreach(var item in Collision[(int)level.X])
+                foreach(var item in Collision[(int)Globals.SaveFile.Level.X])
                 {
                     collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
-                    if(permaExcludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
+                    if(Globals.SaveFile.permaExcludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
 
                     Rectangle dest = new(
                         (int)item.Key.X * Tilesize,
@@ -235,6 +235,8 @@ namespace BlobGame
                     Player.Respawn(Main.player);
                     break;
             }
+
+            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
         }
 
         public static void Reset(Player player)

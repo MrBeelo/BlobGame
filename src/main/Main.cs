@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace BlobGame;
 
@@ -12,8 +13,9 @@ public class Main : Game
 {
     public static Main main;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.36";
+    public static string version = "v0.37";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
+    public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player {get; set;}
     public static Fireball fireball {get; set;}
     public static Tilemap tilemap {get; set;}
@@ -59,20 +61,18 @@ public class Main : Game
     protected override void Initialize()
     { 
         Settings.LoadSettings(settingsFilePath);
+        SaveFile.LoadSavefile(savefileFilePath);
 
         Globals.Graphics.PreferredBackBufferWidth = Globals.Settings.WindowSize.X;
         Globals.Graphics.PreferredBackBufferHeight = Globals.Settings.WindowSize.Y;
 
         canvas = new Canvas(GraphicsDevice, 1920, 1080);
 
-        Window.TextInput += TextInputHandler;
-
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        Settings.LoadSettings(settingsFilePath);
         Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
         pixelTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -89,6 +89,8 @@ public class Main : Game
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
         Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
 
+        Globals.SaveFile.Initialize();
+
         mainMenu = new MainMenuScreen(font, Globals.Graphics);
         paused = new PausedScreen(font, Globals.Graphics);
         quit = new QuitScreen(font, Globals.Graphics);
@@ -97,7 +99,7 @@ public class Main : Game
         win = new WinScreen(font, Globals.Graphics);
         pass = new PassScreen(font, Globals.Graphics);
 
-        player = new Player(playerTexture, new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
         player.LoadContent(this);
         sprites.Add(player);
 
@@ -107,7 +109,7 @@ public class Main : Game
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
 
-        triangle = new Triangle(triangleTexture, new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        triangle = new Triangle(triangleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         triangle.LoadContent(this);
     }
 
@@ -237,6 +239,7 @@ public class Main : Game
                     Triangle.ClearAll();
                     break;
             }
+            Debug.WriteLine(InputText);
             InputText = "";
             TypingMode = false;
         }
@@ -434,6 +437,7 @@ public class Main : Game
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
                     "Level: " + Tilemap.level,
+                    "Savefile Level: " + Globals.SaveFile.Level,
                     "Mapsize: " + tilemap.Mapsize,
                     "Pressed Direction: " + inputManager.pressedDirection,
                     "Typing Mode: " + TypingMode
@@ -526,13 +530,5 @@ public class Main : Game
     {
         Globals.SpriteBatch.Draw(pixelTexture, new Rectangle(Globals.Settings.WindowSize.X / 20, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10, Globals.Settings.WindowSize.X - Globals.Settings.WindowSize.X / 10, Globals.Settings.WindowSize.Y / 20), new Color(Color.Black, 0.35f));
         Globals.SpriteBatch.DrawString(font, InputText, new Vector2(Globals.Settings.WindowSize.X / 20 + 10, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10 + 5), Color.White);
-    }
-
-    public void TextInputHandler(object sender, TextInputEventArgs args)
-    {
-        var pressedKey = args.Key;
-        var character = args.Character;
-        // do something with the character (and optionally the key)
-        // ...
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -7,17 +6,30 @@ namespace BlobGame
 {
     public class MainMenuScreen : Screen
     {
+        private string start = "Start Game";
         public override string[] MenuItems() {
-            return new string[] {"Continue Game", "Options", "Exit"};
+            return new string[] {start, "Options", "Exit"};
         }
 
         public MainMenuScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
         {
-
+            if(Globals.SaveFile.Level.X <= 0)
+            {
+                start = "Start Game";
+            } else {
+                start = "Continue Game";
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
+            if(Globals.SaveFile.Level.X <= 0)
+            {
+                start = "Start Game";
+            } else {
+                start = "Continue Game";
+            }
+
             KeyboardState kstate = Keyboard.GetState();
 
             base.Update(gameTime);

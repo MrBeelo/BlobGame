@@ -12,12 +12,15 @@ public static class Globals
     public static SpriteBatch SpriteBatch { get; set; }
     public static GraphicsDeviceManager Graphics {get; set;}
     public static GraphicsDevice GraphicsDevice {get; set;}
-    public static Settings Settings = new Settings(); 
+    public static Settings Settings = new Settings();
+    public static SaveFile SaveFile = new SaveFile();
 
     public static void Update(GameTime gameTime)
     {
         TotalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
         Settings = Settings.LoadSettings(Main.settingsFilePath);
+        SaveFile = SaveFile.LoadSavefile(Main.savefileFilePath);
+        SaveFile.Update();
         Graphics.PreferredBackBufferWidth = Settings.WindowSize.X;
         Graphics.PreferredBackBufferHeight = Settings.WindowSize.Y;
         Graphics.ApplyChanges();

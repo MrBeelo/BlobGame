@@ -48,7 +48,7 @@ namespace BlobGame
         public int Immunity = 0;
         public bool Immune = false;
         public Matrix translation;
-        public static int Xartomantila = 0;
+        public static int xartomantila = 0;
         
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
@@ -368,7 +368,8 @@ namespace BlobGame
                         {
                             Tilemap.permaExcludedNormalTiles.Add(new Vector3(33, tile.X, tile.Y));
                             Tilemap.permaExcludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
-                            Xartomantila++;
+                            xartomantila++;
+                            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
                         }
                     }
                 } else {
@@ -552,6 +553,16 @@ namespace BlobGame
                                 Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
                                 Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             }
+                        }
+                    }
+                    else if(value == 10) //! Xartomantila
+                    {
+                        if(!Tilemap.permaExcludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                        {
+                            Tilemap.permaExcludedNormalTiles.Add(new Vector3(33, tile.X, tile.Y));
+                            Tilemap.permaExcludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
+                            xartomantila++;
+                            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
                         }
                     }
                 } else {
@@ -769,7 +780,7 @@ namespace BlobGame
                 "Immune: " + Immune,
                 "Sanic Time: " + sanicTime,
                 "Double Jump Reset: " + djReset,
-                "Xartomantila: " + Xartomantila
+                "Xartomantila: " + xartomantila
             };
         }
 
