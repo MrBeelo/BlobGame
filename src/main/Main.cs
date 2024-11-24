@@ -35,6 +35,7 @@ public class Main : Game
     public DeathScreen death;
     public WinScreen win;
     public PassScreen pass;
+    public InfoScreen info;
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
     KeyboardState prevkstate;
     public int frameCounter;
@@ -46,7 +47,7 @@ public class Main : Game
     public bool TypingMode = false;
     public string InputText = "";
     public enum GameState
-    {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass}
+    {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info}
     public Main()
     {
         Window.Title = "Blob Game";
@@ -99,6 +100,7 @@ public class Main : Game
         death = new DeathScreen(font, Globals.Graphics);
         win = new WinScreen(font, Globals.Graphics);
         pass = new PassScreen(font, Globals.Graphics);
+        info = new InfoScreen(font, Globals.Graphics);
 
         player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
         player.LoadContent(this);
@@ -235,7 +237,7 @@ public class Main : Game
                     Player.successSound.Play((float)LoweredVolume, 0.0f, 0.0f);
                     break;
 
-                case "/execute as @a at @s run kill @s":
+                case "/killAll":
                     player.alive = false;
                     Triangle.ClearAll();
                     break;
@@ -311,6 +313,10 @@ public class Main : Game
             case GameState.Pass:
                 pass.Update(gameTime);
                 break;
+
+            case GameState.Info:
+                info.Update(gameTime);
+                break;
         }
 
         prevkstate = kstate;
@@ -368,7 +374,7 @@ public class Main : Game
         Globals.SpriteBatch.End();
 
         //!Beginning UI Sprite Batch
-        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        Globals.SpriteBatch.Begin();
 
         switch (currentGameState) 
         {
@@ -408,6 +414,10 @@ public class Main : Game
             
             case GameState.Pass:
                 pass.Draw(Globals.SpriteBatch, Globals.Graphics);
+                break;
+
+            case GameState.Info:
+                info.Draw(Globals.SpriteBatch, Globals.Graphics);
                 break;
         }
 

@@ -8,7 +8,7 @@ namespace BlobGame
     {
         private string start = "Start Game";
         public override string[] MenuItems() {
-            return new string[] {start, "Options", "Exit"};
+            return new string[] {start, "Options", "Credits & Info", "Exit"};
         }
 
         public MainMenuScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
@@ -49,6 +49,10 @@ namespace BlobGame
                         Main.currentGameState = Main.GameState.Options;
                         break;
                     case 2:
+                        //Info
+                        Main.currentGameState = Main.GameState.Info;
+                        break;
+                    case 3:
                         // Exit
                         Main.currentGameState = Main.GameState.Quit;
                         break;

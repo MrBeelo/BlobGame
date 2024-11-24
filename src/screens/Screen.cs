@@ -11,7 +11,7 @@ namespace BlobGame
         public KeyboardState prevkstate;
         public SpriteFont menuFont;
         public int selectedIndex;
-        public Vector2[] itemPosition = {Vector2.Zero, Vector2.Zero, Vector2.Zero};
+        public Vector2[] itemPosition = {Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero};
         public Color normalColor = Color.White;
         public Color selectedColor = Color.Yellow;
         public Main main;
