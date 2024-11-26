@@ -241,6 +241,23 @@ public class Main : Game
                     player.alive = false;
                     Triangle.ClearAll();
                     break;
+
+                case string s when s.StartsWith("/moveTo"):
+                    string levelPart = s.Substring("/moveTo ".Length).Trim();
+                    if (int.TryParse(levelPart, out int level))
+                    {
+                        if(level >= 0 && level < Tilemap.Collision.Length)
+                        {
+                            Tilemap.EvaluateLevelPos(level);
+                            Tilemap.level.X = level;
+                            Player.Respawn(player);
+                        }
+                    }
+                    break;
+
+                default:
+                    Debug.WriteLine("INVALID COMMAND");
+                    break;
             }
             Debug.WriteLine(InputText);
             InputText = "";

@@ -120,6 +120,13 @@ namespace BlobGame
 
         public void Update(Game game)
         {
+            if(level.X > Collision.Length || level.X < 0)
+            {
+                level = new Vector3(0, 50, 600);
+            }
+
+            EvaluateLevelPos((int)level.X);
+            
             GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level.X + "_normal.csv"), this);
         }
 
@@ -198,34 +205,29 @@ namespace BlobGame
             switch(level.X)
             {
                 case 0:
-                    level.Y = 50;
-                    level.Z = 600;
+                    EvaluateLevelPos((int)level.X);
                     Player.Respawn(Main.player);
                     break;
 
                 case 1:
-                    level.Y = 100;
-                    level.Z = 250;
+                    EvaluateLevelPos((int)level.X);
                     Player.Respawn(Main.player);
                     break;
 
                 case 2:
-                    level.Y = 220;
-                    level.Z = 190;
+                    EvaluateLevelPos((int)level.X);
                     Player.Respawn(Main.player);
                     break;
 
                 case 3:
-                    level.Y = 200;
-                    level.Z = 100;
+                    EvaluateLevelPos((int)level.X);
                     Triangle.Summon(new Vector2(1400, 400));
                     Triangle.Summon(new Vector2(750, 250));
                     Player.Respawn(Main.player);
                     break;
 
                 case 4:
-                    level.Y = 160;
-                    level.Z = 65;
+                    EvaluateLevelPos((int)level.X);
                     Triangle.Summon(new Vector2(1600, 130));
                     Triangle.Summon(new Vector2(1090, 1000));
                     Triangle.Summon(new Vector2(580, 1025));
@@ -233,8 +235,7 @@ namespace BlobGame
                     break;
 
                 case 5:
-                    level.Y = 100;
-                    level.Z = 65;
+                    EvaluateLevelPos((int)level.X);
                     Triangle.Summon(new Vector2(800, 65));
                     Triangle.Summon(new Vector2(1400, 130));
                     Triangle.Summon(new Vector2(1890, 130));
@@ -253,8 +254,7 @@ namespace BlobGame
                     break;
 
                 case 6:
-                    level.Y = 200;
-                    level.Z = 100;
+                    EvaluateLevelPos((int)level.X);
                     Player.Respawn(Main.player);
                     break;
             }
@@ -269,6 +269,47 @@ namespace BlobGame
             excludedCollisionTiles.Clear();
             Player.Respawn(player);
             Triangle.ClearAll();
+        }
+
+        public static void EvaluateLevelPos(int l)
+        {
+            switch(l)
+            {
+                case 0:
+                    level.Y = 50;
+                    level.Z = 600;
+                    break;
+
+                case 1:
+                    level.Y = 100;
+                    level.Z = 250;
+                    break;
+
+                case 2:
+                    level.Y = 220;
+                    level.Z = 190;
+                    break;
+
+                case 3:
+                    level.Y = 200;
+                    level.Z = 100;
+                    break;
+
+                case 4:
+                    level.Y = 160;
+                    level.Z = 65;
+                    break;
+
+                case 5:
+                    level.Y = 100;
+                    level.Z = 65;
+                    break;
+
+                case 6:
+                    level.Y = 200;
+                    level.Z = 100;
+                    break;
+            }
         }
     }
 }

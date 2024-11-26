@@ -18,8 +18,8 @@ namespace BlobGame
         int walkingCounter;
         int walkingActiveFrame;
         public static Texture2D[] jumpingTextures;
-        public static int triangleSizeW = 42;
-        public static int triangleSizeH = 64;
+        public static int triangleSizeW = 32;
+        public static int triangleSizeH = 48;
         Random random = new Random();
         bool randomBool;
         int delay = 0;
