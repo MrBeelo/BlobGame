@@ -251,6 +251,7 @@ public class Main : Game
                             Tilemap.EvaluateLevelPos(level);
                             Tilemap.level.X = level;
                             Player.Respawn(player);
+                            Globals.SaveFile.SaveSavefile(savefileFilePath);
                         }
                     }
                     break;
