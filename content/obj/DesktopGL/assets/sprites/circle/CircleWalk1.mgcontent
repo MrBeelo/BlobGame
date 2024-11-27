@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk1.png</SourceFile>
-  <SourceTime>2024-11-26T16:29:41.2754429+02:00</SourceTime>
+  <SourceTime>2024-11-27T16:48:18.2677129+02:00</SourceTime>
   <DestFile>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/bin/DesktopGL/assets/sprites/circle/CircleWalk1.xnb</DestFile>
-  <DestTime>2024-11-26T16:35:06.2314782+02:00</DestTime>
+  <DestTime>2024-11-27T16:51:45.3018247+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

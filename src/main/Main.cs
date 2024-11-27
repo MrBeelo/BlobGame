@@ -12,6 +12,7 @@ namespace BlobGame;
 public class Main : Game
 {
     public static Main main;
+    public float deltaTime;
     public static string credits = "Made by MrBeelo";
     public static string version = "v0.38";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
@@ -20,7 +21,9 @@ public class Main : Game
     public static Fireball fireball {get; set;}
     public static Tilemap tilemap {get; set;}
     public static Triangle triangle {get; set;}
+    public static Circle circle {get; set;}
     public static List<Triangle> triangles = new();
+    public static List<Circle> circles = new();
     public static List<Fireball> fireballs = new();
     public static List<Sprite> sprites = new();
     public static bool hasF3On = false;
@@ -90,6 +93,7 @@ public class Main : Game
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
         Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
+        Texture2D circleTexture = Content.Load<Texture2D>("assets/sprites/circle/CircleIdle1");
 
         Globals.SaveFile.Initialize();
 
@@ -114,11 +118,16 @@ public class Main : Game
 
         triangle = new Triangle(triangleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         triangle.LoadContent(this);
+
+        circle = new Circle(circleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Circle.circleSizeW, Circle.circleSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        circle.LoadContent(this);
     }
 
     protected override void Update(GameTime gameTime)
     {
         main = this;
+
+        deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         Globals.Update(gameTime);
 
@@ -192,6 +201,10 @@ public class Main : Game
         {
             switch(InputText)
             {
+                case "/yipee":
+                    Player.successSound.Play((float)LoweredVolume, 0.0f, 0.0f);
+                    break;
+                
                 case "/kill":
                     player.alive = false;
                     break;
@@ -206,10 +219,6 @@ public class Main : Game
 
                 case "/respawn":
                     Player.Respawn(player);
-                    break;
-
-                case "/triangleClear":
-                    Triangle.ClearAll();
                     break;
 
                 case "/moveLevel":
@@ -233,13 +242,22 @@ public class Main : Game
                     Triangle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
                     break;
 
-                case "/yipee":
-                    Player.successSound.Play((float)LoweredVolume, 0.0f, 0.0f);
+                case "/clearTriangle":
+                    Triangle.ClearAll();
+                    break;
+
+                case "/summonCircle":
+                    Circle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    break;
+
+                case "/clearCircle":
+                    Circle.ClearAll();
                     break;
 
                 case "/killAll":
                     player.alive = false;
                     Triangle.ClearAll();
+                    Circle.ClearAll();
                     break;
 
                 case string s when s.StartsWith("/moveTo"):
@@ -296,6 +314,11 @@ public class Main : Game
                 foreach(var triangle in triangles.ToList())
                 {
                     triangle.Update(gameTime);
+                }
+
+                foreach(var circle in circles.ToList())
+                {
+                    circle.Update(gameTime);
                 }
 
                 if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape) && !TypingMode)
@@ -385,6 +408,11 @@ public class Main : Game
                 {
                     triangle.Draw(Globals.SpriteBatch);
                 }
+
+                foreach(var circle in circles.ToList())
+                {
+                    circle.Draw(Globals.SpriteBatch);
+                }
                 break;
         }
 
@@ -463,10 +491,17 @@ public class Main : Game
                     otherDebugInfoList.AddRange(triangleDebugInfo);
                 }
 
+                foreach(var circle in circles)
+                {
+                    string[] circleDebugInfo = circle.GetDebugInfo();
+                    otherDebugInfoList.AddRange(circleDebugInfo);
+                }
+
                 string[] mainDebugInfo = 
                 {
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
+                    "Delta Time: " + deltaTime,
                     "Level: " + Tilemap.level,
                     "Savefile Level: " + Globals.SaveFile.Level,
                     "Mapsize: " + tilemap.Mapsize,

@@ -638,8 +638,11 @@ namespace BlobGame
             {
                 Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
                 Main.fireballs.Add(fireball);
-                stamina -= 100;
                 laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                if(!isSanic)
+                {
+                    stamina -= 100;
+                }
             }
 
             //! Handling the Dash

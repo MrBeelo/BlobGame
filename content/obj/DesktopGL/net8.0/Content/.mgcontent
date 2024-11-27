@@ -17,6 +17,13 @@
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedEnd.wav</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedStart.wav</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/success.wav</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleIdle1.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleIdle2.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleJump1.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleJump2.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk1.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk2.png</File>
+    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk3.png</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball1.png</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball2.png</File>
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball3.png</File>
@@ -36,6 +43,13 @@
     <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
