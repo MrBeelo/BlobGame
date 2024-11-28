@@ -7,3 +7,67 @@ using (var game = new BlobGame.Main())
 //git commit -m "Your commit message here" (to commit)
 //git push origin main (to push, with main being the branch name)
 
+/*
+
+? Hey,
+? So this is probably where I'm going to be leaving notes and questioning reality.
+? Man coding is kind of hard, thank God I didn't choose C++, that would have been too difficult.
+? Any things I have to finish will be marked with TODO, else with ? (or if really important with !)
+? I have no idea when I first started this, github says 2 months ago (writing on 28/11/2024) but that was
+? when I first committed to github, what about those tests that I made?
+? This stuff will probably go on some essay one day soooo...
+? Hi, I'm MrBeelo! (Vaggelis) and uhhhhhhhh...
+? That's about it... Okay look,
+? I have way too much shit going on at the moment, I hope future me is okay. :(
+? This is my first *real* project (if we exclude anything made in scratch)
+? Currently in 9th grade doing this as a passion project.
+? I hope one day I can make this into a full game and maybe even sell it.
+? Currently I want to make it to 50 updates and come out with a finished product.
+? And I'm not saying polished, unless I join a game studio or something.
+? This idea wouldn't have been a thing if my friend Nick didn't make this
+? horrific model of a 'blob' or whatever. Whatever it is, it was funny at the time.
+? Genuinely, how did I even get here??? Like I'm making a fucking game???
+? This is something I've always wanted to do, and now I'm here!
+? And I've learned so much along the way too! I even learned how shit some
+? programming languages are! (I'm looking at you, Java)
+? As much as I hate them though, they're still languages and you can still make
+? some insane shit with them.. I also hope that I finally learn python, I beleive
+? it would be a nice addition to my language collection.
+? And that's about it for my rant. I hope I reach 0.50 soon and the
+? people like it :)))))
+?
+? Peace, Beelo
+
+TODOS THAT I HAVE TO COMPLETE :))) 
+
+TODO: FOR UPDATE 0.39:
+TODO:
+TODO: 1) ABOUT 1 OR 2 LEVELS, MAKE ONE OF THESE INTO A SCROLLER***
+
+TODO: FOR UPDATE 0.40:
+TODO:
+TODO: 1) HOWEVER MANY LEVELS IT TAKES TO REACH 10 + SCROLLER***
+TODO: 2) BOSSFIGHT IDEA*
+
+TODO: FOR WHENEVER:
+TODO:
+TODO: 1) DELTATIME**
+
+
+! * Summon a triangle as a bossfight where the Drect is like 5 times bigger
+! in width and height so it looks like a giant bossfight and that should be level 10 where you put the win block!
+! You can probably make that a new BossSummon() method.
+!
+! ** Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)
+! Afterwards add LogPos into Drect and update as usual. Prob make that updating thing into a method and add thing in first line,
+! where in Sprite.cs you call Drect = new Rectangle(LogicalPosition.X, LogicalPosition.Y, Drect.Width, Drect.Height)
+! Then you can call whenever, or just set up an update loop withing Sprite.cs that other classes inherit from.
+! All values should be floats up until the update method, as if you multiply anything by deltaTime and it's
+! rounded to an integer, It's going to be 0, so the player won't be able to move
+!
+! *** Total level height should be 1080 like usual but width should be
+! really long, kinda like Geometry Dash :)
+
+*/
+
