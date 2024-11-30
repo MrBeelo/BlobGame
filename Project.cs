@@ -7,6 +7,9 @@ using (var game = new BlobGame.Main())
 //git commit -m "Your commit message here" (to commit)
 //git push origin main (to push, with main being the branch name)
 
+//dotnet publish (for windows)
+//dotnet publish -r linux-x64 (for linux)
+
 /*
 
 ? Hey,
