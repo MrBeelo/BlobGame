@@ -27,8 +27,8 @@ namespace BlobGame
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[6 + 1]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[6 + 1]; //! Same here
+            Normal = new Dictionary<Vector2, int>[7 + 1]; //! Change based on how many maps you make.
+            Collision = new Dictionary<Vector2, int>[7 + 1]; //! Same here
             normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
@@ -197,68 +197,7 @@ namespace BlobGame
         public static void MoveLevel()
         {
             level.X++;
-
-            excludedNormalTiles.Clear();
-            excludedCollisionTiles.Clear();
-            Triangle.ClearAll();
-
-            switch(level.X)
-            {
-                case 0:
-                    EvaluateLevelPos((int)level.X);
-                    Player.Respawn(Main.player);
-                    break;
-
-                case 1:
-                    EvaluateLevelPos((int)level.X);
-                    Player.Respawn(Main.player);
-                    break;
-
-                case 2:
-                    EvaluateLevelPos((int)level.X);
-                    Player.Respawn(Main.player);
-                    break;
-
-                case 3:
-                    EvaluateLevelPos((int)level.X);
-                    Triangle.Summon(new Vector2(1400, 400));
-                    Triangle.Summon(new Vector2(750, 250));
-                    Player.Respawn(Main.player);
-                    break;
-
-                case 4:
-                    EvaluateLevelPos((int)level.X);
-                    Triangle.Summon(new Vector2(1600, 130));
-                    Triangle.Summon(new Vector2(1090, 1000));
-                    Triangle.Summon(new Vector2(580, 1025));
-                    Player.Respawn(Main.player);
-                    break;
-
-                case 5:
-                    EvaluateLevelPos((int)level.X);
-                    Triangle.Summon(new Vector2(800, 65));
-                    Triangle.Summon(new Vector2(1400, 130));
-                    Triangle.Summon(new Vector2(1890, 130));
-                    Triangle.Summon(new Vector2(380, 320));
-                    Triangle.Summon(new Vector2(960, 320));
-                    Triangle.Summon(new Vector2(1540, 320));
-                    Triangle.Summon(new Vector2(1800, 320));
-                    Triangle.Summon(new Vector2(290, 580));
-                    Triangle.Summon(new Vector2(770, 580));
-                    Triangle.Summon(new Vector2(1570, 580));
-                    Triangle.Summon(new Vector2(670, 830));
-                    Triangle.Summon(new Vector2(1180, 830));
-                    Triangle.Summon(new Vector2(1150, 1000));
-                    Triangle.Summon(new Vector2(1630, 1000));
-                    Player.Respawn(Main.player);
-                    break;
-
-                case 6:
-                    EvaluateLevelPos((int)level.X);
-                    Player.Respawn(Main.player);
-                    break;
-            }
-
+            EvaluateLevel((int)level.X);
             Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
         }
 
@@ -269,6 +208,7 @@ namespace BlobGame
             excludedCollisionTiles.Clear();
             Player.Respawn(player);
             Triangle.ClearAll();
+            Circle.ClearAll();
         }
 
         public static void EvaluateLevelPos(int l)
@@ -309,7 +249,67 @@ namespace BlobGame
                     level.Y = 200;
                     level.Z = 100;
                     break;
+
+                case 7:
+                    level.Y = 225;
+                    level.Z = 350;
+                    break;
             }
+        }
+
+        public static void EvaluateLevel(int l)
+        {
+            EvaluateLevelPos(l);
+            excludedNormalTiles.Clear();
+            excludedCollisionTiles.Clear();
+            Triangle.ClearAll();
+            Circle.ClearAll();
+            switch(l)
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    Circle.Summon(new Vector2(1400, 400));
+                    Circle.Summon(new Vector2(750, 250));
+                    break;
+
+                case 4:
+                    Triangle.Summon(new Vector2(1600, 130));
+                    Triangle.Summon(new Vector2(1090, 1000));
+                    Triangle.Summon(new Vector2(580, 1025));
+                    break;
+
+                case 5:
+                    Circle.Summon(new Vector2(800, 65));
+                    Circle.Summon(new Vector2(1400, 130));
+                    Triangle.Summon(new Vector2(1890, 130));
+                    Circle.Summon(new Vector2(380, 320));
+                    Circle.Summon(new Vector2(960, 320));
+                    Triangle.Summon(new Vector2(1540, 320));
+                    Circle.Summon(new Vector2(1800, 320));
+                    Circle.Summon(new Vector2(290, 580));
+                    Triangle.Summon(new Vector2(770, 580));
+                    Circle.Summon(new Vector2(1570, 580));
+                    Circle.Summon(new Vector2(670, 830));
+                    Triangle.Summon(new Vector2(1180, 830));
+                    Circle.Summon(new Vector2(1150, 1000));
+                    Circle.Summon(new Vector2(1630, 1000));
+                    break;
+
+                case 6:
+                    break;
+
+                case 7:
+                    break;
+            }
+            Player.Respawn(Main.player);
         }
     }
 }

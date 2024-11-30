@@ -464,3 +464,5 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\wi
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\circle\CircleWalk1.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\circle\CircleWalk2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\content\assets\sprites\circle\CircleWalk3.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level7_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Debug\net8.0\win-x64\data\level7_normal.csv

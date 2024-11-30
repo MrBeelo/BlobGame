@@ -214,7 +214,7 @@ namespace BlobGame
                 TriangleIsAlive = false;
             }
 
-            if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune)
+            if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && !Main.player.isSanic)
             {
                 Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 Main.player.Health -= 20;

@@ -14,7 +14,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.38";
+    public static string version = "v0.39";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player {get; set;}
@@ -95,8 +95,6 @@ public class Main : Game
         Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
         Texture2D circleTexture = Content.Load<Texture2D>("assets/sprites/circle/CircleIdle1");
 
-        Globals.SaveFile.Initialize();
-
         mainMenu = new MainMenuScreen(font, Globals.Graphics);
         paused = new PausedScreen(font, Globals.Graphics);
         quit = new QuitScreen(font, Globals.Graphics);
@@ -121,6 +119,8 @@ public class Main : Game
 
         circle = new Circle(circleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Circle.circleSizeW, Circle.circleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         circle.LoadContent(this);
+
+        Globals.SaveFile.Initialize();
     }
 
     protected override void Update(GameTime gameTime)
@@ -266,7 +266,7 @@ public class Main : Game
                     {
                         if(level >= 0 && level < Tilemap.Collision.Length)
                         {
-                            Tilemap.EvaluateLevelPos(level);
+                            Tilemap.EvaluateLevel(level);
                             Tilemap.level.X = level;
                             Player.Respawn(player);
                             Globals.SaveFile.SaveSavefile(savefileFilePath);

@@ -12,6 +12,13 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sounds\speedEnd.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sounds\speedStart.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sounds\success.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleIdle1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleIdle2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleJump1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleJump2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleWalk1.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleWalk2.xnb
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\circle\CircleWalk3.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\fireball\Fireball1.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\fireball\Fireball2.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\content/assets\sprites\fireball\Fireball3.xnb
@@ -43,6 +50,8 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\level5_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\level6_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\level6_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\level7_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\data\level7_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\soft_oal.dll
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\SDL2.dll
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\win-x64\publish\BlobGame.exe

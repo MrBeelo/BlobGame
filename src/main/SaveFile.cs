@@ -53,6 +53,8 @@ namespace BlobGame
                 Xartomantila = loadedSaveFile.Xartomantila;
                 permaExcludedNormalTiles = loadedSaveFile.permaExcludedNormalTiles;
                 permaExcludedCollisionTiles = loadedSaveFile.permaExcludedCollisionTiles;
+                Tilemap.EvaluateLevel((int)Level.X);
+                Player.ResetPos(Main.player);
             } else if(!File.Exists(filePath))
             {
                 Level = new Vector3(0, 50, 600);
