@@ -14,7 +14,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.39.1";
+    public static string version = "v0.39.2";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player {get; set;}
@@ -104,11 +104,17 @@ public class Main : Game
         pass = new PassScreen(font, Globals.Graphics);
         info = new InfoScreen(font, Globals.Graphics);
 
-        fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
-        fireball.LoadContent(this);
+        Globals.SaveFile.Initialize();
+
+        player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player.LoadContent(this);
+        sprites.Add(player);
 
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
+
+        fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
+        fireball.LoadContent(this);
 
         triangle = new Triangle(triangleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         triangle.LoadContent(this);
@@ -116,12 +122,7 @@ public class Main : Game
         circle = new Circle(circleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Circle.circleSizeW, Circle.circleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         circle.LoadContent(this);
 
-        Globals.SaveFile.Initialize();
-
-        player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
-        player.LoadContent(this);
-        sprites.Add(player);
-
+        Player.Respawn(player);
     }
 
     protected override void Update(GameTime gameTime)

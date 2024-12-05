@@ -15,26 +15,26 @@ namespace BlobGame
         public static Dictionary<Vector2, int>[] Collision;
         public Texture2D textureAtlas;
         public Texture2D hitboxAtlas;
-        public List<Vector3> normalTiles;
-        public List<Vector3> collisionTiles;
+        public List<Vector3> normalTiles = new();
+        public List<Vector3> collisionTiles = new();
 
-        public static List<Vector3> excludedNormalTiles;
+        public static List<Vector3> excludedNormalTiles = new();
 
-        public static List<Vector3> excludedCollisionTiles;
-        public static List<Vector3> permaExcludedNormalTiles;
+        public static List<Vector3> excludedCollisionTiles = new();
+        public static List<Vector3> permaExcludedNormalTiles = new();
 
-        public static List<Vector3> permaExcludedCollisionTiles;
+        public static List<Vector3> permaExcludedCollisionTiles = new();
 
         public Tilemap()
         {
             Normal = new Dictionary<Vector2, int>[7 + 1]; //! Change based on how many maps you make.
             Collision = new Dictionary<Vector2, int>[7 + 1]; //! Same here
-            normalTiles = new();
+            /*normalTiles = new();
             collisionTiles = new();
             excludedNormalTiles = new();
             excludedCollisionTiles = new();
             permaExcludedNormalTiles = new();
-            permaExcludedCollisionTiles = new();
+            permaExcludedCollisionTiles = new();*/
         }
 
         public Dictionary<Vector2, int> LoadMap(string filepath)
@@ -309,7 +309,6 @@ namespace BlobGame
                 case 7:
                     break;
             }
-            Player.Respawn(Main.player);
         }
     }
 }
