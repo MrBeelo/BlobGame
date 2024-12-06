@@ -219,6 +219,7 @@ namespace BlobGame
                 Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 Main.player.Health -= 10;
                 Main.player.Immunity = 50;
+                Player.Damage(10);
             }
 
             if(!TriangleIsAlive)

@@ -13,7 +13,7 @@ namespace BlobGame
     {
         public static int playerSizeW = 42;
         public static int playerSizeH = 64;
-        public int Health {get; set;} = 100;
+        public float Health {get; set;} = 100;
         public int stamina = 500;
         public static SoundEffect successSound;
         private static SoundEffect jumpSound;
@@ -208,7 +208,7 @@ namespace BlobGame
                 doubleJump = false;
             }
 
-            Velocity.Y = Math.Min(25.0f, Velocity.Y);
+            Velocity.Y = Math.Min(40.0f, Velocity.Y);
 
             SetBounds();
             Drect.Location = PointClamp(Drect.Location, minPos, maxPos);
@@ -401,6 +401,7 @@ namespace BlobGame
             
                         if (Velocity.Y > 0) // Falling Down
                         {
+                            TakeFallDmg();
                             Drect.Y = collision.Top - Drect.Height;
                             Velocity.Y = 0.5f;
                             isInAir = false;
@@ -614,22 +615,12 @@ namespace BlobGame
 
             if(!horizColl && hazardHorizColl)
             {
-                alive = false;
-                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
-                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
-                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
-                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
-                ResetState(this);
+                Die();
             }
 
             if(!vertColl && hazardVertColl)
             {
-                alive = false;
-                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
-                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
-                Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
-                Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
-                ResetState(this);
+                Die();
             }
 
             //! Handling the Fireball
@@ -911,6 +902,58 @@ namespace BlobGame
             var dy = (Settings.SimulationSize.Y / 2) - Main.player.Drect.Y - Main.player.Drect.Height;
             dy = MathHelper.Clamp(dy, -Main.tilemap.Mapsize.Y + Settings.SimulationSize.Y, 0);
             translation = Matrix.CreateTranslation(dx, dy, 0f);
+        }
+
+        public static void TakeFallDmg()
+        {
+            switch(Main.player.Velocity.Y)
+            {
+                case >= 40:
+                    Damage(15);
+                    break;
+
+                case > 35:
+                    Damage(12.5f);
+                    break;
+
+                case > 30:
+                    Damage(10);
+                    break;
+
+                case > 25:
+                    Damage(7.5f);
+                    break;
+
+                case > 20:
+                    Damage(5);
+                    break;
+            }
+        }
+
+        public static void Damage(float dmgAmount)
+        {
+            Main.player.Health -= dmgAmount;
+            if(Main.player.Health > 0)
+            {
+                hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            }
+            Main.player.Immunity = 50;
+        }
+
+        public static void Die()
+        {
+            Main.player.alive = false;
+            Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
+            Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
+            Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
+            Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
+            ResetState(Main.player);
+            hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+        }
+
+        public static void Teleport(int x, int y)
+        {
+            Main.player.Drect = new Rectangle(x, y, playerSizeW, playerSizeH);
         }
     }
 }

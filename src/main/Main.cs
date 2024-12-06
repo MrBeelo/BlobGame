@@ -14,7 +14,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.39.2";
+    public static string version = "v0.39.3";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player {get; set;}
@@ -208,7 +208,7 @@ public class Main : Game
                     break;
                 
                 case "/kill":
-                    player.alive = false;
+                    Player.Die();
                     break;
 
                 case "/resetState":
@@ -262,25 +262,29 @@ public class Main : Game
                     Circle.ClearAll();
                     break;
 
-                case string s when s.StartsWith("/moveTo"):
-                    string levelPart = s.Substring("/moveTo ".Length).Trim();
-                    if (int.TryParse(levelPart, out int level))
+                case string s when s.StartsWith("/moveTo") && int.TryParse(s.Substring("/moveTo ".Length).Trim(), out int level):
+                    if(level >= 0 && level < Tilemap.Collision.Length)
                     {
-                        if(level >= 0 && level < Tilemap.Collision.Length)
-                        {
-                            Tilemap.EvaluateLevel(level);
-                            Tilemap.level.X = level;
-                            Player.Respawn(player);
-                            Globals.SaveFile.SaveSavefile(savefileFilePath);
-                        }
+                        Tilemap.EvaluateLevel(level);
+                        Tilemap.level.X = level;
+                        Player.Respawn(player);
+                        Globals.SaveFile.SaveSavefile(savefileFilePath);
                     }
                     break;
 
+                case string s when s.StartsWith("/dmg") && int.TryParse(s["/dmg ".Length..].Trim(), out int damage):
+                    Player.Damage(damage);
+                    break;
+
+                case string s when s.StartsWith("/tp ") && TryParseTwoArgs(s["/tp ".Length..].Trim(), out int x, out int y):
+                    Player.Teleport(x, y);
+                    break;
+
                 default:
-                    Debug.WriteLine("INVALID COMMAND");
+                    Debug.WriteLine("Player Inputted Invalid Command: " + InputText);
                     break;
             }
-            Debug.WriteLine(InputText);
+            Debug.WriteLine("Player Inputted Command: " + InputText);
             InputText = "";
             TypingMode = false;
         }
@@ -598,5 +602,12 @@ public class Main : Game
     {
         Globals.SpriteBatch.Draw(pixelTexture, new Rectangle(Globals.Settings.WindowSize.X / 20, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10, Globals.Settings.WindowSize.X - Globals.Settings.WindowSize.X / 10, Globals.Settings.WindowSize.Y / 20), new Color(Color.Black, 0.35f));
         Globals.SpriteBatch.DrawString(font, InputText, new Vector2(Globals.Settings.WindowSize.X / 20 + 10, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10 + 5), Color.White);
+    }
+
+    public static bool TryParseTwoArgs(string input, out int arg1, out int arg2)
+    {
+        arg1 = arg2 = 0;
+        string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 2 && int.TryParse(parts[0], out arg1) && int.TryParse(parts[1], out arg2);
     }
 }

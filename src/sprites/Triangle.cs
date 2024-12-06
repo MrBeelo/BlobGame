@@ -216,9 +216,10 @@ namespace BlobGame
 
             if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && !Main.player.isSanic)
             {
-                Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                Main.player.Health -= 20;
-                Main.player.Immunity = 50;
+                //Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                //Main.player.Health -= 20;
+                //Main.player.Immunity = 50;
+                Player.Damage(20);
             }
 
             if(!TriangleIsAlive)

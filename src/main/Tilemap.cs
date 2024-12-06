@@ -198,6 +198,7 @@ namespace BlobGame
         {
             level.X++;
             EvaluateLevel((int)level.X);
+            Player.Respawn(Main.player);
             Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
         }
 
