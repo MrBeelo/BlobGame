@@ -320,7 +320,7 @@ namespace BlobGame
 
         public static void SummonBoss(Vector2 pos)
         {
-            Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
+            Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, bossTriangleSizeW, bossTriangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
             Main.triangles.Add(triangle);
         }
 

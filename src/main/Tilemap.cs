@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using System.Diagnostics;
 
 namespace BlobGame
 {
@@ -11,12 +12,12 @@ namespace BlobGame
         public static Vector3 level = new Vector3(0, 50, 600);
         public static int Tilesize = 32; //Display Tilesize
         public Point Mapsize {get; private set;}
-        public static Dictionary<Vector2, int>[] Normal;
-        public static Dictionary<Vector2, int>[] Collision;
+        public static Dictionary<Vector2, int>[] Normal = new Dictionary<Vector2, int>[10 + 1]; //! Change based on how many maps you make.
+        public static Dictionary<Vector2, int>[] Collision = new Dictionary<Vector2, int>[10 + 1]; //! Same here
         public Texture2D textureAtlas;
         public Texture2D hitboxAtlas;
-        public List<Vector3> normalTiles = new();
-        public List<Vector3> collisionTiles = new();
+        public static List<Vector3> normalTiles = new();
+        public static List<Vector3> collisionTiles = new();
 
         public static List<Vector3> excludedNormalTiles = new();
 
@@ -27,14 +28,6 @@ namespace BlobGame
 
         public Tilemap()
         {
-            Normal = new Dictionary<Vector2, int>[7 + 1]; //! Change based on how many maps you make.
-            Collision = new Dictionary<Vector2, int>[7 + 1]; //! Same here
-            /*normalTiles = new();
-            collisionTiles = new();
-            excludedNormalTiles = new();
-            excludedCollisionTiles = new();
-            permaExcludedNormalTiles = new();
-            permaExcludedCollisionTiles = new();*/
         }
 
         public Dictionary<Vector2, int> LoadMap(string filepath)
@@ -125,7 +118,7 @@ namespace BlobGame
                 level = new Vector3(0, 50, 600);
             }
 
-            EvaluateLevelPos((int)level.X);
+            //EvaluateLevelPos((int)level.X);
             
             GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level.X + "_normal.csv"), this);
         }
@@ -194,12 +187,63 @@ namespace BlobGame
             }
         }
 
+        public static void MoveTo(int l)
+        {
+            //level.X++;
+            level.X = l;
+            //EvaluateLevel((int)level.X);
+            //Player.Respawn(Main.player);
+            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+            Eval();
+            /*foreach (var tile in Collision[(int)level.X])
+            {
+                if (Collision[(int)level.X].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
+                {
+                    //Debug.WriteLine("Level: " + level + ", Value: " + value + ", Pos: " + tile.Key.X +  ", " + tile.Key.Y);
+                    if(value == 2)
+                    {
+                        Debug.WriteLine("PASS FOUND AT: " + new Vector2(tile.Key.X, tile.Key.Y));
+                    }
+                }
+            }*/
+        }
+
         public static void MoveLevel()
         {
-            level.X++;
-            EvaluateLevel((int)level.X);
-            Player.Respawn(Main.player);
-            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+            MoveTo((int)level.X + 1);
+        }
+
+        public static void Eval()
+        {
+            excludedNormalTiles.Clear();
+            excludedCollisionTiles.Clear();
+            Triangle.ClearAll();
+            Circle.ClearAll();
+            foreach (var tile in Collision[(int)level.X])
+            {
+                if (Collision[(int)level.X].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
+                {
+                    if(value == 16)
+                    {
+                        Player.Teleport((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize);
+                    }
+
+                    if(value == 17)
+                    {
+                        Triangle.Summon(new Vector2((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize));
+                    }
+
+                    if(value == 18)
+                    {
+                        Triangle.SummonBoss(new Vector2((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize));
+                    }
+
+                    if(value == 19)
+                    {
+                        Circle.Summon(new Vector2((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize));
+                    }
+                }
+            } 
         }
 
         public static void Reset(Player player)
@@ -212,7 +256,7 @@ namespace BlobGame
             Circle.ClearAll();
         }
 
-        public static void EvaluateLevelPos(int l)
+        /*public static void EvaluateLevelPos(int l)
         {
             switch(l)
             {
@@ -310,6 +354,6 @@ namespace BlobGame
                 case 7:
                     break;
             }
-        }
+        }*/
     }
 }

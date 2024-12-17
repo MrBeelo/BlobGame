@@ -104,14 +104,15 @@ public class Main : Game
         pass = new PassScreen(font, Globals.Graphics);
         info = new InfoScreen(font, Globals.Graphics);
 
-        Globals.SaveFile.Initialize();
-
-        player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
-        player.LoadContent(this);
-        sprites.Add(player);
-
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
+
+        player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+
+        Globals.SaveFile.Initialize();
+
+        player.LoadContent(this);
+        sprites.Add(player);
 
         fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
         fireball.LoadContent(this);
@@ -270,13 +271,14 @@ public class Main : Game
                     break;
 
                 case string s when s.StartsWith("/moveTo") && int.TryParse(s.Substring("/moveTo ".Length).Trim(), out int level):
-                    if (level >= 0 && level < Tilemap.Collision.Length)
+                    /*if (level >= 0 && level < Tilemap.Collision.Length)
                     {
                         Tilemap.EvaluateLevel(level);
                         Tilemap.level.X = level;
                         Player.Respawn(player);
                         Globals.SaveFile.SaveSavefile(savefileFilePath);
-                    }
+                    }*/
+                    Tilemap.MoveTo(level);
                     break;
 
                 case string s when s.StartsWith("/dmg") && int.TryParse(s["/dmg ".Length..].Trim(), out int damage):

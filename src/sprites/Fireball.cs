@@ -66,7 +66,7 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(value == 1 || value == 4 || value == 5)
+                    if(value == 1 || value == 4 || value == 5 || value >= 16)
                     {
                         //! Do nothing
                     } else if(value == 6)
