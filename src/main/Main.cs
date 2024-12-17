@@ -107,7 +107,7 @@ public class Main : Game
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
 
-        player = new Player(playerTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        player = new Player(playerTexture, new Rectangle(0, 0, Player.playerSizeW, Player.playerSizeH), new(0, 0, 20, 30), Globals.Graphics);
 
         Globals.SaveFile.Initialize();
 
@@ -117,10 +117,10 @@ public class Main : Game
         fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
         fireball.LoadContent(this);
 
-        triangle = new Triangle(triangleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        triangle = new Triangle(triangleTexture, new Rectangle(0, 0, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         triangle.LoadContent(this);
 
-        circle = new Circle(circleTexture, new Rectangle((int)Globals.SaveFile.Level.Y, (int)Globals.SaveFile.Level.Z, Circle.circleSizeW, Circle.circleSizeH), new(0, 0, 20, 30), Globals.Graphics);
+        circle = new Circle(circleTexture, new Rectangle(0, 0, Circle.circleSizeW, Circle.circleSizeH), new(0, 0, 20, 30), Globals.Graphics);
         circle.LoadContent(this);
 
         Player.Respawn(player);
@@ -227,7 +227,7 @@ public class Main : Game
                     break;
 
                 case "/moveLevel":
-                    if (Tilemap.level.X < Tilemap.Collision.Length - 1)
+                    if (Tilemap.level < Tilemap.Collision.Length - 1)
                     {
                         Tilemap.MoveLevel();
                     }
@@ -445,7 +445,7 @@ public class Main : Game
 
             case GameState.Playing:
                 string health = "Health: " + player.Health.ToString() + "/100";
-                string level = "Level: " + Tilemap.level.X;
+                string level = "Level: " + Tilemap.level;
                 string xartomantila = "Xartomantila: " + Player.xartomantila;
 
                 Globals.SpriteBatch.DrawString(font, health, new Vector2(Settings.SimulationSize.X - font.MeasureString(health).X - 20, 10), Color.Black);

@@ -13,7 +13,7 @@ namespace BlobGame
 
         public MainMenuScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
         {
-            if(Globals.SaveFile.Level.X <= 0)
+            if(Globals.SaveFile.Level <= 0)
             {
                 start = "Start Game";
             } else {
@@ -23,7 +23,7 @@ namespace BlobGame
 
         public override void Update(GameTime gameTime)
         {
-            if(Globals.SaveFile.Level.X <= 0)
+            if(Globals.SaveFile.Level <= 0)
             {
                 start = "Start Game";
             } else {

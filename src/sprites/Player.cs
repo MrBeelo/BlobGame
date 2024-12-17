@@ -221,7 +221,7 @@ namespace BlobGame
             
             foreach (var tile in horizontalCollisions)
             {
-                if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Tilemap.Collision[Tilemap.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 0) //! Solid
                     {
@@ -390,7 +390,7 @@ namespace BlobGame
             isInAir = true;
             foreach (var tile in verticalCollisions)
             {
-                if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Tilemap.Collision[Tilemap.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 0) //! Solid
                     {
@@ -780,7 +780,7 @@ namespace BlobGame
 
         public static void ResetPos(Player player)
         {
-            player.Drect = new Rectangle((int)Tilemap.level.Y, (int)Tilemap.level.Z, playerSizeW, playerSizeH);
+            Tilemap.Eval();
         }
 
         public static void ResetState(Player player)

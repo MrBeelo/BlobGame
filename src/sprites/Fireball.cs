@@ -64,7 +64,7 @@ namespace BlobGame
             horizontalCollisions = GetIntersectingTiles(Drect);
             foreach (var tile in horizontalCollisions)
             {
-                if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Tilemap.Collision[(int)Tilemap.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 1 || value == 4 || value == 5 || value >= 16)
                     {
@@ -104,7 +104,7 @@ namespace BlobGame
             verticalCollisions = GetIntersectingTiles(Drect);
             foreach (var tile in verticalCollisions)
             {
-                if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
+                if (Tilemap.Collision[(int)Tilemap.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
                     if(value == 1 || value == 4 || value == 5)
                     {

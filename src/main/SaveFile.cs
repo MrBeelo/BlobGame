@@ -7,7 +7,7 @@ namespace BlobGame
 {
     public class SaveFile
     {
-        public Vector3 Level {get; set;}
+        public int Level {get; set;}
         public int Xartomantila {get; set;}
         public List<Vector3> permaExcludedNormalTiles {get; set;}
 
@@ -56,7 +56,7 @@ namespace BlobGame
                 Tilemap.Eval();
             } else if(!File.Exists(filePath))
             {
-                Level = new Vector3(0, 50, 600);
+                Level = 0;
                 Xartomantila = 0;
                 permaExcludedNormalTiles = new();
                 permaExcludedCollisionTiles = new();

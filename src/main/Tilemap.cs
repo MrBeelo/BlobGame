@@ -9,7 +9,7 @@ namespace BlobGame
 {
     public class Tilemap
     {
-        public static Vector3 level = new Vector3(0, 50, 600);
+        public static int level = 0;
         public static int Tilesize = 32; //Display Tilesize
         public Point Mapsize {get; private set;}
         public static Dictionary<Vector2, int>[] Normal = new Dictionary<Vector2, int>[10 + 1]; //! Change based on how many maps you make.
@@ -113,14 +113,14 @@ namespace BlobGame
 
         public void Update(Game game)
         {
-            if(level.X > Collision.Length || level.X < 0)
+            if(level > Collision.Length || level < 0)
             {
-                level = new Vector3(0, 50, 600);
+                level = 0;
             }
 
             //EvaluateLevelPos((int)level.X);
             
-            GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level.X + "_normal.csv"), this);
+            GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level + "_normal.csv"), this);
         }
 
         public void Draw(GameTime gameTime)
@@ -130,7 +130,7 @@ namespace BlobGame
                 int tpr = 8; //Tiles per row
                 int p_tilesize = 32; //Pixel Tilesize
 
-                foreach(var item in Normal[(int)Globals.SaveFile.Level.X])
+                foreach(var item in Normal[(int)Globals.SaveFile.Level])
                 {
                     normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
@@ -156,7 +156,7 @@ namespace BlobGame
                     Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
                 }
 
-                foreach(var item in Collision[(int)Globals.SaveFile.Level.X])
+                foreach(var item in Collision[(int)Globals.SaveFile.Level])
                 {
                     collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
@@ -190,7 +190,7 @@ namespace BlobGame
         public static void MoveTo(int l)
         {
             //level.X++;
-            level.X = l;
+            level = l;
             //EvaluateLevel((int)level.X);
             //Player.Respawn(Main.player);
             Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
@@ -210,7 +210,7 @@ namespace BlobGame
 
         public static void MoveLevel()
         {
-            MoveTo((int)level.X + 1);
+            MoveTo((int)level + 1);
         }
 
         public static void Eval()
@@ -219,9 +219,9 @@ namespace BlobGame
             excludedCollisionTiles.Clear();
             Triangle.ClearAll();
             Circle.ClearAll();
-            foreach (var tile in Collision[(int)level.X])
+            foreach (var tile in Collision[(int)level])
             {
-                if (Collision[(int)level.X].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
+                if (Collision[(int)level].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
                 {
                     if(value == 16)
                     {
@@ -248,7 +248,7 @@ namespace BlobGame
 
         public static void Reset(Player player)
         {
-            level = new Vector3(0, 50, 600);
+            level = 0;
             excludedNormalTiles.Clear();
             excludedCollisionTiles.Clear();
             Player.Respawn(player);
