@@ -1,10 +1,6 @@
 {
-  "Level": 10,
-  "Xartomantila": 1,
-  "permaExcludedNormalTiles": [
-    "33, 27, 25"
-  ],
-  "permaExcludedCollisionTiles": [
-    "10, 27, 25"
-  ]
+  "Level": 0,
+  "Xartomantila": 0,
+  "permaExcludedNormalTiles": [],
+  "permaExcludedCollisionTiles": []
 }

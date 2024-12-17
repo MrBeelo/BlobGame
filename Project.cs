@@ -45,25 +45,15 @@ TODOS THAT I HAVE TO COMPLETE :)))
 
 TODO: FOR WHENEVER:
 TODO:
-TODO: 1) DELTATIME**
+TODO: 1) DELTATIME*
 
-TODO: 0.40 IS BASICALLY THE BIGGEST UPDATE EVER :)
-
-
-! * Summon a triangle as a bossfight where the Drect is like 5 times bigger
-! in width and height so it looks like a giant bossfight and that should be level 10 where you put the win block!
-! You can probably make that a new BossSummon() method.
-!
-! ** Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)
 ! Afterwards add LogPos into Drect and update as usual. Prob make that updating thing into a method and add thing in first line,
 ! where in Sprite.cs you call Drect = new Rectangle(LogicalPosition.X, LogicalPosition.Y, Drect.Width, Drect.Height)
 ! Then you can call whenever, or just set up an update loop withing Sprite.cs that other classes inherit from.
 ! All values should be floats up until the update method, as if you multiply anything by deltaTime and it's
 ! rounded to an integer, It's going to be 0, so the player won't be able to move
-!
-! *** Total level height should be 1080 like usual but width should be
-! really long, kinda like Geometry Dash :)
 
 */
 

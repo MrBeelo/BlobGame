@@ -38,6 +38,8 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\content/assets\sprites\triangle\TriangleWalk3.xnb
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level0_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level0_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level10_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level10_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level1_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level1_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level2_collision.csv
@@ -52,6 +54,10 @@ C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level6_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level7_collision.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level7_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level8_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level8_normal.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level9_collision.csv
+C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\data\level9_normal.csv
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\libopenal.so.1
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\libSDL2-2.0.so.0
 C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\bin\Release\net8.0\linux-x64\publish\BlobGame

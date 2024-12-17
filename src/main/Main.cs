@@ -14,7 +14,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.39.3";
+    public static string version = "v0.40";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }
@@ -271,13 +271,6 @@ public class Main : Game
                     break;
 
                 case string s when s.StartsWith("/moveTo") && int.TryParse(s.Substring("/moveTo ".Length).Trim(), out int level):
-                    /*if (level >= 0 && level < Tilemap.Collision.Length)
-                    {
-                        Tilemap.EvaluateLevel(level);
-                        Tilemap.level.X = level;
-                        Player.Respawn(player);
-                        Globals.SaveFile.SaveSavefile(savefileFilePath);
-                    }*/
                     Tilemap.MoveTo(level);
                     break;
 

@@ -189,28 +189,14 @@ namespace BlobGame
 
         public static void MoveTo(int l)
         {
-            //level.X++;
             level = l;
-            //EvaluateLevel((int)level.X);
-            //Player.Respawn(Main.player);
             Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
             Eval();
-            /*foreach (var tile in Collision[(int)level.X])
-            {
-                if (Collision[(int)level.X].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
-                {
-                    //Debug.WriteLine("Level: " + level + ", Value: " + value + ", Pos: " + tile.Key.X +  ", " + tile.Key.Y);
-                    if(value == 2)
-                    {
-                        Debug.WriteLine("PASS FOUND AT: " + new Vector2(tile.Key.X, tile.Key.Y));
-                    }
-                }
-            }*/
         }
 
         public static void MoveLevel()
         {
-            MoveTo((int)level + 1);
+            MoveTo(level + 1);
         }
 
         public static void Eval()
@@ -219,9 +205,9 @@ namespace BlobGame
             excludedCollisionTiles.Clear();
             Triangle.ClearAll();
             Circle.ClearAll();
-            foreach (var tile in Collision[(int)level])
+            foreach (var tile in Collision[level])
             {
-                if (Collision[(int)level].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
+                if (Collision[level].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
                 {
                     if(value == 16)
                     {
@@ -255,105 +241,5 @@ namespace BlobGame
             Triangle.ClearAll();
             Circle.ClearAll();
         }
-
-        /*public static void EvaluateLevelPos(int l)
-        {
-            switch(l)
-            {
-                case 0:
-                    level.Y = 50;
-                    level.Z = 600;
-                    break;
-
-                case 1:
-                    level.Y = 100;
-                    level.Z = 250;
-                    break;
-
-                case 2:
-                    level.Y = 220;
-                    level.Z = 190;
-                    break;
-
-                case 3:
-                    level.Y = 200;
-                    level.Z = 100;
-                    break;
-
-                case 4:
-                    level.Y = 160;
-                    level.Z = 65;
-                    break;
-
-                case 5:
-                    level.Y = 100;
-                    level.Z = 65;
-                    break;
-
-                case 6:
-                    level.Y = 200;
-                    level.Z = 100;
-                    break;
-
-                case 7:
-                    level.Y = 225;
-                    level.Z = 350;
-                    break;
-            }
-        }
-
-        public static void EvaluateLevel(int l)
-        {
-            EvaluateLevelPos(l);
-            excludedNormalTiles.Clear();
-            excludedCollisionTiles.Clear();
-            Triangle.ClearAll();
-            Circle.ClearAll();
-            switch(l)
-            {
-                case 0:
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    break;
-
-                case 3:
-                    Circle.Summon(new Vector2(1400, 400));
-                    Circle.Summon(new Vector2(750, 250));
-                    break;
-
-                case 4:
-                    Triangle.Summon(new Vector2(1600, 130));
-                    Triangle.Summon(new Vector2(1090, 1000));
-                    Triangle.Summon(new Vector2(580, 1025));
-                    break;
-
-                case 5:
-                    Circle.Summon(new Vector2(800, 65));
-                    Circle.Summon(new Vector2(1400, 130));
-                    Triangle.Summon(new Vector2(1890, 130));
-                    Circle.Summon(new Vector2(380, 320));
-                    Circle.Summon(new Vector2(960, 320));
-                    Triangle.Summon(new Vector2(1540, 320));
-                    Circle.Summon(new Vector2(1800, 320));
-                    Circle.Summon(new Vector2(290, 580));
-                    Triangle.Summon(new Vector2(770, 580));
-                    Circle.Summon(new Vector2(1570, 580));
-                    Circle.Summon(new Vector2(670, 830));
-                    Triangle.Summon(new Vector2(1180, 830));
-                    Circle.Summon(new Vector2(1150, 1000));
-                    Circle.Summon(new Vector2(1630, 1000));
-                    break;
-
-                case 6:
-                    break;
-
-                case 7:
-                    break;
-            }
-        }*/
     }
 }

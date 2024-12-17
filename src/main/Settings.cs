@@ -1,9 +1,7 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
-using System.Reflection.PortableExecutable;
 
 namespace BlobGame
 {
