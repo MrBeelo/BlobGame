@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,11 +17,11 @@ public class Main : Game
     public static string version = "v0.39.3";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
-    public static Player player {get; set;}
-    public static Fireball fireball {get; set;}
-    public static Tilemap tilemap {get; set;}
-    public static Triangle triangle {get; set;}
-    public static Circle circle {get; set;}
+    public static Player player { get; set; }
+    public static Fireball fireball { get; set; }
+    public static Tilemap tilemap { get; set; }
+    public static Triangle triangle { get; set; }
+    public static Circle circle { get; set; }
     public static List<Triangle> triangles = new();
     public static List<Circle> circles = new();
     public static List<Fireball> fireballs = new();
@@ -50,7 +50,7 @@ public class Main : Game
     public bool TypingMode = false;
     public string InputText = "";
     public enum GameState
-    {MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info}
+    { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public Main()
     {
         Window.Title = "Blob Game";
@@ -63,7 +63,7 @@ public class Main : Game
     }
 
     protected override void Initialize()
-    { 
+    {
         Settings.LoadSettings(settingsFilePath);
         SaveFile.LoadSavefile(savefileFilePath);
 
@@ -137,7 +137,7 @@ public class Main : Game
 
         inputManager.Update(gameTime);
 
-        if(TypingMode)
+        if (TypingMode)
         {
             foreach (var key in kstate.GetPressedKeys())
             {
@@ -173,40 +173,42 @@ public class Main : Game
             frameCounter = 0;
         }
 
-        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11))
+        if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F11))
         {
             Globals.Settings.SetFullScreen();
         }
 
-        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
+        if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == false)
         {
             hasF3On = true;
-        } else if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
+        }
+        else if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.F3) && hasF3On == true)
         {
             hasF3On = false;
         }
 
         //! Handling Typing Mode
 
-        if(InputManager.IsKeyPressed(kstate, prevkstate, Keys.OemTilde))
+        if (InputManager.IsKeyPressed(kstate, prevkstate, Keys.OemTilde))
         {
-            if(!TypingMode)
+            if (!TypingMode)
             {
                 TypingMode = true;
-            } else if (TypingMode)
+            }
+            else if (TypingMode)
             {
                 TypingMode = false;
             }
         }
 
-        if(TypingMode && InputManager.IsKeyPressed(kstate, prevkstate, Keys.Enter))
+        if (TypingMode && InputManager.IsKeyPressed(kstate, prevkstate, Keys.Enter))
         {
-            switch(InputText)
+            switch (InputText)
             {
                 case "/yipee":
                     Player.successSound.Play((float)LoweredVolume, 0.0f, 0.0f);
                     break;
-                
+
                 case "/kill":
                     Player.Die();
                     break;
@@ -224,17 +226,18 @@ public class Main : Game
                     break;
 
                 case "/moveLevel":
-                    if(Tilemap.level.X < Tilemap.Collision.Length - 1)
+                    if (Tilemap.level.X < Tilemap.Collision.Length - 1)
                     {
                         Tilemap.MoveLevel();
                     }
                     break;
 
                 case "/immune":
-                    if(!player.Immune)
+                    if (!player.Immune)
                     {
                         player.Immune = true;
-                    } else if(player.Immune)
+                    }
+                    else if (player.Immune)
                     {
                         player.Immune = false;
                     }
@@ -242,6 +245,10 @@ public class Main : Game
 
                 case "/summonTriangle":
                     Triangle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    break;
+
+                case "/summonBossTriangle":
+                    Triangle.SummonBoss(new Vector2(player.Drect.X, player.Drect.Y));
                     break;
 
                 case "/clearTriangle":
@@ -263,7 +270,7 @@ public class Main : Game
                     break;
 
                 case string s when s.StartsWith("/moveTo") && int.TryParse(s.Substring("/moveTo ".Length).Trim(), out int level):
-                    if(level >= 0 && level < Tilemap.Collision.Length)
+                    if (level >= 0 && level < Tilemap.Collision.Length)
                     {
                         Tilemap.EvaluateLevel(level);
                         Tilemap.level.X = level;
@@ -289,7 +296,7 @@ public class Main : Game
             TypingMode = false;
         }
 
-        if(TypingMode && InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
+        if (TypingMode && InputManager.IsKeyPressed(kstate, prevkstate, Keys.Escape))
         {
             InputText = "";
             TypingMode = false;
@@ -297,7 +304,7 @@ public class Main : Game
 
         //! Updating for all Game States
 
-        switch (currentGameState) 
+        switch (currentGameState)
         {
             case GameState.MainMenu:
                 mainMenu.Update(gameTime);
@@ -312,17 +319,17 @@ public class Main : Game
                 player.Update(gameTime);
                 player.CalculateTranslation();
 
-                foreach(var fireball in fireballs.ToList())
+                foreach (var fireball in fireballs.ToList())
                 {
                     fireball.Update(gameTime);
                 }
 
-                foreach(var triangle in triangles.ToList())
+                foreach (var triangle in triangles.ToList())
                 {
                     triangle.Update(gameTime);
                 }
 
-                foreach(var circle in circles.ToList())
+                foreach (var circle in circles.ToList())
                 {
                     circle.Update(gameTime);
                 }
@@ -344,7 +351,7 @@ public class Main : Game
             case GameState.Options:
                 options.Update(gameTime);
                 break;
-            
+
             case GameState.Quit:
                 quit.Update(gameTime);
                 break;
@@ -356,7 +363,7 @@ public class Main : Game
             case GameState.Win:
                 win.Update(gameTime);
                 break;
-            
+
             case GameState.Pass:
                 pass.Update(gameTime);
                 break;
@@ -377,7 +384,7 @@ public class Main : Game
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        if(currentGameState == GameState.Playing)
+        if (currentGameState == GameState.Playing)
         {
             DrawBG();
         }
@@ -385,18 +392,18 @@ public class Main : Game
         //!Beggining Play Sprite Batch
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: player.translation);
 
-        switch (currentGameState) 
+        switch (currentGameState)
         {
             case GameState.Playing:
                 tilemap.Draw(gameTime);
 
-                if(hasF3On)
+                if (hasF3On)
                 {
-                    foreach(var rect in player.horizontalCollisions)
+                    foreach (var rect in player.horizontalCollisions)
                     {
                         DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                     }
-                    foreach(var rect in player.verticalCollisions)
+                    foreach (var rect in player.verticalCollisions)
                     {
                         DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                     }
@@ -405,17 +412,17 @@ public class Main : Game
 
                 player.Draw(Globals.SpriteBatch);
 
-                foreach(var fireball in fireballs.ToList())
+                foreach (var fireball in fireballs.ToList())
                 {
                     fireball.Draw(Globals.SpriteBatch);
                 }
 
-                foreach(var triangle in triangles.ToList())
+                foreach (var triangle in triangles.ToList())
                 {
                     triangle.Draw(Globals.SpriteBatch);
                 }
 
-                foreach(var circle in circles.ToList())
+                foreach (var circle in circles.ToList())
                 {
                     circle.Draw(Globals.SpriteBatch);
                 }
@@ -428,7 +435,7 @@ public class Main : Game
         //!Beginning UI Sprite Batch
         Globals.SpriteBatch.Begin();
 
-        switch (currentGameState) 
+        switch (currentGameState)
         {
             case GameState.MainMenu:
                 mainMenu.Draw(Globals.SpriteBatch, Globals.Graphics);
@@ -451,7 +458,7 @@ public class Main : Game
             case GameState.Options:
                 options.Draw(Globals.SpriteBatch, Globals.Graphics);
                 break;
-            
+
             case GameState.Quit:
                 quit.Draw(Globals.SpriteBatch, Globals.Graphics);
                 break;
@@ -463,7 +470,7 @@ public class Main : Game
             case GameState.Win:
                 win.Draw(Globals.SpriteBatch, Globals.Graphics);
                 break;
-            
+
             case GameState.Pass:
                 pass.Draw(Globals.SpriteBatch, Globals.Graphics);
                 break;
@@ -475,36 +482,36 @@ public class Main : Game
 
         //! Handle F3 Info
 
-        if(hasF3On)
+        if (hasF3On)
+        {
+            List<string> otherDebugInfoList = new List<string>();
+
+            foreach (var sprite in sprites)
             {
-                List<string> otherDebugInfoList = new List<string>();
+                string[] spriteDebugInfo = sprite.GetDebugInfo();
+                otherDebugInfoList.AddRange(spriteDebugInfo);
+            }
 
-                foreach(var sprite in sprites)
-                {
-                    string[] spriteDebugInfo = sprite.GetDebugInfo();
-                    otherDebugInfoList.AddRange(spriteDebugInfo);
-                }
+            foreach (var fireball in fireballs)
+            {
+                string[] fireballDebugInfo = fireball.GetDebugInfo();
+                otherDebugInfoList.AddRange(fireballDebugInfo);
+            }
 
-                foreach(var fireball in fireballs)
-                {
-                    string[] fireballDebugInfo = fireball.GetDebugInfo();
-                    otherDebugInfoList.AddRange(fireballDebugInfo);
-                }
+            foreach (var triangle in triangles)
+            {
+                string[] triangleDebugInfo = triangle.GetDebugInfo();
+                otherDebugInfoList.AddRange(triangleDebugInfo);
+            }
 
-                foreach(var triangle in triangles)
-                {
-                    string[] triangleDebugInfo = triangle.GetDebugInfo();
-                    otherDebugInfoList.AddRange(triangleDebugInfo);
-                }
+            foreach (var circle in circles)
+            {
+                string[] circleDebugInfo = circle.GetDebugInfo();
+                otherDebugInfoList.AddRange(circleDebugInfo);
+            }
 
-                foreach(var circle in circles)
-                {
-                    string[] circleDebugInfo = circle.GetDebugInfo();
-                    otherDebugInfoList.AddRange(circleDebugInfo);
-                }
-
-                string[] mainDebugInfo = 
-                {
+            string[] mainDebugInfo =
+            {
                     "Current Game State: " + currentGameState,
                     "FPS: " + FPS,
                     "Delta Time: " + deltaTime,
@@ -515,29 +522,29 @@ public class Main : Game
                     "Typing Mode: " + TypingMode
                 };
 
-                string[] otherDebugInfo = otherDebugInfoList.ToArray();
+            string[] otherDebugInfo = otherDebugInfoList.ToArray();
 
-                string[] combinedDebugInfo = mainDebugInfo.Concat(otherDebugInfo).ToArray();
+            string[] combinedDebugInfo = mainDebugInfo.Concat(otherDebugInfo).ToArray();
 
-                Vector2 pos = Vector2.Zero;
+            Vector2 pos = Vector2.Zero;
 
-                foreach(var info in combinedDebugInfo)
-                {
-                    Globals.SpriteBatch.DrawString(debugFont, info, pos, Color.Black);
-                    pos.Y += 20;
-                }
+            foreach (var info in combinedDebugInfo)
+            {
+                Globals.SpriteBatch.DrawString(debugFont, info, pos, Color.Black);
+                pos.Y += 20;
             }
+        }
 
         //! Handling Typing Mode
 
-        if(TypingMode)
+        if (TypingMode)
         {
             DrawTypingZone();
         }
-            
+
         //!Ending UI Sprite Batch
         Globals.SpriteBatch.End();
-        
+
         base.Draw(gameTime);
 
         canvas.Draw(Globals.SpriteBatch);
@@ -548,7 +555,8 @@ public class Main : Game
         Environment.Exit(0);
     }
 
-    public void DrawRectHollow(SpriteBatch spriteBatch, Rectangle rect, int thickness, Color color) {
+    public void DrawRectHollow(SpriteBatch spriteBatch, Rectangle rect, int thickness, Color color)
+    {
         spriteBatch.Draw(
             pixelTexture,
             new Rectangle(

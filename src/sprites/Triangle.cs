@@ -25,6 +25,8 @@ namespace BlobGame
         int delay = 0;
         int onGroundDelay = 0;
         bool TriangleIsAlive = true;
+        public static int bossTriangleSizeW = 210;
+        public static int bossTriangleSizeH = 320;
 
         public Triangle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -61,43 +63,44 @@ namespace BlobGame
             base.Update(gameTime);
 
             idleCounter++;
-            if(idleCounter > 29)
+            if (idleCounter > 29)
             {
                 idleCounter = 0;
                 idleActiveFrame++;
 
-                if(idleActiveFrame > idleTextures.Length - 1)
+                if (idleActiveFrame > idleTextures.Length - 1)
                 {
                     idleActiveFrame = 0;
                 }
             }
 
             walkingCounter++;
-            if(walkingCounter > 44 - (speed * 6))
+            if (walkingCounter > 44 - (speed * 6))
             {
                 walkingCounter = 0;
                 walkingActiveFrame++;
 
-                if(walkingActiveFrame > walkingTextures.Length - 1)
+                if (walkingActiveFrame > walkingTextures.Length - 1)
                 {
                     walkingActiveFrame = 0;
                 }
             }
 
-            if(!isLeft)
+            if (!isLeft)
             {
                 Velocity.X = speed;
-            } else if(isLeft)
+            }
+            else if (isLeft)
             {
                 Velocity.X = -speed;
             }
 
-            if(delay > 0)
+            if (delay > 0)
             {
                 delay--;
             }
 
-            if(onGroundDelay > 0)
+            if (onGroundDelay > 0)
             {
                 onGroundDelay--;
             }
@@ -105,39 +108,41 @@ namespace BlobGame
             Velocity.Y += 0.5f;
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
-            
+
             // Horizontal Collision Resolution
             Drect.X += (int)Velocity.X;
             horizontalCollisions = GetIntersectingTiles(Drect);
 
             isInAir = true;
 
-            if(onGroundDelay == 0 && !isInAir)
+            if (onGroundDelay == 0 && !isInAir)
             {
                 Velocity.Y = -10;
                 onGroundDelay = 300;
             }
 
             randomBool = random.Next(2) == 1; // Generates 0 or 1, then checks if it equals 1
-            
+
             foreach (var tile in horizontalCollisions)
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                    if (!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                     {
-                        if(value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
+                        if (value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
                         {
-                        Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
-            
+                            Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
+
                             if (Velocity.X > 0) // Moving Right
                             {
                                 Drect.X = collision.Left - Drect.Width;
 
-                                if(randomBool)
+                                if (randomBool)
                                 {
                                     isLeft = true;
-                                } else if(!randomBool && delay == 0) {
+                                }
+                                else if (!randomBool && delay == 0)
+                                {
                                     Velocity.Y = -10;
                                     delay = 40;
                                 }
@@ -146,10 +151,12 @@ namespace BlobGame
                             {
                                 Drect.X = collision.Right;
 
-                                if(randomBool)
+                                if (randomBool)
                                 {
                                     isLeft = false;
-                                } else if(!randomBool && delay == 0) {
+                                }
+                                else if (!randomBool && delay == 0)
+                                {
                                     Velocity.Y = -10;
                                     delay = 40;
                                 }
@@ -158,11 +165,11 @@ namespace BlobGame
                         }
                         else if (value == 4) //! Water
                         {
-                            if(Velocity.X > 1)
+                            if (Velocity.X > 1)
                             {
                                 Velocity.X = 1;
                             }
-                            else if(Velocity.X < -1)
+                            else if (Velocity.X < -1)
                             {
                                 Velocity.X = -1;
                             }
@@ -170,7 +177,7 @@ namespace BlobGame
                     }
                 }
             }
-            
+
             // Vertical Collision Resolution
             Drect.Y += (int)Velocity.Y;
             verticalCollisions = GetIntersectingTiles(Drect);
@@ -179,12 +186,12 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[(int)Tilemap.level.X].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
+                    if (!Tilemap.excludedCollisionTiles.Contains(new Vector3(value, tile.X, tile.Y)))
                     {
-                        if(value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
+                        if (value == 0 || value == 2 || value == 3 || value == 6 || value == 7) //! Solid
                         {
                             Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
-            
+
                             if (Velocity.Y > 0) // Falling Down
                             {
                                 Drect.Y = collision.Top - Drect.Height;
@@ -199,7 +206,7 @@ namespace BlobGame
                         }
                         else if (value == 4) //! Water
                         {
-                            if(Velocity.Y > 0)
+                            if (Velocity.Y > 0)
                             {
                                 Velocity.Y = 1;
                             }
@@ -209,12 +216,12 @@ namespace BlobGame
                 }
             }
 
-            if(Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
+            if (Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
             {
                 TriangleIsAlive = false;
             }
 
-            if(Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && !Main.player.isSanic)
+            if (Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && !Main.player.isSanic)
             {
                 //Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
                 //Main.player.Health -= 20;
@@ -222,7 +229,7 @@ namespace BlobGame
                 Player.Damage(20);
             }
 
-            if(!TriangleIsAlive)
+            if (!TriangleIsAlive)
             {
                 Main.triangles.Remove(this);
                 //Main.sprites.Remove(this);
@@ -233,7 +240,7 @@ namespace BlobGame
         {
             SpriteEffects spriteEffects = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
-            if(isMoving && !isInAir)
+            if (isMoving && !isInAir)
             {
                 Globals.SpriteBatch.Draw(
                     walkingTextures[walkingActiveFrame],
@@ -247,9 +254,9 @@ namespace BlobGame
                 );
             }
 
-            if(isInAir)
+            if (isInAir)
             {
-                if(Velocity.Y >= 5 || Velocity.Y <= -5)
+                if (Velocity.Y >= 5 || Velocity.Y <= -5)
                 {
                     Globals.SpriteBatch.Draw(
                         jumpingTextures[0],
@@ -277,7 +284,7 @@ namespace BlobGame
                 }
             }
 
-            if(!isMoving && !isInAir)
+            if (!isMoving && !isInAir)
             {
                 Globals.SpriteBatch.Draw(
                     idleTextures[idleActiveFrame],
@@ -294,7 +301,7 @@ namespace BlobGame
 
         public override string[] GetDebugInfo()
         {
-            return new string[] 
+            return new string[]
             {
                 "---TRIANGLE---",
                 "Random Bool: " + randomBool,
@@ -306,6 +313,12 @@ namespace BlobGame
         }
 
         public static void Summon(Vector2 pos)
+        {
+            Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
+            Main.triangles.Add(triangle);
+        }
+
+        public static void SummonBoss(Vector2 pos)
         {
             Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
             Main.triangles.Add(triangle);

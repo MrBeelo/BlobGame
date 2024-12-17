@@ -1,0 +1,10 @@
+{
+  "Level": "0, 50, 600",
+  "Xartomantila": 1,
+  "permaExcludedNormalTiles": [
+    "33, 73, 3"
+  ],
+  "permaExcludedCollisionTiles": [
+    "10, 73, 3"
+  ]
+}
