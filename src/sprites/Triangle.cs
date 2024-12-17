@@ -25,8 +25,8 @@ namespace BlobGame
         int delay = 0;
         int onGroundDelay = 0;
         bool TriangleIsAlive = true;
-        public static int bossTriangleSizeW = 210;
-        public static int bossTriangleSizeH = 320;
+        public static int bossTriangleSizeW = 126;
+        public static int bossTriangleSizeH = 192;
 
         public Triangle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {

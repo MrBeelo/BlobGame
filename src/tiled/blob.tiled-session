@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level6.tmx",
+    "activeFile": "level9.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -72,8 +72,8 @@
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1528,
-                "y": 719
+                "x": 2270,
+                "y": 967
             }
         },
         "level7.tmx": {
@@ -96,7 +96,7 @@
             "scale": 0.5413020833333333,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 964.3413836235927,
+                "x": 520.9660348311364,
                 "y": 932.0119311074762
             }
         },
@@ -112,10 +112,11 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
     "openFiles": [
-        "level6.tmx"
+        "level9.tmx"
     ],
     "project": "blob.tiled-project",
     "recentFiles": [
+        "level9.tmx",
         "level6.tmx",
         "normal.tsx",
         "collision.tsx",
@@ -126,8 +127,7 @@
         "level1.tmx",
         "level2.tmx",
         "level3.tmx",
-        "level4.tmx",
-        "level5.tmx"
+        "level4.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
