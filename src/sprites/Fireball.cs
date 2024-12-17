@@ -159,6 +159,19 @@ namespace BlobGame
                 Srect,
                 Color.White
             );
+
+            if (Main.hasF3On)
+            {
+                foreach (var rect in horizontalCollisions)
+                {
+                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                }
+                foreach (var rect in verticalCollisions)
+                {
+                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                }
+                Main.DrawRectHollow(Globals.SpriteBatch, Drect, 4, Color.Blue);
+            }
         }
 
         public override string[] GetDebugInfo()

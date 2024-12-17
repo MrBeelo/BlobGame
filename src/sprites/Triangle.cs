@@ -27,7 +27,7 @@ namespace BlobGame
         bool TriangleIsAlive = true;
         public static int bossTriangleSizeW = 126;
         public static int bossTriangleSizeH = 192;
-        int switchTick;
+        int switchTick = new Random().Next(1, 101);
         bool stop = false;
 
         public Triangle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
@@ -265,7 +265,7 @@ namespace BlobGame
         {
             SpriteEffects spriteEffects = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
-            if (isMoving && !isInAir)
+            if (isMoving && !isInAir && !stop)
             {
                 Globals.SpriteBatch.Draw(
                     walkingTextures[walkingActiveFrame],
@@ -309,7 +309,7 @@ namespace BlobGame
                 }
             }
 
-            if (!isMoving && !isInAir)
+            if ((!isMoving || stop) && !isInAir)
             {
                 Globals.SpriteBatch.Draw(
                     idleTextures[idleActiveFrame],
@@ -321,6 +321,19 @@ namespace BlobGame
                     spriteEffects,
                     0f
                 );
+            }
+
+            if (Main.hasF3On)
+            {
+                foreach (var rect in horizontalCollisions)
+                {
+                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                }
+                foreach (var rect in verticalCollisions)
+                {
+                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                }
+                Main.DrawRectHollow(Globals.SpriteBatch, Drect, 4, Color.Blue);
             }
         }
 

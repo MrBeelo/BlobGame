@@ -22,7 +22,7 @@ namespace BlobGame
         public static int circleSizeH = 64;
         Random random = new Random();
         bool randomBool;
-        int switchTick;
+        int switchTick = new Random().Next(1, 101);
         int delay = 0;
         int onGroundDelay = 0;
         bool TriangleIsAlive = true;
@@ -262,7 +262,7 @@ namespace BlobGame
         {
             SpriteEffects spriteEffects = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
-            if(isMoving && !isInAir)
+            if(isMoving && !isInAir && !stop)
             {
                 Globals.SpriteBatch.Draw(
                     walkingTextures[walkingActiveFrame],
@@ -306,7 +306,7 @@ namespace BlobGame
                 }
             }
 
-            if(!isMoving && !isInAir)
+            if((!isMoving || stop) && !isInAir)
             {
                 Globals.SpriteBatch.Draw(
                     idleTextures[idleActiveFrame],
@@ -318,6 +318,19 @@ namespace BlobGame
                     spriteEffects,
                     0f
                 );
+            }
+
+            if (Main.hasF3On)
+            {
+                foreach (var rect in horizontalCollisions)
+                {
+                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                }
+                foreach (var rect in verticalCollisions)
+                {
+                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                }
+                Main.DrawRectHollow(Globals.SpriteBatch, Drect, 4, Color.Blue);
             }
         }
 

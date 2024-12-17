@@ -399,19 +399,6 @@ public class Main : Game
             case GameState.Playing:
                 tilemap.Draw(gameTime);
 
-                if (hasF3On)
-                {
-                    foreach (var rect in player.horizontalCollisions)
-                    {
-                        DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
-                    }
-                    foreach (var rect in player.verticalCollisions)
-                    {
-                        DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
-                    }
-                    DrawRectHollow(Globals.SpriteBatch, player.Drect, 4, Color.Blue);
-                }
-
                 player.Draw(Globals.SpriteBatch);
 
                 foreach (var fireball in fireballs.ToList())
@@ -557,7 +544,7 @@ public class Main : Game
         Environment.Exit(0);
     }
 
-    public void DrawRectHollow(SpriteBatch spriteBatch, Rectangle rect, int thickness, Color color)
+    public static void DrawRectHollow(SpriteBatch spriteBatch, Rectangle rect, int thickness, Color color)
     {
         spriteBatch.Draw(
             pixelTexture,
