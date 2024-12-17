@@ -22,9 +22,11 @@ namespace BlobGame
         public static int circleSizeH = 64;
         Random random = new Random();
         bool randomBool;
+        int switchTick;
         int delay = 0;
         int onGroundDelay = 0;
         bool TriangleIsAlive = true;
+        bool stop = false;
 
         public Circle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -84,6 +86,16 @@ namespace BlobGame
                 }
             }
 
+            if(switchTick == 75)
+            {
+                if(!isLeft)
+                {
+                    isLeft = true;
+                } else {
+                    isLeft = false;
+                }
+            }
+
             if(!isLeft)
             {
                 Velocity.X = speed;
@@ -105,9 +117,12 @@ namespace BlobGame
             Velocity.Y += 0.5f;
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
+
+            SetBounds();
+            Drect.Location = PointClamp(Drect.Location, minPos, maxPos);
             
             // Horizontal Collision Resolution
-            Drect.X += (int)Velocity.X;
+            if(!stop){Drect.X += (int)Velocity.X;}
             horizontalCollisions = GetIntersectingTiles(Drect);
 
             isInAir = true;
@@ -209,6 +224,20 @@ namespace BlobGame
                 }
             }
 
+            if(switchTick > 0)
+            {
+                switchTick--;
+            } else {
+                switchTick = 100;
+            }
+
+            if(switchTick > 25)
+            {
+                stop = false;
+            } else {
+                stop = true;
+            }
+
             if(Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
             {
                 TriangleIsAlive = false;
@@ -298,9 +327,11 @@ namespace BlobGame
             {
                 "---CIRCLE---",
                 "Random Bool: " + randomBool,
+                "Switch Tick: " + switchTick,
                 "Delay: " + delay,
                 "Is In Air: " + isInAir,
                 "Is Left: " + isLeft,
+                "Stopped: " + stop,
                 "Drect: " + Drect
             };
         }

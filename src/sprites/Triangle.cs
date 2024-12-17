@@ -27,6 +27,8 @@ namespace BlobGame
         bool TriangleIsAlive = true;
         public static int bossTriangleSizeW = 126;
         public static int bossTriangleSizeH = 192;
+        int switchTick;
+        bool stop = false;
 
         public Triangle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -86,6 +88,16 @@ namespace BlobGame
                 }
             }
 
+            if(switchTick == 75)
+            {
+                if(!isLeft)
+                {
+                    isLeft = true;
+                } else {
+                    isLeft = false;
+                }
+            }
+
             if (!isLeft)
             {
                 Velocity.X = speed;
@@ -109,8 +121,11 @@ namespace BlobGame
 
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
 
+            SetBounds();
+            Drect.Location = PointClamp(Drect.Location, minPos, maxPos);
+
             // Horizontal Collision Resolution
-            Drect.X += (int)Velocity.X;
+            if(!stop){Drect.X += (int)Velocity.X;}
             horizontalCollisions = GetIntersectingTiles(Drect);
 
             isInAir = true;
@@ -216,6 +231,20 @@ namespace BlobGame
                 }
             }
 
+            if(switchTick > 0)
+            {
+                switchTick--;
+            } else {
+                switchTick = 100;
+            }
+
+            if(switchTick > 25)
+            {
+                stop = false;
+            } else {
+                stop = true;
+            }
+
             if (Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
             {
                 TriangleIsAlive = false;
@@ -223,16 +252,12 @@ namespace BlobGame
 
             if (Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && !Main.player.isSanic)
             {
-                //Player.hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
-                //Main.player.Health -= 20;
-                //Main.player.Immunity = 50;
                 Player.Damage(20);
             }
 
             if (!TriangleIsAlive)
             {
                 Main.triangles.Remove(this);
-                //Main.sprites.Remove(this);
             }
         }
 
