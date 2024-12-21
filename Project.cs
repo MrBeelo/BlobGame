@@ -41,11 +41,26 @@ using (var game = new BlobGame.Main())
 ?
 ? Peace, Beelo
 
+
+!----------AFTER 0.40-----------
+! For update 0.50 (hoping to be final), I'm just gonna add whatever comes to me mind.
+! I want 10 new features and an update for each of them.
+! Good Luck Ya 'hmar
+
 TODOS THAT I HAVE TO COMPLETE :))) 
 
-TODO: FOR WHENEVER:
+TODO: FOR UNTIL 0.50:
 TODO:
-TODO: 1) DELTATIME*
+TODO: 1) DELTATIME* []
+TODO: 2) PROPER BOSSFIGHT*** []
+TODO: 3) NEW COOL FONT []
+TODO: 4) MENU SCREEN BACKGROUND []
+TODO: 5) MOUSE SUPPORT []
+TODO: 6) COVER ART []
+TODO: 7) LEVEL SELECT SCREEN []
+TODO: 8) 10 MORE LEVELS + BIOMES** []
+TODO: 9) MUSIC []
+TODO: 10) LOOOOOOOOOOOOORE FOR NICK []
 
 ! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)
@@ -54,6 +69,11 @@ TODO: 1) DELTATIME*
 ! Then you can call whenever, or just set up an update loop withing Sprite.cs that other classes inherit from.
 ! All values should be floats up until the update method, as if you multiply anything by deltaTime and it's
 ! rounded to an integer, It's going to be 0, so the player won't be able to move
+!
+! ** Levels 0-10 are in the Plains biome, make levels 11-20 be in like the Crypts or something. Also add [THE PLAINS/CRYPTS]
+! popup when entering the biome.
+!
+! *** Should be a new class and should summon small circles and triangles. Also make a better map for it.
 
 */
 
