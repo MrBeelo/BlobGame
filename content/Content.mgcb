@@ -37,6 +37,11 @@
 /processorParam:TextureFormat=Color
 /build:assets/bg.png
 
+#begin assets/bgloop.mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:assets/bgloop.mp4
+
 #begin assets/collision_atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor

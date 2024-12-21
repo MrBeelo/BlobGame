@@ -69,3 +69,5 @@
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/level8_normal.csv
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/level9_collision.csv
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/level9_normal.csv
+/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/bgloop.mp4
+/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/bgloop.xnb

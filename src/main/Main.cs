@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
@@ -45,10 +46,12 @@ public class Main : Game
     public TimeSpan timeSpan;
     public int FPS;
     Texture2D background;
+    //public Video bgloop;
     public static InputManager inputManager = new InputManager();
     public Canvas canvas;
     public bool TypingMode = false;
     public string InputText = "";
+    //public VideoPlayer videoPlayer = new VideoPlayer();
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public Main()
@@ -89,6 +92,7 @@ public class Main : Game
         font = Content.Load<SpriteFont>("assets/fonts/font");
         debugFont = Content.Load<SpriteFont>("assets/fonts/debugFont");
         background = Content.Load<Texture2D>("assets/bg");
+        //bgloop = Content.Load<Video>("assets/bgloop");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
@@ -124,6 +128,12 @@ public class Main : Game
         circle.LoadContent(this);
 
         Player.Respawn(player);
+    }
+
+    protected override void UnloadContent()
+    {
+        //videoPlayer.Stop();
+        base.UnloadContent();
     }
 
     protected override void Update(GameTime gameTime)
@@ -368,6 +378,18 @@ public class Main : Game
                 break;
         }
 
+        /*
+
+        if(currentGameState != GameState.Playing)
+        {
+            // Check if the video is not playing
+            if (videoPlayer.State != MediaState.Playing)
+            {
+                videoPlayer.IsLooped = true; // Enable looping
+                videoPlayer.Play(bgloop); // Start playing the video
+            }
+        }*/
+
         prevkstate = kstate;
 
         base.Update(gameTime);
@@ -379,10 +401,7 @@ public class Main : Game
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        if (currentGameState == GameState.Playing)
-        {
-            DrawBG();
-        }
+        DrawBG();
 
         //!Beggining Play Sprite Batch
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: player.translation);
@@ -584,7 +603,17 @@ public class Main : Game
     public void DrawBG()
     {
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
+        if (currentGameState == GameState.Playing)
+        {
+            Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
+        } else if (currentGameState != GameState.Playing)
+        {
+            /*Texture2D videoTexture = videoPlayer.GetTexture();
+            if (videoTexture != null)
+            {
+                Globals.SpriteBatch.Draw(videoTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+            }*/
+        }
         Globals.SpriteBatch.End();
     }
 

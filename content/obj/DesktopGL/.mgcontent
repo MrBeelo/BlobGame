@@ -4,45 +4,47 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/atlas.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/bg.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/collision_atlas.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/debugFont.spritefont</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/font.spritefont</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/explosion.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/hitBlob.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/jump.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/laserShoot.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/powerUp.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedEnd.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedStart.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/success.wav</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleIdle1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleIdle2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleJump1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleJump2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk3.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball3.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerIdle1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerIdle2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerJump1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerJump2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk3.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleIdle1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleIdle2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleJump1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleJump2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk1.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk2.png</File>
-    <File>c:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlas.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bg.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bgloop.mp4</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/collision_atlas.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/debugFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/font.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/explosion.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/hitBlob.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/jump.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/laserShoot.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/powerUp.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/speedEnd.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/speedStart.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/success.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleIdle1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleIdle2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleJump1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleJump2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleWalk1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleWalk2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleWalk3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/fireball/Fireball1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/fireball/Fireball2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/fireball/Fireball3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerIdle1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerIdle2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerJump1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerJump2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerWalk1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerWalk2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerWalk3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleIdle1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleIdle2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleJump1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleJump2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

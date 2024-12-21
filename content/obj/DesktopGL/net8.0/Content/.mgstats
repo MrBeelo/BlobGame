@@ -1,6 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlas.png","/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/atlas.xnb","TextureProcessor","Texture2DContent",7875,262229,0.077839
 "/var/home/MrBeelo/Desktop/BlobGame/content/assets/bg.png","/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/bg.xnb","TextureProcessor","Texture2DContent",12053,8294485,0.1511707
+"/var/home/MrBeelo/Desktop/BlobGame/content/assets/bgloop.mp4","/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/bgloop.xnb","VideoProcessor","VideoContent",2733280,244,0.0737369
 "/var/home/MrBeelo/Desktop/BlobGame/content/assets/collision_atlas.png","/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/collision_atlas.xnb","TextureProcessor","Texture2DContent",1313,98389,0.0030984
 "/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/debugFont.spritefont","/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/fonts/debugFont.xnb","FontDescriptionProcessor","SpriteFontContent",2026,37922,0.0970443
 "/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/font.spritefont","/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/fonts/font.xnb","FontDescriptionProcessor","SpriteFontContent",2017,70690,0.024676

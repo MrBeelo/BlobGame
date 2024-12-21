@@ -6,6 +6,7 @@
   <SourceFiles>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlas.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bg.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bgloop.mp4</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/collision_atlas.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/debugFont.spritefont</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/font.spritefont</File>
@@ -43,6 +44,7 @@
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
