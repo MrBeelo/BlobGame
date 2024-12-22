@@ -41,6 +41,7 @@
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/sprites/triangle/TriangleWalk1.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/sprites/triangle/TriangleWalk2.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/sprites/triangle/TriangleWalk3.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/data/cover.png
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/data/level0_collision.csv
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/data/level0_normal.csv
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/data/level10_collision.csv

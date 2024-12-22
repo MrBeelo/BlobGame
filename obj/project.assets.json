@@ -119,7 +119,7 @@
         }
       }
     },
-    "net8.0/win-x64": {
+    "net8.0/linux-x64": {
       "Microsoft.NET.ILLink.Tasks/8.0.11": {
         "type": "package",
         "build": {
@@ -150,7 +150,7 @@
           }
         },
         "native": {
-          "runtimes/win-x64/native/soft_oal.dll": {}
+          "runtimes/linux-x64/native/libopenal.so.1": {}
         },
         "build": {
           "build/MonoGame.Framework.DesktopGL.targets": {}
@@ -159,7 +159,7 @@
       "MonoGame.Library.SDL/2.26.5.5": {
         "type": "package",
         "native": {
-          "runtimes/win-x64/native/SDL2.dll": {}
+          "runtimes/linux-x64/native/libSDL2-2.0.so.0": {}
         }
       },
       "Newtonsoft.Json/13.0.3": {
@@ -507,15 +507,15 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+            "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
             "version": "[8.0.11, 8.0.11]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
             "version": "[8.0.11, 8.0.11]"
           },
           {
-            "name": "Microsoft.NETCore.App.Runtime.win-x64",
+            "name": "Microsoft.NETCore.App.Runtime.linux-x64",
             "version": "[8.0.11, 8.0.11]"
           }
         ],
@@ -528,7 +528,7 @@
       }
     },
     "runtimes": {
-      "win-x64": {
+      "linux-x64": {
         "#import": []
       }
     }

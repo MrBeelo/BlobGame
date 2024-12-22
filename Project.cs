@@ -7,7 +7,7 @@ using (var game = new BlobGame.Main())
 //git commit -m "Your commit message here" (to commit)
 //git push origin main (to push, with main being the branch name)
 
-//dotnet publish (for windows)
+//dotnet publish -r win-x64 (for windows)
 //dotnet publish -r linux-x64 (for linux)
 
 /*
@@ -56,7 +56,7 @@ TODO: 2) PROPER BOSSFIGHT*** []
 TODO: 3) NEW COOL FONT + MAKE SELECTED INDEX BIGGER [0.41]
 TODO: 4) MENU SCREEN BACKGROUND [IMPOSSIBLE ON LINUX, FIND ANOTHER WAY]
 TODO: 5) MOUSE SUPPORT []
-TODO: 6) COVER ART []
+TODO: 6) COVER ART [0.42]
 TODO: 7) LEVEL SELECT SCREEN []
 TODO: 8) 10 MORE LEVELS + BIOMES** []
 TODO: 9) MUSIC []

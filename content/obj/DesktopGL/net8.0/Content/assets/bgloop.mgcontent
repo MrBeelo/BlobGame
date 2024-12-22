@@ -3,7 +3,7 @@
   <SourceFile>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bgloop.mp4</SourceFile>
   <SourceTime>2024-12-22T00:03:23.0567857+02:00</SourceTime>
   <DestFile>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/bgloop.xnb</DestFile>
-  <DestTime>2024-12-22T13:58:36.507583+02:00</DestTime>
+  <DestTime>2024-12-22T14:20:18.1253582+02:00</DestTime>
   <Importer>H264Importer</Importer>
   <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
   <Processor>VideoProcessor</Processor>

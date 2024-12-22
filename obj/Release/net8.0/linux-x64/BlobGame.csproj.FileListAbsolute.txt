@@ -529,3 +529,4 @@ C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/linux-x64/BlobGame.pdb
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/linux-x64/BlobGame.genruntimeconfig.cache
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/linux-x64/ref/BlobGame.dll
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/linux-x64/data/cover.png

@@ -15,7 +15,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.41";
+    public static string version = "v0.42";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }

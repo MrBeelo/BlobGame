@@ -48,7 +48,7 @@ namespace BlobGame
                 "Most of the art, coding and sound effects made by MrBeelo.",
                 "Inspiration and a little help with art by Nick_Greek.",
                 "Some coding fundementals by 'Coding with Sphere' and 'GameDev Quickie'.",
-                "Font is Rijusans by GGBot.",
+                "Font: Zerove and Rijusans by GGBot.",
                 "",
                 "",
                 "",
