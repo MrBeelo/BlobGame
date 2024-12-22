@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mUiaAh3FcIM=",
+  "dgSpecHash": "lydzcugJ+qY=",
   "success": true,
-  "projectFilePath": "/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+  "projectFilePath": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
   "expectedPackageFiles": [
     "/home/MrBeelo/.nuget/packages/microsoft.net.illink.tasks/8.0.11/microsoft.net.illink.tasks.8.0.11.nupkg.sha512",
     "/home/MrBeelo/.nuget/packages/monogame.content.builder.task/3.8.2.1105/monogame.content.builder.task.3.8.2.1105.nupkg.sha512",
@@ -12,9 +12,9 @@
     "/home/MrBeelo/.nuget/packages/nvorbis/0.10.4/nvorbis.0.10.4.nupkg.sha512",
     "/home/MrBeelo/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
     "/home/MrBeelo/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
-    "/home/MrBeelo/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/8.0.11/microsoft.netcore.app.runtime.linux-x64.8.0.11.nupkg.sha512",
-    "/home/MrBeelo/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/8.0.11/microsoft.aspnetcore.app.runtime.linux-x64.8.0.11.nupkg.sha512",
-    "/home/MrBeelo/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.11/microsoft.netcore.app.host.linux-x64.8.0.11.nupkg.sha512"
+    "/home/MrBeelo/.nuget/packages/microsoft.netcore.app.runtime.win-x64/8.0.11/microsoft.netcore.app.runtime.win-x64.8.0.11.nupkg.sha512",
+    "/home/MrBeelo/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/8.0.11/microsoft.aspnetcore.app.runtime.win-x64.8.0.11.nupkg.sha512",
+    "/home/MrBeelo/.nuget/packages/microsoft.netcore.app.host.win-x64/8.0.11/microsoft.netcore.app.host.win-x64.8.0.11.nupkg.sha512"
   ],
   "logs": []
 }

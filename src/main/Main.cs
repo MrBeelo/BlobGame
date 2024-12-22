@@ -15,7 +15,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.40";
+    public static string version = "v0.41";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }
@@ -29,7 +29,10 @@ public class Main : Game
     public static List<Sprite> sprites = new();
     public static bool hasF3On = false;
     public static Texture2D pixelTexture;
-    public static SpriteFont font;
+    public static SpriteFont statsFont;
+    public static SpriteFont typeFont;
+    public static SpriteFont headerFont;
+    public static SpriteFont indexFont;
     public static SpriteFont debugFont;
     public static GameState currentGameState = GameState.MainMenu;
     private MainMenuScreen mainMenu;
@@ -89,7 +92,10 @@ public class Main : Game
         //! Definition of a texture and a position for the sprite class is needed here.
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
 
-        font = Content.Load<SpriteFont>("assets/fonts/font");
+        statsFont = Content.Load<SpriteFont>("assets/fonts/statsFont");
+        typeFont = Content.Load<SpriteFont>("assets/fonts/typeFont");
+        headerFont = Content.Load<SpriteFont>("assets/fonts/headerFont");
+        indexFont = Content.Load<SpriteFont>("assets/fonts/indexFont");
         debugFont = Content.Load<SpriteFont>("assets/fonts/debugFont");
         background = Content.Load<Texture2D>("assets/bg");
         //bgloop = Content.Load<Video>("assets/bgloop");
@@ -99,14 +105,14 @@ public class Main : Game
         Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
         Texture2D circleTexture = Content.Load<Texture2D>("assets/sprites/circle/CircleIdle1");
 
-        mainMenu = new MainMenuScreen(font, Globals.Graphics);
-        paused = new PausedScreen(font, Globals.Graphics);
-        quit = new QuitScreen(font, Globals.Graphics);
-        options = new SettingsScreen(font, Globals.Graphics);
-        death = new DeathScreen(font, Globals.Graphics);
-        win = new WinScreen(font, Globals.Graphics);
-        pass = new PassScreen(font, Globals.Graphics);
-        info = new InfoScreen(font, Globals.Graphics);
+        mainMenu = new MainMenuScreen(indexFont, Globals.Graphics);
+        paused = new PausedScreen(indexFont, Globals.Graphics);
+        quit = new QuitScreen(indexFont, Globals.Graphics);
+        options = new SettingsScreen(indexFont, Globals.Graphics);
+        death = new DeathScreen(indexFont, Globals.Graphics);
+        win = new WinScreen(indexFont, Globals.Graphics);
+        pass = new PassScreen(indexFont, Globals.Graphics);
+        info = new InfoScreen(indexFont, Globals.Graphics);
 
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
@@ -447,9 +453,9 @@ public class Main : Game
                 string level = "Level: " + Tilemap.level;
                 string xartomantila = "Xartomantila: " + Player.xartomantila;
 
-                Globals.SpriteBatch.DrawString(font, health, new Vector2(Settings.SimulationSize.X - font.MeasureString(health).X - 20, 10), Color.Black);
-                Globals.SpriteBatch.DrawString(font, level, new Vector2(Settings.SimulationSize.X - font.MeasureString(level).X - 20, 60), Color.Black);
-                Globals.SpriteBatch.DrawString(font, xartomantila, new Vector2(Settings.SimulationSize.X - font.MeasureString(xartomantila).X - 20, 110), Color.Black);
+                Globals.SpriteBatch.DrawString(statsFont, health, new Vector2(Settings.SimulationSize.X - statsFont.MeasureString(health).X - 20, 10), Color.Black);
+                Globals.SpriteBatch.DrawString(statsFont, level, new Vector2(Settings.SimulationSize.X - statsFont.MeasureString(level).X - 20, 60), Color.Black);
+                Globals.SpriteBatch.DrawString(statsFont, xartomantila, new Vector2(Settings.SimulationSize.X - statsFont.MeasureString(xartomantila).X - 20, 110), Color.Black);
                 break;
 
             case GameState.Paused:
@@ -620,7 +626,7 @@ public class Main : Game
     public void DrawTypingZone()
     {
         Globals.SpriteBatch.Draw(pixelTexture, new Rectangle(Globals.Settings.WindowSize.X / 20, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10, Globals.Settings.WindowSize.X - Globals.Settings.WindowSize.X / 10, Globals.Settings.WindowSize.Y / 20), new Color(Color.Black, 0.35f));
-        Globals.SpriteBatch.DrawString(font, InputText, new Vector2(Globals.Settings.WindowSize.X / 20 + 10, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10 + 5), Color.White);
+        Globals.SpriteBatch.DrawString(typeFont, InputText, new Vector2(Globals.Settings.WindowSize.X / 20 + 10, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10 + 5), Color.White);
     }
 
     public static bool TryParseTwoArgs(string input, out int arg1, out int arg2)

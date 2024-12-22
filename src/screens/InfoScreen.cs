@@ -48,6 +48,7 @@ namespace BlobGame
                 "Most of the art, coding and sound effects made by MrBeelo.",
                 "Inspiration and a little help with art by Nick_Greek.",
                 "Some coding fundementals by 'Coding with Sphere' and 'GameDev Quickie'.",
+                "Font is Rijusans by GGBot.",
                 "",
                 "",
                 "",
@@ -57,14 +58,14 @@ namespace BlobGame
 
             for (int i = 0; i < lines.Length; i++)
             {
-                Globals.SpriteBatch.DrawString(Main.font, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (Main.font.MeasureString(lines[i]).X / 2), i * 30 + i * 5 + 50), Color.Black);
+                Globals.SpriteBatch.DrawString(Main.indexFont, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (Main.indexFont.MeasureString(lines[i]).X / 2), i * 30 + i * 5 + 50), Color.Black);
             }
 
             
 
             for (int i = 0; i < MenuItem.Length; i++)
             {
-                spriteBatch.DrawString(Main.font, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (Main.font.MeasureString(MenuItem).X / 2), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), selectedColor);
+                spriteBatch.DrawString(Main.indexFont, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (Main.indexFont.MeasureString(MenuItem).X / 2), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), selectedColor);
             }
         }
     }

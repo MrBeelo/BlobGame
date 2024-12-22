@@ -2,8 +2,8 @@
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleIdle2.png</SourceFile>
   <SourceTime>2024-12-18T15:56:59.4175696+02:00</SourceTime>
-  <DestFile>/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/sprites/circle/CircleIdle2.xnb</DestFile>
-  <DestTime>2024-12-18T16:00:50.4113584+02:00</DestTime>
+  <DestFile>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/sprites/circle/CircleIdle2.xnb</DestFile>
+  <DestTime>2024-12-22T13:58:36.8235948+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

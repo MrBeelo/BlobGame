@@ -2,7 +2,6 @@
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/bg.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/collision_atlas.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/fonts/debugFont.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/fonts/font.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/sounds/explosion.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/sounds/hitBlob.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/sounds/jump.xnb
@@ -71,3 +70,7 @@
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/level9_normal.csv
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/bgloop.mp4
 /var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/bgloop.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/fonts/headerFont.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/fonts/indexFont.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/fonts/statsFont.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Debug/net8.0/linux-x64/content/assets/fonts/typeFont.xnb

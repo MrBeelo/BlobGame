@@ -696,46 +696,46 @@
         },
         "native": {
           "Microsoft.DiaSymReader.Native.amd64.dll": {
-            "fileVersion": "14.40.33810.0"
+            "fileVersion": "0.0.0.0"
           },
           "System.IO.Compression.Native.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "clretwrc.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "clrgc.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "clrjit.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "coreclr.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "createdump.exe": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "hostfxr.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "hostpolicy.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "mscordaccore.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "mscordaccore_amd64_amd64_8.0.1124.51707.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "mscordbi.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "mscorrc.dll": {
-            "fileVersion": "8.0.1124.51707"
+            "fileVersion": "0.0.0.0"
           },
           "msquic.dll": {
-            "fileVersion": "2.3.5.0"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -761,7 +761,7 @@
       "MonoGame.Library.SDL/2.26.5.5": {
         "native": {
           "runtimes/win-x64/native/SDL2.dll": {
-            "fileVersion": "2.26.5.0"
+            "fileVersion": "0.0.0.0"
           }
         }
       },

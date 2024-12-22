@@ -717,7 +717,7 @@
       "MonoGame.Library.SDL/2.26.5.5": {
         "native": {
           "runtimes/win-x64/native/SDL2.dll": {
-            "fileVersion": "2.26.5.0"
+            "fileVersion": "0.0.0.0"
           }
         }
       },
