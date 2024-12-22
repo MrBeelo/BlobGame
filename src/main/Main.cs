@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+//using Microsoft.Xna.Framework.Media;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
@@ -54,7 +54,9 @@ public class Main : Game
     public Canvas canvas;
     public bool TypingMode = false;
     public string InputText = "";
-    //public VideoPlayer videoPlayer = new VideoPlayer();
+    /// <summary>
+    /// public VideoPlayer videoPlayer = new VideoPlayer();
+    /// </summary>
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public Main()
@@ -138,7 +140,7 @@ public class Main : Game
 
     protected override void UnloadContent()
     {
-        //videoPlayer.Stop();
+        ///videoPlayer.Stop();
         base.UnloadContent();
     }
 
@@ -384,17 +386,16 @@ public class Main : Game
                 break;
         }
 
-        /*
-
         if(currentGameState != GameState.Playing)
         {
+            /*
             // Check if the video is not playing
             if (videoPlayer.State != MediaState.Playing)
             {
                 videoPlayer.IsLooped = true; // Enable looping
                 videoPlayer.Play(bgloop); // Start playing the video
-            }
-        }*/
+            }*/
+        }
 
         prevkstate = kstate;
 
