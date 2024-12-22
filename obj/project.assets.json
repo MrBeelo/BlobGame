@@ -113,7 +113,7 @@
         }
       }
     },
-    "net8.0/win-x64": {
+    "net8.0/linux-x64": {
       "MonoGame.Content.Builder.Task/3.8.2.1105": {
         "type": "package",
         "build": {
@@ -138,7 +138,7 @@
           }
         },
         "native": {
-          "runtimes/win-x64/native/soft_oal.dll": {}
+          "runtimes/linux-x64/native/libopenal.so.1": {}
         },
         "build": {
           "build/MonoGame.Framework.DesktopGL.targets": {}
@@ -147,7 +147,7 @@
       "MonoGame.Library.SDL/2.26.5.5": {
         "type": "package",
         "native": {
-          "runtimes/win-x64/native/SDL2.dll": {}
+          "runtimes/linux-x64/native/libSDL2-2.0.so.0": {}
         }
       },
       "Newtonsoft.Json/13.0.3": {
@@ -368,32 +368,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/home/MrBeelo/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\Programming Languages\\Le Game\\BlobGame\\BlobGame.csproj",
+      "projectUniqueName": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
       "projectName": "BlobGame",
-      "projectPath": "C:\\Users\\User\\Desktop\\Programming Languages\\Le Game\\BlobGame\\BlobGame.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\Programming Languages\\Le Game\\BlobGame\\obj\\",
+      "projectPath": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+      "packagesPath": "/home/MrBeelo/.nuget/packages/",
+      "outputPath": "/var/home/MrBeelo/Desktop/BlobGame/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/MrBeelo/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
+        "/usr/lib64/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -411,7 +404,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -443,15 +437,15 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+            "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
             "version": "[8.0.11, 8.0.11]"
           },
           {
-            "name": "Microsoft.NETCore.App.Runtime.win-x64",
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
             "version": "[8.0.11, 8.0.11]"
           },
           {
-            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+            "name": "Microsoft.NETCore.App.Runtime.linux-x64",
             "version": "[8.0.11, 8.0.11]"
           }
         ],
@@ -460,11 +454,11 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
-      "win-x64": {
+      "linux-x64": {
         "#import": []
       }
     }

@@ -89,7 +89,7 @@ namespace BlobGame
 
             string message = "Settings";
 
-            spriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2 - (Main.headerFont.MeasureString(message).X / 2f), 30), Color.Black);
+            spriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2 - (Main.headerFont.MeasureString(message).X / 2f), 30), Color.White);
         }
 
         public void UpdateMenuItems()

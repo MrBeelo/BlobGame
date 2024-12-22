@@ -14,7 +14,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.42";
+    public static string version = "v0.43";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }
@@ -47,13 +47,11 @@ public class Main : Game
     public int frameCounter;
     public TimeSpan timeSpan;
     public int FPS;
-    Texture2D background;
-    //public Video bgloop;
     public static InputManager inputManager = new InputManager();
     public Canvas canvas;
     public bool TypingMode = false;
     public string InputText = "";
-    //public VideoPlayer videoPlayer = new VideoPlayer();
+    public Background background = new();
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public Main()
@@ -96,13 +94,13 @@ public class Main : Game
         headerFont = Content.Load<SpriteFont>("assets/fonts/headerFont");
         indexFont = Content.Load<SpriteFont>("assets/fonts/indexFont");
         debugFont = Content.Load<SpriteFont>("assets/fonts/debugFont");
-        background = Content.Load<Texture2D>("assets/bg");
-        //bgloop = Content.Load<Video>("assets/bgloop");
 
         Texture2D playerTexture = Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
         Texture2D fireTexture = Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
         Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
         Texture2D circleTexture = Content.Load<Texture2D>("assets/sprites/circle/CircleIdle1");
+
+        background.LoadContent();
 
         mainMenu = new MainMenuScreen(indexFont, Globals.Graphics);
         paused = new PausedScreen(indexFont, Globals.Graphics);
@@ -137,7 +135,6 @@ public class Main : Game
 
     protected override void UnloadContent()
     {
-        ///videoPlayer.Stop();
         base.UnloadContent();
     }
 
@@ -385,13 +382,7 @@ public class Main : Game
 
         if(currentGameState != GameState.Playing)
         {
-            /*
-            // Check if the video is not playing
-            if (videoPlayer.State != MediaState.Playing)
-            {
-                videoPlayer.IsLooped = true; // Enable looping
-                videoPlayer.Play(bgloop); // Start playing the video
-            }*/
+            background.Update(gameTime);
         }
 
         prevkstate = kstate;
@@ -405,7 +396,7 @@ public class Main : Game
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        DrawBG();
+        background.DrawBG(gameTime);
 
         //!Beggining Play Sprite Batch
         Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: player.translation);
@@ -602,23 +593,6 @@ public class Main : Game
             ),
             color
         );
-    }
-
-    public void DrawBG()
-    {
-        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        if (currentGameState == GameState.Playing)
-        {
-            Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
-        } else if (currentGameState != GameState.Playing)
-        {
-            /*Texture2D videoTexture = videoPlayer.GetTexture();
-            if (videoTexture != null)
-            {
-                Globals.SpriteBatch.Draw(videoTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-            }*/
-        }
-        Globals.SpriteBatch.End();
     }
 
     public void DrawTypingZone()

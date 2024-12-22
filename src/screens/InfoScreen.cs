@@ -58,7 +58,7 @@ namespace BlobGame
 
             for (int i = 0; i < lines.Length; i++)
             {
-                Globals.SpriteBatch.DrawString(Main.indexFont, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (Main.indexFont.MeasureString(lines[i]).X / 2), i * 30 + i * 5 + 50), Color.Black);
+                Globals.SpriteBatch.DrawString(Main.indexFont, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (Main.indexFont.MeasureString(lines[i]).X / 2), i * 30 + i * 5 + 50), Color.White);
             }
 
             

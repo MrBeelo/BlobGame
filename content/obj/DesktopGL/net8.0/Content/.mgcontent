@@ -4,49 +4,105 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/atlas.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/bg.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/bgloop.mp4</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/collision_atlas.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/debugFont.spritefont</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/headerFont.spritefont</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/indexFont.spritefont</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/statsFont.spritefont</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/fonts/typeFont.spritefont</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/explosion.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/hitBlob.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/jump.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/laserShoot.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/powerUp.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedEnd.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/speedStart.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sounds/success.wav</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleIdle1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleIdle2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleJump1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleJump2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/circle/CircleWalk3.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/fireball/Fireball3.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerIdle1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerIdle2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerJump1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerJump2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/player/PlayerWalk3.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleIdle1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleIdle2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleJump1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleJump2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk1.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk2.png</File>
-    <File>C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlas.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/bgloop.mp4</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/mainbg.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg10.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg11.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg12.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg13.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg14.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg15.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg16.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg17.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg18.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg19.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg20.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg21.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg22.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg23.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg24.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg25.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg26.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg27.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg28.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg4.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg5.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg6.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg7.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg8.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg9.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/collision_atlas.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/debugFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/headerFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/indexFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/statsFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/typeFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/explosion.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/hitBlob.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/jump.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/laserShoot.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/powerUp.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/speedEnd.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/speedStart.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/success.wav</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleIdle1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleIdle2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleJump1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleJump2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleWalk1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleWalk2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/circle/CircleWalk3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/fireball/Fireball1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/fireball/Fireball2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/fireball/Fireball3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerIdle1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerIdle2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerJump1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerJump2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerWalk1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerWalk2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/player/PlayerWalk3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleIdle1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleIdle2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleJump1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleJump2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

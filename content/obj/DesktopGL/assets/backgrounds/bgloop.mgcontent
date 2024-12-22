@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/bgloop.mp4</SourceFile>
+  <SourceTime>2024-12-22T22:18:14.7105005+02:00</SourceTime>
+  <DestFile>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/assets/backgrounds/bgloop.xnb</DestFile>
+  <DestTime>2024-12-22T22:31:22.7013497+02:00</DestTime>
+  <Importer>H264Importer</Importer>
+  <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
+  <Processor>VideoProcessor</Processor>
+  <ProcessorTime>2024-08-16T20:05:56+03:00</ProcessorTime>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/assets/backgrounds/bgloop.mp4</string>
+  </BuildOutput>
+</PipelineBuildEvent>

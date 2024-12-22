@@ -5,8 +5,36 @@
   <Config />
   <SourceFiles>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlas.png</File>
-    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bg.png</File>
-    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/bgloop.mp4</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/bgloop.mp4</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/mainbg.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg1.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg10.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg11.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg12.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg13.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg14.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg15.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg16.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg17.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg18.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg19.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg2.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg20.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg21.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg22.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg23.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg24.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg25.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg26.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg27.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg28.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg3.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg4.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg5.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg6.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg7.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg8.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg9.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/collision_atlas.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/debugFont.spritefont</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/headerFont.spritefont</File>
@@ -47,6 +75,34 @@
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
