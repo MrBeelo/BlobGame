@@ -45,7 +45,7 @@ namespace BlobGame
                 "",
                 "",
                 "CREDITS:",
-                "Most of the art, coding and sound effects made by MrBeelo.",
+                "Most of the art, coding, sound effects and menu music (made with BandCamp) made by MrBeelo.",
                 "Inspiration and a little help with art by Nick_Greek.",
                 "Some coding fundementals by 'Coding with Sphere' and 'GameDev Quickie'.",
                 "Font: Zerove and Rijusans by GGBot.",

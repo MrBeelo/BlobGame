@@ -69,7 +69,7 @@ public class Background
         {
             transitionProgress = MathF.Max(transitionProgress - elapsedSeconds * transitionSpeed, 0f);
         }
-        return Color.Lerp(Color.White, Color.LightSalmon, transitionProgress);
+        return Color.Lerp(Color.White, new Color(255, 153, 153), transitionProgress);
     }
 }
 

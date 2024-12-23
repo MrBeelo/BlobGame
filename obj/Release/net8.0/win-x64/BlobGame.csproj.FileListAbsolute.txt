@@ -472,11 +472,6 @@ C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/
 C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/win-x64/data/level8_normal.csv
 C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/win-x64/data/level9_collision.csv
 C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/win-x64/data/level9_normal.csv
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/atlas.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/bg.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/bgloop.mp4
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/bgloop.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/collision_atlas.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/fonts/debugFont.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/fonts/headerFont.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/fonts/indexFont.xnb
@@ -772,3 +767,9 @@ C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/backgrounds/menubg7.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/backgrounds/menubg8.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/backgrounds/menubg9.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/atlases/atlas.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/atlases/collision_atlas.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/menumusic.ogg
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/menumusic.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/playmusic.ogg
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/playmusic.xnb

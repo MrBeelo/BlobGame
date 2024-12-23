@@ -73,8 +73,8 @@ namespace BlobGame
 
         public void LoadContent(Game game)
         {
-            string atlasPath = Path.Combine(AppContext.BaseDirectory, "data", "atlas.png");
-            string collAtlasPath = Path.Combine(AppContext.BaseDirectory, "data", "collision_atlas.png");
+            string atlasPath = Path.Combine(AppContext.BaseDirectory, "content", "assets", "custom", "atlas.png");
+            string collAtlasPath = Path.Combine(AppContext.BaseDirectory, "content", "assets", "custom", "collision_atlas.png");
 
             if (File.Exists(atlasPath))
             {
@@ -85,7 +85,7 @@ namespace BlobGame
             }
             else if (!File.Exists(atlasPath))
             {
-                textureAtlas = game.Content.Load<Texture2D>("assets/atlas");
+                textureAtlas = game.Content.Load<Texture2D>("assets/atlases/atlas");
             }
 
             if (File.Exists(collAtlasPath))
@@ -97,7 +97,7 @@ namespace BlobGame
             }
             else if (!File.Exists(collAtlasPath))
             {
-                hitboxAtlas = game.Content.Load<Texture2D>("assets/collision_atlas");
+                hitboxAtlas = game.Content.Load<Texture2D>("assets/atlases/collision_atlas");
             }
 
             for(int i = 0; i < Normal.Length; i++)

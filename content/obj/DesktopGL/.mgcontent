@@ -4,7 +4,8 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlas.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlases/atlas.png</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/atlases/collision_atlas.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/bgloop.mp4</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/mainbg.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg1.png</File>
@@ -35,12 +36,13 @@
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg7.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg8.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/menubg9.png</File>
-    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/collision_atlas.png</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/debugFont.spritefont</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/headerFont.spritefont</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/indexFont.spritefont</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/statsFont.spritefont</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/fonts/typeFont.spritefont</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/music/menumusic.mp3</File>
+    <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/music/playmusic.mp3</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/explosion.wav</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/hitBlob.wav</File>
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/jump.wav</File>
@@ -75,6 +77,8 @@
     <File>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sprites/triangle/TriangleWalk3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

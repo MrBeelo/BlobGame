@@ -1,5 +1,6 @@
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/BlobGame.pdb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/atlas.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/atlases/atlas.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/atlases/collision_atlas.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/backgrounds/bgloop.mp4
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/backgrounds/bgloop.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/backgrounds/mainbg.xnb
@@ -31,15 +32,15 @@
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/backgrounds/menubg7.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/backgrounds/menubg8.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/backgrounds/menubg9.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/bg.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/bgloop.mp4
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/bgloop.xnb
-/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/collision_atlas.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/fonts/debugFont.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/fonts/headerFont.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/fonts/indexFont.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/fonts/statsFont.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/fonts/typeFont.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/music/menumusic.ogg
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/music/menumusic.xnb
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/music/playmusic.ogg
+/var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/music/playmusic.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/sounds/explosion.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/sounds/hitBlob.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/publish/content/assets/sounds/jump.xnb

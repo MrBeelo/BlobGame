@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
@@ -14,7 +15,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.43";
+    public static string version = "v0.44";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }
@@ -52,6 +53,8 @@ public class Main : Game
     public bool TypingMode = false;
     public string InputText = "";
     public Background background = new();
+    public Song menuMusic;
+    public Song playMusic;
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public Main()
@@ -100,6 +103,9 @@ public class Main : Game
         Texture2D triangleTexture = Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
         Texture2D circleTexture = Content.Load<Texture2D>("assets/sprites/circle/CircleIdle1");
 
+        menuMusic = Content.Load<Song>("assets/music/menumusic");
+        playMusic = Content.Load<Song>("assets/music/playmusic");
+
         background.LoadContent();
 
         mainMenu = new MainMenuScreen(indexFont, Globals.Graphics);
@@ -131,6 +137,8 @@ public class Main : Game
         circle.LoadContent(this);
 
         Player.Respawn(player);
+
+        MediaPlayer.Play(menuMusic);
     }
 
     protected override void UnloadContent()
@@ -380,10 +388,22 @@ public class Main : Game
                 break;
         }
 
-        if(currentGameState != GameState.Playing)
+        if(currentGameState == GameState.Playing || currentGameState == GameState.Paused || currentGameState == GameState.Pass || currentGameState == GameState.Win || (currentGameState == GameState.Options && options.cameFrom == SettingsScreen.CameFrom.Paused))
         {
-            background.Update(gameTime);
+            if (MediaPlayer.Queue.ActiveSong != playMusic)
+            { MediaPlayer.Play(playMusic); }
+            MediaPlayer.Volume = (float)LoweredVolume - 0.2f;
+        } else {
+            if (MediaPlayer.Queue.ActiveSong != menuMusic)
+            { MediaPlayer.Play(menuMusic); }
+            MediaPlayer.Volume = (float)LoweredVolume;
         }
+
+        if(currentGameState != GameState.Playing)
+        { background.Update(gameTime); }
+
+        MediaPlayer.IsRepeating = true;
+
 
         prevkstate = kstate;
 
