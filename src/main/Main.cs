@@ -388,7 +388,7 @@ public class Main : Game
                 break;
         }
 
-        if(currentGameState == GameState.Playing || currentGameState == GameState.Paused || currentGameState == GameState.Pass || currentGameState == GameState.Win || (currentGameState == GameState.Options && options.cameFrom == SettingsScreen.CameFrom.Paused))
+        if(currentGameState == GameState.Playing || currentGameState == GameState.Paused || currentGameState == GameState.Pass || currentGameState == GameState.Win || currentGameState == GameState.Death || (currentGameState == GameState.Options && options.cameFrom == SettingsScreen.CameFrom.Paused))
         {
             if (MediaPlayer.Queue.ActiveSong != playMusic)
             { MediaPlayer.Play(playMusic); }

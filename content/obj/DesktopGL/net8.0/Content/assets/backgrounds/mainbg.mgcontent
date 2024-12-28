@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>/var/home/MrBeelo/Desktop/BlobGame/content/assets/backgrounds/mainbg.png</SourceFile>
-  <SourceTime>2024-12-22T22:18:14.7065003+02:00</SourceTime>
-  <DestFile>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/backgrounds/mainbg.xnb</DestFile>
-  <DestTime>2024-12-23T20:57:39.1488645+02:00</DestTime>
+  <SourceTime>2024-12-24T17:51:30.8246022+02:00</SourceTime>
+  <DestFile>/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/backgrounds/mainbg.xnb</DestFile>
+  <DestTime>2024-12-28T15:31:25.7350317+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

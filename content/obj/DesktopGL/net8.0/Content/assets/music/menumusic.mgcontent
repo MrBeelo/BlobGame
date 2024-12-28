@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>/var/home/MrBeelo/Desktop/BlobGame/content/assets/music/menumusic.mp3</SourceFile>
-  <SourceTime>2024-12-23T20:20:22.905705+02:00</SourceTime>
-  <DestFile>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/music/menumusic.xnb</DestFile>
-  <DestTime>2024-12-23T20:57:43.49603+02:00</DestTime>
+  <SourceTime>2024-12-24T17:51:30.9426063+02:00</SourceTime>
+  <DestFile>/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/music/menumusic.xnb</DestFile>
+  <DestTime>2024-12-28T15:31:30.0961976+02:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
   <Processor>SongProcessor</Processor>
@@ -15,6 +15,6 @@
   <Dependencies />
   <BuildAsset />
   <BuildOutput>
-    <string>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/music/menumusic.ogg</string>
+    <string>/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/music/menumusic.ogg</string>
   </BuildOutput>
 </PipelineBuildEvent>
