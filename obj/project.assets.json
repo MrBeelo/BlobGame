@@ -437,11 +437,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+      "projectUniqueName": "/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
       "projectName": "BlobGame",
-      "projectPath": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+      "projectPath": "/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
       "packagesPath": "/home/MrBeelo/.nuget/packages/",
-      "outputPath": "/var/home/MrBeelo/Desktop/BlobGame/obj/",
+      "outputPath": "/home/MrBeelo/Desktop/BlobGame/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/MrBeelo/.nuget/NuGet/NuGet.Config"

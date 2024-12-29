@@ -19,10 +19,12 @@ public class Main : Game
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }
+    public static TriangleBoss triangleBoss {get; set;}
     public static Fireball fireball { get; set; }
     public static Tilemap tilemap { get; set; }
     public static Triangle triangle { get; set; }
     public static Circle circle { get; set; }
+    public static List<TriangleBoss> triangleBosses = new();
     public static List<Triangle> triangles = new();
     public static List<Circle> circles = new();
     public static List<Fireball> fireballs = new();
@@ -127,7 +129,10 @@ public class Main : Game
         player.LoadContent(this);
         sprites.Add(player);
 
-        fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false);
+        triangleBoss = new TriangleBoss(triangleTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics);
+        triangleBoss.LoadContent(this);
+
+        fireball = new Fireball(fireTexture, Rectangle.Empty, Rectangle.Empty, Globals.Graphics, false, false);
         fireball.LoadContent(this);
 
         triangle = new Triangle(triangleTexture, new Rectangle(0, 0, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30), Globals.Graphics);
@@ -268,12 +273,16 @@ public class Main : Game
                     Triangle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
                     break;
 
-                case "/summonBossTriangle":
-                    Triangle.SummonBoss(new Vector2(player.Drect.X, player.Drect.Y));
-                    break;
-
                 case "/clearTriangle":
                     Triangle.ClearAll();
+                    break;
+
+                case "/summonBossTriangle":
+                    TriangleBoss.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    break;
+
+                case "/clearBossTriangle":
+                    TriangleBoss.ClearAll();
                     break;
 
                 case "/summonCircle":
@@ -337,6 +346,11 @@ public class Main : Game
                 foreach (var fireball in fireballs.ToList())
                 {
                     fireball.Update(gameTime);
+                }
+
+                foreach (var triangleBoss in triangleBosses.ToList())
+                {
+                    triangleBoss.Update(gameTime);
                 }
 
                 foreach (var triangle in triangles.ToList())
@@ -431,6 +445,11 @@ public class Main : Game
                 foreach (var fireball in fireballs.ToList())
                 {
                     fireball.Draw(Globals.SpriteBatch);
+                }
+
+                foreach (var triangleBoss in triangleBosses.ToList())
+                {
+                    triangleBoss.Draw(Globals.SpriteBatch);
                 }
 
                 foreach (var triangle in triangles.ToList())

@@ -118,8 +118,6 @@ namespace BlobGame
             {
                 level = 0;
             }
-
-            //EvaluateLevelPos((int)level.X);
             
             GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level + "_normal.csv"), this);
         }
@@ -206,6 +204,7 @@ namespace BlobGame
             excludedNormalTiles.Clear();
             excludedCollisionTiles.Clear();
             Triangle.ClearAll();
+            TriangleBoss.ClearAll();
             Circle.ClearAll();
             foreach (var tile in Collision[level])
             {
@@ -247,7 +246,7 @@ namespace BlobGame
 
                     if(value == 18)
                     {
-                        Triangle.SummonBoss(new Vector2((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize));
+                        TriangleBoss.Summon(new Vector2((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize));
                     }
 
                     if(value == 19)
@@ -265,6 +264,7 @@ namespace BlobGame
             excludedCollisionTiles.Clear();
             Player.Respawn(player);
             Triangle.ClearAll();
+            TriangleBoss.ClearAll();
             Circle.ClearAll();
         }
     }

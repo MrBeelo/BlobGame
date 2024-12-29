@@ -20,7 +20,6 @@ namespace BlobGame
         private static SoundEffect speedStartSound;
         private static SoundEffect speedEndSound;
         private static SoundEffect powerUpSound;
-        private static SoundEffect laserShootSound;
         public static SoundEffect hitSound;
         public Texture2D[] idleTextures;
         int idleCounter;
@@ -87,7 +86,6 @@ namespace BlobGame
             speedStartSound = game.Content.Load<SoundEffect>("assets/sounds/speedStart");
             speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
             powerUpSound = game.Content.Load<SoundEffect>("assets/sounds/powerUp");
-            laserShootSound = game.Content.Load<SoundEffect>("assets/sounds/laserShoot");
             hitSound = game.Content.Load<SoundEffect>("assets/sounds/hitBlob");
 
             successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
@@ -647,9 +645,7 @@ namespace BlobGame
 
             if(Main.inputManager.PFireball && (stamina >= 500 || isSanic))
             {
-                Fireball fireball = new Fireball(Fireball.fireTextures[1], new Rectangle(Drect.Center.X, Drect.Center.Y - 15, 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft);
-                Main.fireballs.Add(fireball);
-                laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                Fireball.Fire(Drect, isLeft, false);
                 if(!isSanic)
                 {
                     stamina -= 100;

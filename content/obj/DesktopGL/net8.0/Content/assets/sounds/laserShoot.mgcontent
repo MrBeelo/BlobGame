@@ -2,8 +2,8 @@
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>/var/home/MrBeelo/Desktop/BlobGame/content/assets/sounds/laserShoot.wav</SourceFile>
   <SourceTime>2024-12-24T17:51:30.9526067+02:00</SourceTime>
-  <DestFile>/var/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/sounds/laserShoot.xnb</DestFile>
-  <DestTime>2024-12-29T16:34:17.9736964+02:00</DestTime>
+  <DestFile>/home/MrBeelo/Desktop/BlobGame/content/bin/DesktopGL/Content/assets/sounds/laserShoot.xnb</DestFile>
+  <DestTime>2024-12-29T22:42:34.5188092+02:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2024-08-16T20:05:56+03:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>
