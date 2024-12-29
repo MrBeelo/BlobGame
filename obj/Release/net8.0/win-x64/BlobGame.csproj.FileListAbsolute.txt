@@ -729,7 +729,6 @@ C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.AssemblyInfo.cs
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.csproj.CoreCompileInputs.cache
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.sourcelink.json
-/var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.csproj.Up2Date
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.dll
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/refint/BlobGame.dll
 /var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.pdb
@@ -773,3 +772,4 @@ C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/bin/Release/net8.0/
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/menumusic.xnb
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/playmusic.ogg
 /var/home/MrBeelo/Desktop/BlobGame/bin/Release/net8.0/win-x64/content/assets/music/playmusic.xnb
+/var/home/MrBeelo/Desktop/BlobGame/obj/Release/net8.0/win-x64/BlobGame.csproj.CopyComplete

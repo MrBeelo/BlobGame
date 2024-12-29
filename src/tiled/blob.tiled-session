@@ -13,42 +13,42 @@
             "scaleInEditor": 1
         },
         "level0.tmx": {
-            "scale": 0.5,
+            "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1036,
-                "y": 671
+                "x": 1033,
+                "y": 703
             }
         },
         "level1.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 573.3333333333333,
-                "y": 525.9999999999999
+                "x": 1360.6666666666665,
+                "y": 618
             }
         },
         "level10.tmx": {
             "scale": 0.5155729166666666,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 960.0969794928782,
-                "y": 544.0549550459642
+                "x": 961.0667744216588,
+                "y": 544.0549550459643
             }
         },
         "level2.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 540,
-                "y": 477.99999999999994
+                "x": 727.3333333333333,
+                "y": 638
             }
         },
         "level3.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1002,
+                "x": 1001,
                 "y": 379
             }
         },
@@ -56,39 +56,39 @@
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1036,
-                "y": 275
+                "x": 1001,
+                "y": 351
             }
         },
         "level5.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 974,
-                "y": 811
+                "x": 973,
+                "y": 331
             }
         },
         "level6.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2270,
-                "y": 967
+                "x": 695,
+                "y": 781
             }
         },
         "level7.tmx": {
-            "scale": 0.33,
+            "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1803.030303030303,
-                "y": 1243.939393939394
+                "x": 429,
+                "y": 533
             }
         },
         "level8.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1014,
+                "x": 1091,
                 "y": 543
             }
         },
@@ -96,8 +96,8 @@
             "scale": 0.5413020833333333,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 888.5980948715481,
-                "y": 1161.0891946502452
+                "x": 845.1842586356202,
+                "y": 699.2398729914365
             }
         },
         "normal.tsx": {
@@ -105,30 +105,39 @@
             "scaleInEditor": 1
         }
     },
-    "last.exportedFilePath": "C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/src/tiled",
-    "last.imagePath": "C:/Users/User/Desktop/Programming Languages/Le Game/BlobGame/content/assets",
+    "last.exportedFilePath": "/home/MrBeelo",
+    "last.imagePath": "/home/MrBeelo/Desktop/BlobGame/content/assets/atlases",
     "map.height": 34,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
     "openFiles": [
         "level9.tmx",
-        "level10.tmx"
-    ],
-    "project": "blob.tiled-project",
-    "recentFiles": [
-        "level9.tmx",
         "level10.tmx",
-        "level6.tmx",
-        "normal.tsx",
-        "collision.tsx",
-        "level7.tmx",
-        "level8.tmx",
         "level0.tmx",
         "level1.tmx",
         "level2.tmx",
         "level3.tmx",
-        "level4.tmx"
+        "level4.tmx",
+        "level5.tmx",
+        "level6.tmx",
+        "level7.tmx",
+        "level8.tmx"
+    ],
+    "project": "blob.tiled-project",
+    "recentFiles": [
+        "level9.tmx",
+        "level8.tmx",
+        "level7.tmx",
+        "level6.tmx",
+        "level5.tmx",
+        "level4.tmx",
+        "level3.tmx",
+        "level2.tmx",
+        "level1.tmx",
+        "level0.tmx",
+        "level10.tmx",
+        "normal.tsx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

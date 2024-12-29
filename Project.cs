@@ -60,7 +60,7 @@ TODO: 6) COVER ART [0.42]
 TODO: 7) LEVEL SELECT SCREEN []
 TODO: 8) 10 MORE LEVELS + BIOMES** []
 TODO: 9) MUSIC [0.44]
-TODO: 10) LOOOOOOOOOOOOORE FOR NICK []
+TODO: 10) GOODER HITBOXES [0.45]
 
 ! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)

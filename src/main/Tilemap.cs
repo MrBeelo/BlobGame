@@ -16,6 +16,7 @@ namespace BlobGame
         public static Dictionary<Vector2, int>[] Collision = new Dictionary<Vector2, int>[10 + 1]; //! Same here
         public Texture2D textureAtlas;
         public Texture2D hitboxAtlas;
+        public static List<Rectangle> spikes = new();
         public static List<Vector3> normalTiles = new();
         public static List<Vector3> collisionTiles = new();
 
@@ -201,6 +202,7 @@ namespace BlobGame
 
         public static void Eval()
         {
+            spikes.Clear();
             excludedNormalTiles.Clear();
             excludedCollisionTiles.Clear();
             Triangle.ClearAll();
@@ -209,6 +211,30 @@ namespace BlobGame
             {
                 if (Collision[level].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))
                 {
+                    if(value == 11)
+                    {
+                        Rectangle spike = new ((int)tile.Key.X * Tilesize + 8, (int)tile.Key.Y * Tilesize + 12, 16, 20);
+                        spikes.Add(spike);
+                    }
+
+                    if(value == 12)
+                    {
+                        Rectangle spike = new ((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize + 8, 20, 16);
+                        spikes.Add(spike);
+                    }
+
+                    if(value == 13)
+                    {
+                        Rectangle spike = new ((int)tile.Key.X * Tilesize + 8, (int)tile.Key.Y * Tilesize, 16, 20);
+                        spikes.Add(spike);
+                    }
+
+                    if(value == 14)
+                    {
+                        Rectangle spike = new ((int)tile.Key.X * Tilesize + 12, (int)tile.Key.Y * Tilesize + 8, 20, 16);
+                        spikes.Add(spike);
+                    }
+
                     if(value == 16)
                     {
                         Player.Teleport((int)tile.Key.X * Tilesize, (int)tile.Key.Y * Tilesize);

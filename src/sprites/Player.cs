@@ -240,7 +240,7 @@ namespace BlobGame
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
-                    else if(value == 1 && !Immune) //! Hazard
+                    else if((value == 1) && !Immune) //! Hazard
                     {
                     hazardHorizColl = true;
                     Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
@@ -370,6 +370,16 @@ namespace BlobGame
                             Tilemap.permaExcludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             xartomantila++;
                             Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+                        }
+                    }
+                    else if(value >= 11 && value <= 14 && !Immune)
+                    {
+                        foreach(Rectangle spike in Tilemap.spikes)
+                        {
+                            if(Drect.Intersects(spike))
+                            {
+                                hazardHorizColl = true;
+                            }
                         }
                     }
                 } else {
@@ -564,6 +574,16 @@ namespace BlobGame
                             Tilemap.permaExcludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             xartomantila++;
                             Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+                        }
+                    }
+                    else if(value >= 11 && value <= 14 && !Immune)
+                    {
+                        foreach(Rectangle spike in Tilemap.spikes)
+                        {
+                            if(Drect.Intersects(spike))
+                            {
+                                hazardVertColl = true;
+                            }
                         }
                     }
                 } else {

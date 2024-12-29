@@ -15,7 +15,7 @@ public class Main : Game
     public static Main main;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.44";
+    public static string version = "v0.45";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
     public static Player player { get; set; }
@@ -392,7 +392,7 @@ public class Main : Game
         {
             if (MediaPlayer.Queue.ActiveSong != playMusic)
             { MediaPlayer.Play(playMusic); }
-            MediaPlayer.Volume = (float)LoweredVolume - 0.2f;
+            MediaPlayer.Volume = (float)LoweredVolume - 0.1f;
         } else {
             if (MediaPlayer.Queue.ActiveSong != menuMusic)
             { MediaPlayer.Play(menuMusic); }
