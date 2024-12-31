@@ -270,7 +270,7 @@ public class Main : Game
                     break;
 
                 case "/summonTriangle":
-                    Triangle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    Triangle.Summon(new Vector2(player.Drect.X - Triangle.triangleSizeW, player.Drect.Y - Triangle.triangleSizeH));
                     break;
 
                 case "/clearTriangle":
@@ -278,7 +278,7 @@ public class Main : Game
                     break;
 
                 case "/summonBossTriangle":
-                    TriangleBoss.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    TriangleBoss.Summon(new Vector2(player.Drect.X - TriangleBoss.bossTriangleSizeW, player.Drect.Y - TriangleBoss.bossTriangleSizeH));
                     break;
 
                 case "/clearBossTriangle":
@@ -286,7 +286,7 @@ public class Main : Game
                     break;
 
                 case "/summonCircle":
-                    Circle.Summon(new Vector2(player.Drect.X, player.Drect.Y));
+                    Circle.Summon(new Vector2(player.Drect.X - Circle.circleSizeW, player.Drect.Y - Circle.circleSizeH));
                     break;
 
                 case "/clearCircle":
@@ -484,6 +484,8 @@ public class Main : Game
                 Globals.SpriteBatch.DrawString(statsFont, health, new Vector2(Settings.SimulationSize.X - statsFont.MeasureString(health).X - 20, 10), Color.Black);
                 Globals.SpriteBatch.DrawString(statsFont, level, new Vector2(Settings.SimulationSize.X - statsFont.MeasureString(level).X - 20, 60), Color.Black);
                 Globals.SpriteBatch.DrawString(statsFont, xartomantila, new Vector2(Settings.SimulationSize.X - statsFont.MeasureString(xartomantila).X - 20, 110), Color.Black);
+                foreach(TriangleBoss triangleBoss in Main.triangleBosses)
+                { triangleBoss.DrawBar(); }
                 break;
 
             case GameState.Paused:

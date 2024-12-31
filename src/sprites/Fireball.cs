@@ -120,8 +120,7 @@ namespace BlobGame
                         {
                             Tilemap.excludedNormalTiles.Add(new Vector3(29, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
-                            alive = false;
-                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Die();
                         }
                     } else {
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
@@ -130,15 +129,13 @@ namespace BlobGame
                         {
                             Drect.Y = collision.Top - Drect.Height;
                             Velocity.Y = 0;
-                            alive = false;
-                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Die();
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
                             Drect.Y = collision.Bottom;
                             Velocity.Y = 0;
-                            alive = false;
-                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            Die();
                         }
                     }
                 }
@@ -185,11 +182,24 @@ namespace BlobGame
             }
         }
 
-        public static void Fire(Rectangle drect, bool isLeft, bool bad)
+        public static void Fire(Rectangle drect, bool isLeft)
         {
-            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center.X, new Random().Next(drect.Top + 1, drect.Bottom - 32 - 1), 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft, bad);
+            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center.X, new Random().Next(drect.Top + 1, drect.Bottom - 32 - 1), 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft, false);
             Main.fireballs.Add(fireball);
             laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+        }
+
+        public static void FireBad(Rectangle drect, bool isLeft)
+        {
+            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center.X, new Random().Next(drect.Top + 1, drect.Bottom - 48 - 1), 48, 48), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft, true);
+            Main.fireballs.Add(fireball);
+            laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+        }
+
+        public void Die()
+        {
+            alive = false;
+            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
         }
 
         public override string[] GetDebugInfo()

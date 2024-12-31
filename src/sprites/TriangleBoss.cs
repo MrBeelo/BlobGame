@@ -23,6 +23,7 @@ namespace BlobGame
         public static int bossTriangleSizeH = 192;
         int switchTick = new Random().Next(1, 101);
         bool stop = false;
+        public int health = 3600;
 
         public TriangleBoss(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
         {
@@ -82,14 +83,24 @@ namespace BlobGame
                 }
             }
 
-            if(switchTick % 100 == 0)
+            if(switchTick % 500 == 400)
             {
-                if(!isLeft)
+                if(!isLeft && randomBool)
                 {
                     isLeft = true;
-                } else {
+                } else if(randomBool) {
                     isLeft = false;
                 }
+            }
+
+            if(Drect.X <= minPos.X + 10)
+            {
+                isLeft = false;
+            }
+
+            if(Drect.X >= maxPos.X - Drect.Width - 10)
+            {
+                isLeft = true;
             }
 
             if (!isLeft)
@@ -225,6 +236,8 @@ namespace BlobGame
                 }
             }
 
+            //! AI
+
             if(switchTick > 0)
             {
                 switchTick--;
@@ -232,12 +245,12 @@ namespace BlobGame
                 switchTick = 499;
             }
 
-            if(switchTick % 100 <= 25)
+            /*if(switchTick % 100 <= 25)
             {
                 stop = true;
             } else {
                 stop = false;
-            }
+            }*/
 
             if(switchTick == 250)
             {
@@ -254,9 +267,23 @@ namespace BlobGame
                 }
             }
 
-            if(switchTick % 50 == 0)
+            if (switchTick % 50 == 0)
             {
-                Fireball.Fire(Drect, isLeft, true);
+                Fireball.FireBad(Drect, isLeft);
+            }
+            
+            foreach (Fireball fireball in Main.fireballs)
+            {
+                if (fireball.Drect.Intersects(Drect) && !fireball.bad)
+                {
+                    fireball.Die();
+                    health -= 20;
+                }
+            }
+
+            if (health == 0)
+            {
+                TriangleIsAlive = false;
             }
 
             if (Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
@@ -373,6 +400,12 @@ namespace BlobGame
         public static void ClearAll()
         {
             Main.triangleBosses.Clear();
+        }
+
+        public void DrawBar()
+        {
+            string healthStat = "Boss Health: " + health + "/3600";
+            Globals.SpriteBatch.DrawString(Main.statsFont, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (Main.statsFont.MeasureString(healthStat).X / 2), 10), Color.Black);
         }
     }
 }

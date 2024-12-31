@@ -645,7 +645,7 @@ namespace BlobGame
 
             if(Main.inputManager.PFireball && (stamina >= 500 || isSanic))
             {
-                Fireball.Fire(Drect, isLeft, false);
+                Fireball.Fire(Drect, isLeft);
                 if(!isSanic)
                 {
                     stamina -= 100;

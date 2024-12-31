@@ -96,6 +96,16 @@ namespace BlobGame
                 }
             }
 
+            if(Drect.X <= minPos.X + 10)
+            {
+                isLeft = false;
+            }
+
+            if(Drect.X >= maxPos.X - Drect.Width - 10)
+            {
+                isLeft = true;
+            }
+
             if (!isLeft)
             {
                 Velocity.X = speed;

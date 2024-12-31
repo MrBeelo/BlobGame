@@ -74,6 +74,8 @@ TODO: 10) GOODER HITBOXES [0.45]
 ! popup when entering the biome.
 !
 ! *** Should be a new class and should summon small circles and triangles. Also make a better map for it.
+! For crystals, they should appear from the ground, damaging the player. If player throws not bad fireball
+! Crystal dies. If crystals exist, the give boss buffs such as: more damage, more attack speed, more health, more speed
 
 */
 
