@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using System.Diagnostics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 
 namespace BlobGame
@@ -13,17 +9,16 @@ namespace BlobGame
         int fireCounter;
         int fireActiveFrame;
         public static Texture2D[] fireTextures;
-        private static SoundEffect explosionSound;
-        private static SoundEffect laserShootSound;
+        private static Sound explosionSound;
+        private static Sound laserShootSound;
         public bool alive = true;
         public bool bad = false;
 
-        public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics, bool fireIsLeft, bool fireBad) : base(texture, drect, srect)
+        public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, bool fireIsLeft, bool fireBad) : base(texture, drect, srect)
         {
             Texture = texture;
             Drect = drect;
             Srect = srect;
-            Graphics = graphics;
             Velocity = new();
             isLeft = fireIsLeft;
             bad = fireBad;

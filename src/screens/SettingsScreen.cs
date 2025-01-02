@@ -1,10 +1,7 @@
-
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace BlobGame
 {
@@ -22,19 +19,17 @@ namespace BlobGame
 
         private string[] menuItems;
 
-        public SettingsScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
+        public SettingsScreen(Font font) : base(font)
         {
             // Load settings and parse menu items
             UpdateMenuItems();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            KeyboardState kstate = Keyboard.GetState();
+            base.Update();
 
-            base.Update(gameTime);
-
-            if (Main.inputManager.PConfirm)
+            if (Game.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
@@ -49,52 +44,47 @@ namespace BlobGame
                         }
                         break;
                     case 1:
-                        switch(Globals.Settings.WindowSize)
+                        if (Globals.Settings.WindowSize.X == 1920 && Globals.Settings.WindowSize.Y == 1080)
                         {
-                            case Point(1920, 1080):
-                                Globals.Settings.SetResolution(800, 480);
-                                break;
-
-                            case Point(800, 480):
-                                Globals.Settings.SetResolution(1920, 1080);
-                                break;
+                            Globals.Settings.SetResolution(800, 480);
+                        } else if (Globals.Settings.WindowSize.X == 800 && Globals.Settings.WindowSize.Y == 480)
+                        {
+                            Globals.Settings.SetResolution(1920, 1080);
                         }
                         break;
                     case 2:
                         switch(cameFrom)
                         {
                             case CameFrom.MainMenu:
-                                Main.currentGameState = Main.GameState.MainMenu;
+                                Game.currentGameState = Game.GameState.MainMenu;
                                 break;
 
                             case CameFrom.Paused:
-                                Main.currentGameState = Main.GameState.Playing;
+                                Game.currentGameState = Game.GameState.Playing;
                                 break;
                         }
                         break;
                 }
                 selectedIndex = 0;
-                Globals.Settings.SaveSettings(Main.settingsFilePath); // Save changes to the file
+                Globals.Settings.SaveSettings(Game.settingsFilePath); // Save changes to the file
             }
 
-            Globals.Settings = Settings.LoadSettings(Main.settingsFilePath);
+            Globals.Settings = Settings.LoadSettings(Game.settingsFilePath);
             UpdateMenuItems();
-
-            prevkstate = kstate;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public override void Draw()
         {
-            base.Draw(spriteBatch, graphics);
+            base.Draw();
 
             string message = "Settings";
 
-            spriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2 - (Main.headerFont.MeasureString(message).X / 2f), 30), Color.White);
+            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureText(message, Game.headerSize) / 2f), 30), Game.headerSize, 0, Color.White);
         }
 
         public void UpdateMenuItems()
         {
-            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {Globals.Graphics.PreferredBackBufferWidth:F0} x {Globals.Graphics.PreferredBackBufferHeight:F0}", "Back"};
+            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {GetScreenWidth():F0} x {GetScreenHeight():F0}", "Back"};
         }
     }
 }

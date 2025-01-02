@@ -1,7 +1,6 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace BlobGame;
 
@@ -17,17 +16,17 @@ public class Background
     private const float transitionSpeed = 2f; // Adjust for faster/slower transitions
     public void LoadContent()
     {
-        background = Main.main.Content.Load<Texture2D>("assets/backgrounds/mainbg");
+        background = LoadTexture("assets/backgrounds/mainbg");
         for (int i = 1; i < 28; i++)
         {
-            frames.Add(Main.main.Content.Load<Texture2D>("assets/backgrounds/menubg" + i));
+            frames.Add(LoadTexture("assets/backgrounds/menubg" + i));
         }
     }
 
-    public void Update(GameTime gameTime)
+    public void Update()
     {
         // Update animation frame
-        timeElapsed += gameTime.ElapsedGameTime.TotalMilliseconds;
+        timeElapsed += GetFrameTime();
 
         if (timeElapsed >= frameDuration)
         {
@@ -40,28 +39,28 @@ public class Background
             bgcolorDelay--;
         }
 
-        if (Main.inputManager.PConfirm)
+        if (Game.inputManager.PConfirm)
         {
             bgcolorDelay = 20;
         }
     }
-    public void DrawBG(GameTime gameTime)
+    public void DrawBG()
     {
-        Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        if (Main.currentGameState == Main.GameState.Playing)
+        BeginDrawing();
+        if (Game.currentGameState == Game.GameState.Playing)
         {
-            Globals.SpriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.White);
-        } else if (Main.currentGameState != Main.GameState.Playing)
+            DrawTexture(background, 0, 0, Color.White);
+        } else if (Game.currentGameState != Game.GameState.Playing)
         {
-            Globals.SpriteBatch.Draw(frames[currentFrame], Vector2.Zero, BGColor(gameTime));
+            DrawTexture(frames[currentFrame], 0, 0, BGColor());
         }
-        Globals.SpriteBatch.End();
+        EndDrawing();
     }
 
-    public Color BGColor(GameTime gameTime)
+    public Color BGColor()
     {
-        float elapsedSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (Main.currentGameState == Main.GameState.Quit)
+        float elapsedSeconds = GetFrameTime();
+        if (Game.currentGameState == Game.GameState.Quit)
         {
             transitionProgress = MathF.Min(transitionProgress + elapsedSeconds * transitionSpeed, 1f);
         }
@@ -69,7 +68,7 @@ public class Background
         {
             transitionProgress = MathF.Max(transitionProgress - elapsedSeconds * transitionSpeed, 0f);
         }
-        return Color.Lerp(Color.White, new Color(255, 153, 153), transitionProgress);
+        return ColorLerp(Color.White, new Color(255, 153, 153), transitionProgress);
     }
 }
 

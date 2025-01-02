@@ -38,23 +38,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.NET.ILLink.Tasks": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.11, )",
-              "autoReferenced": true
-            },
-            "MonoGame.Content.Builder.Task": {
-              "target": "Package",
-              "version": "[3.8.2.1105, )"
-            },
-            "MonoGame.Framework.DesktopGL": {
-              "target": "Package",
-              "version": "[3.8.2.1105, )"
-            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "Raylib-cs": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             }
           },
           "imports": [
@@ -68,31 +58,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
-              "version": "[8.0.11, 8.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.linux-x64",
-              "version": "[8.0.11, 8.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.linux-x64",
-              "version": "[8.0.11, 8.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
           "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "linux-x64": {
-          "#import": []
         }
       }
     }

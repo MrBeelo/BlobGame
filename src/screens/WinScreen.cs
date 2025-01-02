@@ -1,7 +1,7 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace BlobGame
 {
@@ -11,41 +11,38 @@ namespace BlobGame
             return new string[] {"Back to Main Menu", "Play Again"};
         }
 
-        public WinScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
+        public WinScreen(Font font) : base(font)
         {
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            KeyboardState kstate = Keyboard.GetState();
+            base.Update();
 
-            base.Update(gameTime);
-
-            if (Main.inputManager.PConfirm)
+            if (Game.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
                     case 0:
-                        Main.currentGameState = Main.GameState.MainMenu;
-                        Tilemap.Reset(Main.player);
+                        Game.currentGameState = Game.GameState.MainMenu;
+                        Tilemap.Reset(Game.player);
                         break;
                     case 1:
-                        Main.currentGameState = Main.GameState.Playing;
-                        Tilemap.Reset(Main.player);
+                        Game.currentGameState = Game.GameState.Playing;
+                        Tilemap.Reset(Game.player);
                         break;
                 }
                 selectedIndex = 0;
             }
-            prevkstate = kstate;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public override void Draw()
         {
-            base.Draw(spriteBatch, graphics);
+            base.Draw();
             
             string message = "You Won!";
 
-            Globals.SpriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2 - (Main.headerFont.MeasureString(message).X / 2f), 30), Color.Gold);
+            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureText(message, Game.headerSize) / 2f), 30), Game.headerSize, 0, Color.Gold);
         }
     }
 }

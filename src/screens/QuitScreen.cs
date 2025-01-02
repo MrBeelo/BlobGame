@@ -1,6 +1,7 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace BlobGame
 {
@@ -9,39 +10,36 @@ namespace BlobGame
         public override string[] MenuItems() {
             return new string[] {"Yes", "No"};
         }
-        public QuitScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
+        public QuitScreen(Font font) : base(font)
         {
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            KeyboardState kstate = Keyboard.GetState();
+            base.Update();
 
-            base.Update(gameTime);
-
-            if (Main.inputManager.PConfirm)
+            if (Game.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
                     case 0:
-                        Main.ExitGame();
+                        Game.ExitGame();
                         break;
                     case 1:
-                        Main.currentGameState = Main.GameState.MainMenu;
+                        Game.currentGameState = Game.GameState.MainMenu;
                         break;
                 }
                 selectedIndex = 0;
             }
-            prevkstate = kstate;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public override void Draw()
         {
-            base.Draw(spriteBatch, graphics);
+            base.Draw();
             
             string message = "Want to quit?";
 
-            Globals.SpriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2 - (Main.headerFont.MeasureString(message).X / 2f), 30), Color.White);
+            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureText(message, Game.headerSize) / 2f), 30), Game.headerSize, 0, Color.White);
         }
     }
 }

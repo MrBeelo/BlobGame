@@ -1,5 +1,6 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace BlobGame
 {
@@ -22,9 +23,9 @@ namespace BlobGame
             Velocity = new();
         }
 
-        public new virtual void Update(GameTime gameTime)
+        public new virtual void Update()
         {
-            base.Update(gameTime);
+            base.Update();
 
             if(Velocity.Y > 0.5 && Velocity.X > 0)
             {

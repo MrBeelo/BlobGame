@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
-using System.Threading.Tasks;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 
 namespace BlobGame
@@ -28,12 +24,11 @@ namespace BlobGame
         int switchTick = new Random().Next(1, 101);
         bool stop = false;
 
-        public Triangle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
+        public Triangle(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
             Texture = texture;
             Drect = drect;
             Srect = srect;
-            Graphics = graphics;
             Velocity = new();
         }
 
@@ -58,9 +53,9 @@ namespace BlobGame
 
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            base.Update(gameTime);
+            base.Update();
 
             idleCounter++;
             if (idleCounter > 29)
@@ -360,13 +355,13 @@ namespace BlobGame
 
         public static void Summon(Vector2 pos)
         {
-            Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
-            Main.triangles.Add(triangle);
+            Triangle triangle = new Triangle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, triangleSizeW, triangleSizeH), new Rectangle(0, 0, 20, 30));
+            Game.triangles.Add(triangle);
         }
 
         public static void ClearAll()
         {
-            Main.triangles.Clear();
+            Game.triangles.Clear();
         }
     }
 }

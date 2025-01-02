@@ -12,11 +12,4 @@
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="/home/MrBeelo/.nuget/packages/" />
   </ItemGroup>
-  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)monogame.content.builder.task/3.8.2.1105/build/MonoGame.Content.Builder.Task.props" Condition="Exists('$(NuGetPackageRoot)monogame.content.builder.task/3.8.2.1105/build/MonoGame.Content.Builder.Task.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.net.illink.tasks/8.0.11/build/Microsoft.NET.ILLink.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.illink.tasks/8.0.11/build/Microsoft.NET.ILLink.Tasks.props')" />
-  </ImportGroup>
-  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">/home/MrBeelo/.nuget/packages/microsoft.net.illink.tasks/8.0.11</PkgMicrosoft_NET_ILLink_Tasks>
-  </PropertyGroup>
 </Project>

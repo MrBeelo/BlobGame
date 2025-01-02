@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.IO;
-using System.Diagnostics;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace BlobGame
 {
@@ -11,7 +8,7 @@ namespace BlobGame
     {
         public static int level = 0;
         public static int Tilesize = 32; //Display Tilesize
-        public Point Mapsize {get; private set;}
+        public System.Drawing.Point Mapsize {get; private set;}
         public static Dictionary<Vector2, int>[] Normal = new Dictionary<Vector2, int>[10 + 1]; //! Change based on how many maps you make.
         public static Dictionary<Vector2, int>[] Collision = new Dictionary<Vector2, int>[10 + 1]; //! Same here
         public Texture2D textureAtlas;
@@ -69,46 +66,22 @@ namespace BlobGame
                 y++;
             }
 
-            tilemap.Mapsize = new Point(x * Tilesize, y * Tilesize);
+            tilemap.Mapsize = new System.Drawing.Point(x * Tilesize, y * Tilesize);
         }
 
         public void LoadContent(Game game)
         {
-            string atlasPath = Path.Combine(AppContext.BaseDirectory, "content", "assets", "custom", "atlas.png");
-            string collAtlasPath = Path.Combine(AppContext.BaseDirectory, "content", "assets", "custom", "collision_atlas.png");
-
-            if (File.Exists(atlasPath))
-            {
-                using (var atlasTex = File.OpenRead(atlasPath))
-                {
-                    textureAtlas = Texture2D.FromStream(Globals.GraphicsDevice, atlasTex);
-                }
-            }
-            else if (!File.Exists(atlasPath))
-            {
-                textureAtlas = game.Content.Load<Texture2D>("assets/atlases/atlas");
-            }
-
-            if (File.Exists(collAtlasPath))
-            {
-                using (var collAtlasTex = File.OpenRead(collAtlasPath))
-                {
-                    hitboxAtlas = Texture2D.FromStream(Globals.GraphicsDevice, collAtlasTex);
-                }
-            }
-            else if (!File.Exists(collAtlasPath))
-            {
-                hitboxAtlas = game.Content.Load<Texture2D>("assets/atlases/collision_atlas");
-            }
+            textureAtlas = LoadTexture("assets/atlases/atlas");
+            hitboxAtlas = LoadTexture("assets/atlases/collision_atlas");
 
             for(int i = 0; i < Normal.Length; i++)
             {
-                Normal[i] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + i + "_normal.csv"));
+                Normal[i] = LoadMap("data/level" + i + "_normal.csv");
             }
 
             for(int i = 0; i < Collision.Length; i++)
             {
-                Collision[i] = LoadMap(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + i + "_collision.csv"));
+                Collision[i] = LoadMap("data/level" + i + "_normal.csv");
             }
         }
 
@@ -119,12 +92,12 @@ namespace BlobGame
                 level = 0;
             }
             
-            GetMapSize(Path.Combine(game.Content.RootDirectory, "..", "data", "level" + Globals.SaveFile.Level + "_normal.csv"), this);
+            GetMapSize("data/level" + Globals.SaveFile.Level + "_normal.csv", this);
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
-            if(Main.currentGameState == Main.GameState.Playing)
+            if(Game.currentGameState == Game.GameState.Playing)
             {
                 int tpr = 8; //Tiles per row
                 int p_tilesize = 32; //Pixel Tilesize
@@ -152,7 +125,7 @@ namespace BlobGame
                         p_tilesize
                     );
 
-                    Globals.SpriteBatch.Draw(textureAtlas, dest, src, Color.White);
+                    DrawTexturePro(textureAtlas, src, dest, Vector2.Zero, 0f, Color.White);
                 }
 
                 foreach(var item in Collision[(int)Globals.SaveFile.Level])
@@ -178,9 +151,9 @@ namespace BlobGame
                         p_tilesize
                     );
 
-                    if(Main.hasF3On)
+                    if(Game.hasF3On)
                     {
-                        Globals.SpriteBatch.Draw(hitboxAtlas, dest, src, Color.White);
+                        DrawTexturePro(hitboxAtlas, src, dest, Vector2.Zero, 0f, Color.White);
                     }
                 }
             }
@@ -189,7 +162,7 @@ namespace BlobGame
         public static void MoveTo(int l)
         {
             level = l;
-            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+            Globals.SaveFile.SaveSavefile(Game.savefileFilePath);
             Eval();
         }
 

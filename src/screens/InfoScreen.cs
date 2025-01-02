@@ -1,7 +1,7 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace BlobGame
 {
@@ -9,24 +9,21 @@ namespace BlobGame
     {
         public string MenuItem = "Back";
         public Color selectedColor = Color.Yellow;
-        KeyboardState prevkstate;
 
-        public InfoScreen(SpriteFont font, GraphicsDeviceManager graphics)
+        public InfoScreen(Font font)
         {
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            KeyboardState kstate = Keyboard.GetState();
 
-            if (Main.inputManager.PConfirm)
+            if (Game.inputManager.PConfirm)
             {
-                Main.currentGameState = Main.GameState.MainMenu;
+                Game.currentGameState = Game.GameState.MainMenu;
             }
-            prevkstate = kstate;
         }
 
-        public void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public void Draw()
         {
             string[] lines = {
                 "Hey!",
@@ -58,14 +55,14 @@ namespace BlobGame
 
             for (int i = 0; i < lines.Length; i++)
             {
-                Globals.SpriteBatch.DrawString(Main.indexFont, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (Main.indexFont.MeasureString(lines[i]).X / 2), i * 30 + i * 5 + 50), Color.White);
+                DrawTextEx(Game.rijusans, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (MeasureText(lines[i], Game.indexSize) / 2), i * 30 + i * 5 + 50), 26, 0, Color.White);
             }
 
             
 
             for (int i = 0; i < MenuItem.Length; i++)
             {
-                spriteBatch.DrawString(Main.indexFont, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (Main.indexFont.MeasureString(MenuItem).X / 2), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), selectedColor);
+                DrawTextEx(Game.rijusans, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (MeasureText(lines[i], Game.indexSize) / 2), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), 26, 0, selectedColor);
             }
         }
     }

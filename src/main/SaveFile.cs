@@ -1,7 +1,7 @@
-using System.IO;
-using Microsoft.Xna.Framework;
+using System.Numerics;
 using Newtonsoft.Json;
-using System.Collections.Generic;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace BlobGame
 {
@@ -15,7 +15,7 @@ namespace BlobGame
 
         public void Initialize()
         {
-            LoadAndApplySaveFile(Main.savefileFilePath);
+            LoadAndApplySaveFile(Game.savefileFilePath);
             Tilemap.level = Level;
             Player.xartomantila = Xartomantila;
             Tilemap.permaExcludedNormalTiles = permaExcludedNormalTiles;
@@ -60,7 +60,7 @@ namespace BlobGame
                 Xartomantila = 0;
                 permaExcludedNormalTiles = new();
                 permaExcludedCollisionTiles = new();
-                SaveSavefile(Main.savefileFilePath);
+                SaveSavefile(Game.savefileFilePath);
             }
         }
 

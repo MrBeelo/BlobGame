@@ -1,6 +1,7 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace BlobGame
 {
@@ -10,44 +11,41 @@ namespace BlobGame
             return new string[] {"Continue", "Options", "Quit"};
         }
 
-        public PausedScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
+        public PausedScreen(Font font) : base(font)
         {
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            KeyboardState kstate = Keyboard.GetState();
+            base.Update();
 
-            base.Update(gameTime);
-
-            if (Main.inputManager.PConfirm)
+            if (Game.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
                     case 0:
-                        Main.currentGameState = Main.GameState.Playing;
+                        Game.currentGameState = Game.GameState.Playing;
                         break;
                     case 1:
-                        Main.options.cameFrom = SettingsScreen.CameFrom.Paused;
-                        Globals.Settings = Settings.LoadSettings(Main.settingsFilePath);
-                        Main.currentGameState = Main.GameState.Options;
+                        Game.options.cameFrom = SettingsScreen.CameFrom.Paused;
+                        Globals.Settings = Settings.LoadSettings(Game.settingsFilePath);
+                        Game.currentGameState = Game.GameState.Options;
                         break;
                     case 2:
-                        Main.currentGameState = Main.GameState.MainMenu;
+                        Game.currentGameState = Game.GameState.MainMenu;
                         break;
                 }
                 selectedIndex = 0;
             }
-            prevkstate = kstate;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public override void Draw()
         {
-            base.Draw(spriteBatch, graphics);
+            base.Draw();
 
             string message = "Paused";
 
-            Globals.SpriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2 - (Main.headerFont.MeasureString(message).X / 2f), 30), Color.White);
+            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureText(message, Game.headerSize) / 2f), 30), Game.headerSize, 0, Color.White);
         }
     }
 }

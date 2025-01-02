@@ -1,7 +1,5 @@
-using System;
-using System.Diagnostics.Tracing;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 namespace BlobGame;
 
@@ -17,8 +15,7 @@ public class InputManager
     public bool PConfirm {get; set;} = false;
     public bool PUp {get; set;} = false;
     public bool PDown {get; set;} = false;
-    KeyboardState prevkstate;
-    GamePadState prevgstate;
+    public static bool isCapsLockOn = false;
 
     public enum PressedDirection 
     {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
@@ -28,12 +25,8 @@ public class InputManager
     {
     }
 
-    public void Update(GameTime gameTime)
+    public void Update()
     {
-        KeyboardState kstate = Keyboard.GetState();
-        JoystickState jstate = Joystick.GetState((int)PlayerIndex.One);
-        GamePadState gstate = GamePad.GetState((int)PlayerIndex.One);
-
         DLeft = false;
         DRight = false;
         DUp = false;
@@ -45,110 +38,117 @@ public class InputManager
         PUp = false;
         PDown = false;
 
-        if(!Main.main.TypingMode)
+        if(!Game.game.TypingMode)
         {
 
-        if(Joystick.LastConnectedIndex == 0)
+        int gamepad = 0;
+
+        if(IsGamepadAvailable(gamepad))
         {
+
+            float leftStickX = GetGamepadAxisMovement(gamepad, GamepadAxis.LeftX);
+            float leftStickY = GetGamepadAxisMovement(gamepad, GamepadAxis.LeftY);
+            //float rightStickX = GetGamepadAxisMovement(gamepad, GamepadAxis.RightX);
+            //float rightStickY = GetGamepadAxisMovement(gamepad, GamepadAxis.RightY);
         
-        if(kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left) || jstate.Axes[0] < -16384 || gstate.IsButtonDown(Buttons.DPadLeft))
+        if(IsKeyDown(KeyboardKey.A) || IsKeyDown(KeyboardKey.Left) || leftStickX < -16384 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceLeft))
         {
             DLeft = true;
         }
 
-        if(kstate.IsKeyDown(Keys.D) || kstate.IsKeyDown(Keys.Right) || jstate.Axes[0] > 16384 || gstate.IsButtonDown(Buttons.DPadRight))
+        if(IsKeyDown(KeyboardKey.D) || IsKeyDown(KeyboardKey.Right) || leftStickX > 16384 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceRight))
         {
             DRight = true;
         }
 
-        if(kstate.IsKeyDown(Keys.W) || kstate.IsKeyDown(Keys.Up) || jstate.Axes[1] < -16384 || gstate.IsButtonDown(Buttons.DPadUp))
+        if(IsKeyDown(KeyboardKey.W) || IsKeyDown(KeyboardKey.Up) || leftStickY < -16384 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceUp))
         {
             DUp = true;
         }
 
-        if(kstate.IsKeyDown(Keys.S) || kstate.IsKeyDown(Keys.Down) || jstate.Axes[1] > 16384 || gstate.IsButtonDown(Buttons.DPadDown))
+        if(IsKeyDown(KeyboardKey.S) || IsKeyDown(KeyboardKey.Down) || leftStickY > 16384 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceDown))
         {
             DDown = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.Space) || IsKeyPressed(kstate, prevkstate, Keys.Up) || IsButtonPressed(gstate, prevgstate, Buttons.A))
+        if(IsKeyPressed(KeyboardKey.Space) || IsKeyPressed(KeyboardKey.Up) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceDown))
         {
             PJump = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.J) || IsButtonPressed(gstate, prevgstate, Buttons.X))
+        if(IsKeyPressed(KeyboardKey.J) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceLeft))
         {
             PDash = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.F) || IsButtonPressed(gstate, prevgstate, Buttons.Y))
+        if(IsKeyPressed(KeyboardKey.F) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceUp))
         {
             PFireball = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.Enter) || IsButtonPressed(gstate, prevgstate, Buttons.A))
+        if(IsKeyPressed(KeyboardKey.Enter) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceDown))
         {
             PConfirm = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.W) || IsKeyPressed(kstate, prevkstate, Keys.Up) || jstate.Axes[1] < -16384 || IsButtonPressed(gstate, prevgstate, Buttons.DPadUp))
+        if(IsKeyPressed(KeyboardKey.W) || IsKeyPressed(KeyboardKey.Up) || leftStickY < -16384 || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceUp))
         {
             PUp = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.S) || IsKeyPressed(kstate, prevkstate, Keys.Down) || jstate.Axes[1] > 16384 || IsButtonPressed(gstate, prevgstate, Buttons.DPadDown))
+        if(IsKeyPressed(KeyboardKey.S) || IsKeyPressed(KeyboardKey.Down) || leftStickY > 16384 || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceDown))
         {
             PDown = true;
         }
         } 
-        else if(Joystick.LastConnectedIndex == -1)
+        else if(!IsGamepadAvailable(gamepad))
         {
-        if(kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left))
+        if(IsKeyDown(KeyboardKey.A) || IsKeyDown(KeyboardKey.Left))
         {
             DLeft = true;
         }
 
-        if(kstate.IsKeyDown(Keys.D) || kstate.IsKeyDown(Keys.Right))
+        if(IsKeyDown(KeyboardKey.D) || IsKeyDown(KeyboardKey.Right))
         {
             DRight = true;
         }
 
-        if(kstate.IsKeyDown(Keys.W) || kstate.IsKeyDown(Keys.Up))
+        if(IsKeyDown(KeyboardKey.W) || IsKeyDown(KeyboardKey.Up))
         {
             DUp = true;
         }
 
-        if(kstate.IsKeyDown(Keys.S) || kstate.IsKeyDown(Keys.Down))
+        if(IsKeyDown(KeyboardKey.S) || IsKeyDown(KeyboardKey.Down))
         {
             DDown = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.Space) || IsKeyPressed(kstate, prevkstate, Keys.Up))
+        if(IsKeyPressed(KeyboardKey.Space) || IsKeyPressed(KeyboardKey.Up))
         {
             PJump = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.J))
+        if(IsKeyPressed(KeyboardKey.J))
         {
             PDash = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.F))
+        if(IsKeyPressed(KeyboardKey.F))
         {
             PFireball = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.Enter))
+        if(IsKeyPressed(KeyboardKey.Enter))
         {
             PConfirm = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.W) || IsKeyPressed(kstate, prevkstate, Keys.Up))
+        if(IsKeyPressed(KeyboardKey.W) || IsKeyPressed(KeyboardKey.Up))
         {
             PUp = true;
         }
 
-        if(IsKeyPressed(kstate, prevkstate, Keys.S) || IsKeyPressed(kstate, prevkstate, Keys.Down))
+        if(IsKeyPressed(KeyboardKey.S) || IsKeyPressed(KeyboardKey.Down))
         {
             PDown = true;
         }
@@ -193,67 +193,59 @@ public class InputManager
                 break;
         }
 
+        if(IsKeyPressed(KeyboardKey.CapsLock))
+        {
+            isCapsLockOn = !isCapsLockOn;
         }
 
-        prevkstate = kstate;
-        prevgstate = gstate;
+        }
     }
 
-    public static bool IsKeyPressed(KeyboardState kstate, KeyboardState prevkstate, Keys key)
+    public static char? KeyToChar(KeyboardKey key, bool shift)
     {
-        return kstate.IsKeyDown(key) && !prevkstate.IsKeyDown(key);
-    }
-    public static bool IsButtonPressed(GamePadState gstate, GamePadState prevgstate, Buttons button)
-    {
-        return gstate.IsButtonDown(button) && !prevgstate.IsButtonDown(button);
-    }
-
-    public static char? KeyToChar(Keys key, bool shift)
-    {
-        bool isCapsLock = Keyboard.GetState().CapsLock;
 
         // Handle A-Z
-        if (key >= Keys.A && key <= Keys.Z)
+        if (key >= KeyboardKey.A && key <= KeyboardKey.Z)
         {
             // Uppercase if either Shift or Caps Lock is active, but not both
-            bool isUpperCase = shift ^ isCapsLock; // XOR to toggle case
+            bool isUpperCase = shift ^ isCapsLockOn; // XOR to toggle case
             return isUpperCase ? (char)key : char.ToLower((char)key);
         }
 
         // Handle 0-9 (D0-D9)
-        if (key >= Keys.D0 && key <= Keys.D9)
+        if (key >= KeyboardKey.Zero && key <= KeyboardKey.Nine)
         {
             return shift ? key switch
             {
-                Keys.D1 => '!',
-                Keys.D2 => '@',
-                Keys.D3 => '#',
-                Keys.D4 => '$',
-                Keys.D5 => '%',
-                Keys.D6 => '^',
-                Keys.D7 => '&',
-                Keys.D8 => '*',
-                Keys.D9 => '(',
-                Keys.D0 => ')',
+                KeyboardKey.One => '!',
+                KeyboardKey.Two => '@',
+                KeyboardKey.Three => '#',
+                KeyboardKey.Four => '$',
+                KeyboardKey.Five => '%',
+                KeyboardKey.Six => '^',
+                KeyboardKey.Seven => '&',
+                KeyboardKey.Eight => '*',
+                KeyboardKey.Nine => '(',
+                KeyboardKey.Zero => ')',
                 _ => null
-            } : (char)('0' + (key - Keys.D0));
+            } : (char)('0' + (key - KeyboardKey.Kp0));
         }
 
         // Handle common punctuation and symbols
         return key switch
         {
-            Keys.Space => ' ',
-            Keys.OemComma => shift ? '<' : ',', // Comma or Less-than
-            Keys.OemPeriod => shift ? '>' : '.', // Period or Greater-than
-            Keys.OemQuestion => shift ? '?' : '/', // Slash or Question Mark
-            Keys.OemSemicolon => shift ? ':' : ';', // Semicolon or Colon
-            Keys.OemQuotes => shift ? '"' : '\'', // Quote or Double Quote
-            Keys.OemOpenBrackets => shift ? '{' : '[', // Open Bracket or Curly Brace
-            Keys.OemCloseBrackets => shift ? '}' : ']', // Close Bracket or Curly Brace
-            Keys.OemPipe => shift ? '|' : '\\', // Pipe or Backslash
-            Keys.OemPlus => shift ? '+' : '=', // Plus or Equal
-            Keys.OemMinus => shift ? '_' : '-', // Underscore or Hyphen
-            //Keys.OemTilde => shift ? '~' : '`', // Tilde or Backtick
+            KeyboardKey.Space => ' ',
+            KeyboardKey.Comma => shift ? '<' : ',', // Comma or Less-than
+            KeyboardKey.Period => shift ? '>' : '.', // Period or Greater-than
+            KeyboardKey.Slash => shift ? '?' : '/', // Slash or Question Mark
+            KeyboardKey.Semicolon => shift ? ':' : ';', // Semicolon or Colon
+            KeyboardKey.Apostrophe => shift ? '"' : '\'', // Quote or Double Quote
+            KeyboardKey.LeftBracket => shift ? '{' : '[', // Open Bracket or Curly Brace
+            KeyboardKey.RightBracket => shift ? '}' : ']', // Close Bracket or Curly Brace
+            KeyboardKey.Backslash => shift ? '|' : '\\', // Pipe or Backslash
+            KeyboardKey.Equal => shift ? '+' : '=', // Plus or Equal
+            KeyboardKey.Minus => shift ? '_' : '-', // Underscore or Hyphen
+            //KeyboardKey.OemTilde => shift ? '~' : '`', // Tilde or Backtick
             _ => null // Unhandled key
         };
     }

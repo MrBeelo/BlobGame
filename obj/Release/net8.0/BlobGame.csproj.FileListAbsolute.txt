@@ -1,6 +1,0 @@
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Release\net8.0\BlobGame.csproj.AssemblyReference.cache
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Release\net8.0\BlobGame.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Release\net8.0\BlobGame.AssemblyInfoInputs.cache
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Release\net8.0\BlobGame.AssemblyInfo.cs
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Release\net8.0\BlobGame.csproj.CoreCompileInputs.cache
-C:\Users\User\Desktop\Programming Languages\Le Game\BlobGame\obj\Release\net8.0\BlobGame.sourcelink.json

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
-using System.Threading.Tasks;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 
 namespace BlobGame
@@ -28,12 +24,11 @@ namespace BlobGame
         bool TriangleIsAlive = true;
         bool stop = false;
 
-        public Circle(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
+        public Circle(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
             Texture = texture;
             Drect = drect;
             Srect = srect;
-            Graphics = graphics;
             Velocity = new();
         }
 
@@ -361,13 +356,13 @@ namespace BlobGame
 
         public static void Summon(Vector2 pos)
         {
-            Circle circle = new Circle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, circleSizeW, circleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
-            Main.circles.Add(circle);
+            Circle circle = new Circle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, circleSizeW, circleSizeH), new Rectangle(0, 0, 20, 30));
+            Game.circles.Add(circle);
         }
 
         public static void ClearAll()
         {
-            Main.circles.Clear();
+            Game.circles.Clear();
         }
     }
 }

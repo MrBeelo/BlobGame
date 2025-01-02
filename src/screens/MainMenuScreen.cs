@@ -1,8 +1,7 @@
-using System;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System.Numerics;
 
 namespace BlobGame
 {
@@ -14,7 +13,7 @@ namespace BlobGame
             return new string[] {start, "Options", "Credits & Info", "Exit"};
         }
 
-        public MainMenuScreen(SpriteFont font, GraphicsDeviceManager graphics) : base(font, graphics)
+        public MainMenuScreen(Font font) : base(font)
         {
             if(Globals.SaveFile.Level <= 0)
             {
@@ -24,9 +23,9 @@ namespace BlobGame
             }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            time += GetFrameTime();
 
             if(Globals.SaveFile.Level <= 0)
             {
@@ -35,49 +34,46 @@ namespace BlobGame
                 start = "Continue Game";
             }
 
-            KeyboardState kstate = Keyboard.GetState();
+            base.Update();
 
-            base.Update(gameTime);
-
-            if (Main.inputManager.PConfirm)
+            if (Game.inputManager.PConfirm)
             {
                 switch (selectedIndex)
                 {
                     case 0:
                         // Start Game
-                        Main.currentGameState = Main.GameState.Playing;
+                        Game.currentGameState = Game.GameState.Playing;
                         break;
                     case 1:
                         // Options
-                        Main.options.cameFrom = SettingsScreen.CameFrom.MainMenu;
-                        Globals.Settings = Settings.LoadSettings(Main.settingsFilePath);
-                        Main.currentGameState = Main.GameState.Options;
+                        Game.options.cameFrom = SettingsScreen.CameFrom.MainMenu;
+                        Globals.Settings = Settings.LoadSettings(Game.settingsFilePath);
+                        Game.currentGameState = Game.GameState.Options;
                         break;
                     case 2:
                         //Info
-                        Main.currentGameState = Main.GameState.Info;
+                        Game.currentGameState = Game.GameState.Info;
                         break;
                     case 3:
                         // Exit
-                        Main.currentGameState = Main.GameState.Quit;
+                        Game.currentGameState = Game.GameState.Quit;
                         break;
                 }
                 selectedIndex = 0;
             }
-            prevkstate = kstate;
         }
 
-        public override void Draw(SpriteBatch spriteBatch, GraphicsDeviceManager graphics)
+        public override void Draw()
         {
-            base.Draw(spriteBatch, graphics);
+            base.Draw();
 
             string message = "Blob Game";
             float amplitude = 0.1745f;
             float rotation = amplitude * (float)Math.Sin(time);
 
-            Globals.SpriteBatch.DrawString(Main.headerFont, message, new Vector2(Settings.SimulationSize.X / 2, 60 + (Main.headerFont.MeasureString(message).Y / 2f)), Color.White, rotation, new Vector2(Main.headerFont.MeasureString(message).X / 2, Main.headerFont.MeasureString(message).Y / 2), 1.0f, SpriteEffects.None, 1f);
-            Globals.SpriteBatch.DrawString(Main.indexFont, Main.credits, new Vector2(Settings.SimulationSize.X - Main.indexFont.MeasureString(Main.credits).X - 20, Settings.SimulationSize.Y - 70), Color.White);
-            Globals.SpriteBatch.DrawString(Main.indexFont, Main.version, new Vector2(20, Settings.SimulationSize.Y - 70), Color.White);
+            DrawTextPro(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2, 60 + (MeasureTextEx(Game.rijusans, Game.credits, Game.indexSize, 0).Y / 2f)), new Vector2(MeasureTextEx(Game.zerove, message, Game.headerSize, 0).X / 2, MeasureTextEx(Game.zerove, message, Game.headerSize, 0).Y / 2) , rotation, Game.headerSize, 0, Color.White);
+            DrawTextEx(Game.rijusans, Game.credits, new Vector2(Settings.SimulationSize.X - MeasureText(Game.credits, Game.indexSize) - 20, Settings.SimulationSize.Y - 70), Game.indexSize, 0, Color.White);
+            DrawTextEx(Game.rijusans, Game.version, new Vector2(20, Settings.SimulationSize.Y - 70), Game.indexSize, 0, Color.White);
         }
     }
 }

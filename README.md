@@ -1,1 +1,0 @@
-This is a little test game I'm making to practice using *C#* and *Monogame*. Some code bits are taken from tutorials from the channels **Coding with Sphere** and **GameDev Quickie**. Don't expect anything crazy, it's just a silly little game with a blob :)

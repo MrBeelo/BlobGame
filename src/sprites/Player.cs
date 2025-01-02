@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
-using System.Diagnostics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 
 namespace BlobGame
@@ -15,12 +10,12 @@ namespace BlobGame
         public static int playerSizeH = 64;
         public float Health {get; set;} = 100;
         public int stamina = 500;
-        public static SoundEffect successSound;
-        private static SoundEffect jumpSound;
-        private static SoundEffect speedStartSound;
-        private static SoundEffect speedEndSound;
-        private static SoundEffect powerUpSound;
-        public static SoundEffect hitSound;
+        public static Sound successSound;
+        private static Sound jumpSound;
+        private static Sound speedStartSound;
+        private static Sound speedEndSound;
+        private static Sound powerUpSound;
+        public static Sound hitSound;
         public Texture2D[] idleTextures;
         int idleCounter;
         int idleActiveFrame;
@@ -50,12 +45,11 @@ namespace BlobGame
         public static int xartomantila = 0;
         
 
-        public Player(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
+        public Player(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
             Texture = texture;
             Drect = drect;
             Srect = srect;
-            Graphics = graphics;
             Velocity = new();
         }
 
@@ -91,9 +85,9 @@ namespace BlobGame
             successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            base.Update(gameTime);
+            base.Update();
 
             flickerTime += Globals.TotalSeconds * 5; // Adjust speed by changing multiplier
 

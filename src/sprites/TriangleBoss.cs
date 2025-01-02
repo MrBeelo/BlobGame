@@ -1,6 +1,6 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System.Numerics;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
 
 
 namespace BlobGame
@@ -25,12 +25,11 @@ namespace BlobGame
         bool stop = false;
         public int health = 3600;
 
-        public TriangleBoss(Texture2D texture, Rectangle drect, Rectangle srect, GraphicsDeviceManager graphics) : base(texture, drect, srect)
+        public TriangleBoss(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
             Texture = texture;
             Drect = drect;
             Srect = srect;
-            Graphics = graphics;
             Velocity = new();
         }
 
@@ -55,9 +54,9 @@ namespace BlobGame
 
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            base.Update(gameTime);
+            base.Update();
 
             idleCounter++;
             if (idleCounter > 29)
@@ -393,19 +392,19 @@ namespace BlobGame
 
         public static void Summon(Vector2 pos)
         {
-            TriangleBoss triangleBoss = new TriangleBoss(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, bossTriangleSizeW, bossTriangleSizeH), new Rectangle(0, 0, 20, 30), Globals.Graphics);
-            Main.triangleBosses.Add(triangleBoss);
+            TriangleBoss triangleBoss = new TriangleBoss(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, bossTriangleSizeW, bossTriangleSizeH), new Rectangle(0, 0, 20, 30));
+            Game.triangleBosses.Add(triangleBoss);
         }
 
         public static void ClearAll()
         {
-            Main.triangleBosses.Clear();
+            Game.triangleBosses.Clear();
         }
 
         public void DrawBar()
         {
             string healthStat = "Boss Health: " + health + "/3600";
-            Globals.SpriteBatch.DrawString(Main.statsFont, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (Main.statsFont.MeasureString(healthStat).X / 2), 10), Color.Black);
+            Globals.SpriteBatch.DrawString(Main.statsFont, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (Game.statsFont.MeasureString(healthStat).X / 2), 10), Color.Black);
         }
     }
 }
