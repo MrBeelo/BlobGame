@@ -6,8 +6,8 @@ namespace BlobGame
 {
     public class CollMoveableSprite : MoveableSprite
     {
-        public List<Point> horizontalCollisions = new();
-        public List<Point> verticalCollisions = new();
+        public List<System.Drawing.Point> horizontalCollisions = new();
+        public List<System.Drawing.Point> verticalCollisions = new();
         public Vector2 minPos, maxPos;
         public CollMoveableSprite(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
@@ -23,36 +23,30 @@ namespace BlobGame
             verticalCollisions = GetIntersectingTiles(Drect);
         }
 
-        public List<Point> GetIntersectingTiles(Rectangle target)
+        public List<System.Drawing.Point> GetIntersectingTiles(Rectangle target)
         {
-            List<Point> tiles = new List<Point>();
+            List<System.Drawing.Point> tiles = new List<System.Drawing.Point>();
         
-            int leftTile = target.Left / Tilemap.Tilesize;
-            int rightTile = (target.Right - 1) / Tilemap.Tilesize;
-            int topTile = target.Top / Tilemap.Tilesize;
-            int bottomTile = (target.Bottom - 1) / Tilemap.Tilesize;
+            int leftTile = (int)(target.Left() / Tilemap.Tilesize);
+            int rightTile = (int)((target.Right() - 1) / Tilemap.Tilesize);
+            int topTile = (int)(target.Top() / Tilemap.Tilesize);
+            int bottomTile = (int)((target.Bottom() - 1) / Tilemap.Tilesize);
         
             for (int x = leftTile; x <= rightTile; x++)
             {
                 for (int y = topTile; y <= bottomTile; y++)
                 {
-                    tiles.Add(new Point(x, y));
+                    tiles.Add(new System.Drawing.Point(x, y));
                 }
             }
         
             return tiles;
         }
 
-        public static Point PointClamp(Point position, Vector2 minPos, Vector2 maxPos)
-        {
-            Vector2 clampedVector = Vector2.Clamp(position.ToVector2(), minPos, maxPos);
-            return clampedVector.ToPoint();
-        }
-
         public void SetBounds()
         {
             minPos = Vector2.Zero;
-            maxPos = Main.tilemap.Mapsize.ToVector2();
+            maxPos = Game.tilemap.Mapsize.ToVector2();
             maxPos.X -= Drect.Width;
             maxPos.Y -= Drect.Height;
         }

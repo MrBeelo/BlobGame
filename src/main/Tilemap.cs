@@ -71,8 +71,8 @@ namespace BlobGame
 
         public void LoadContent(Game game)
         {
-            textureAtlas = LoadTexture("assets/atlases/atlas");
-            hitboxAtlas = LoadTexture("assets/atlases/collision_atlas");
+            textureAtlas = LoadTexture("assets/atlases/atlas.png");
+            hitboxAtlas = LoadTexture("assets/atlases/collision_atlas.png");
 
             for(int i = 0; i < Normal.Length; i++)
             {

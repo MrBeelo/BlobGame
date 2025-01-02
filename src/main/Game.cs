@@ -51,8 +51,8 @@ public class Game
     public bool TypingMode = false;
     public string InputText = "";
     public Background background = new();
-    public Music menuMusic;
-    public Music playMusic;
+    public static Music menuMusic;
+    public static Music playMusic;
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public void Run()
@@ -61,7 +61,7 @@ public class Game
         InitAudioDevice();
         SetWindowIcon(LoadImage("assets/icon.png"));
         SetExitKey(KeyboardKey.Null);
-        SetTargetFPS(60);
+        //SetTargetFPS(144);
         ToggleFullscreen();
         ShowCursor();
 
@@ -134,6 +134,9 @@ public class Game
             Globals.Update();
 
             inputManager.Update();
+
+            UpdateMusicStream(menuMusic);
+            UpdateMusicStream(playMusic); 
 
         if (TypingMode)
         {
@@ -391,7 +394,7 @@ public class Game
         background.DrawBG();
 
         //!Beggining Play Sprite Batch
-        BeginDrawing(transformMatrix: player.translation);
+        BeginDrawing();
 
         switch (currentGameState)
         {
@@ -549,7 +552,7 @@ public class Game
         Environment.Exit(0);
     }
 
-    void DrawRectHollow(Rectangle rect, int thickness, Color color) {
+    public static void DrawRectHollow(Rectangle rect, int thickness, Color color) {
     // Draw top side
     DrawRectangle((int)rect.X, (int)rect.Y, (int)rect.Width, thickness, color);
     // Draw bottom side

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
@@ -41,7 +42,7 @@ namespace BlobGame
         public int djReset = 0;
         public int Immunity = 0;
         public bool Immune = false;
-        public Matrix translation;
+        public Matrix3x2 translation;
         public static int xartomantila = 0;
         
 
@@ -53,10 +54,6 @@ namespace BlobGame
             Velocity = new();
         }
 
-        public void Initialize()
-        {
-        }
-
         public override void LoadContent(Game game)
         {
 
@@ -64,25 +61,25 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerIdle1");
-            idleTextures[1] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerIdle2");
+            idleTextures[0] = LoadTexture("assets/sprites/player/PlayerIdle1.png");
+            idleTextures[1] = LoadTexture("assets/sprites/player/PlayerIdle2.png");
 
-            jumpingTextures[0] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerJump1");
-            jumpingTextures[1] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerJump2");
+            jumpingTextures[0] = LoadTexture("assets/sprites/player/PlayerJump1.png");
+            jumpingTextures[1] = LoadTexture("assets/sprites/player/PlayerJump2.png");
 
-            walkingTextures[0] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerWalk1");
-            walkingTextures[1] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerWalk2");
-            walkingTextures[2] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerWalk1");
-            walkingTextures[3] = game.Content.Load<Texture2D>("assets/sprites/player/PlayerWalk3");
+            walkingTextures[0] = LoadTexture("assets/sprites/player/PlayerWalk1.png");
+            walkingTextures[1] = LoadTexture("assets/sprites/player/PlayerWalk2.png");
+            walkingTextures[2] = LoadTexture("assets/sprites/player/PlayerWalk1.png");
+            walkingTextures[3] = LoadTexture("assets/sprites/player/PlayerWalk3.png");
 
-            successSound = game.Content.Load<SoundEffect>("assets/sounds/success");
-            jumpSound = game.Content.Load<SoundEffect>("assets/sounds/jump");
-            speedStartSound = game.Content.Load<SoundEffect>("assets/sounds/speedStart");
-            speedEndSound = game.Content.Load<SoundEffect>("assets/sounds/speedEnd");
-            powerUpSound = game.Content.Load<SoundEffect>("assets/sounds/powerUp");
-            hitSound = game.Content.Load<SoundEffect>("assets/sounds/hitBlob");
+            successSound = LoadSound("assets/sounds/success.wav");
+            jumpSound = LoadSound("assets/sounds/jump.wav");
+            speedStartSound = LoadSound("assets/sounds/speedStart.wav");
+            speedEndSound = LoadSound("assets/sounds/speedEnd.wav");
+            powerUpSound = LoadSound("assets/sounds/powerUp.wav");
+            hitSound = LoadSound("assets/sounds/hitBlob.wav");
 
-            successSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            PlaySound(successSound);
         }
 
         public override void Update()
@@ -93,7 +90,7 @@ namespace BlobGame
 
             if(alive == false)
             {
-                Main.currentGameState = Main.GameState.Death;
+                Game.currentGameState = Game.GameState.Death;
             }
 
             if(Drect.Y > 1500)
@@ -137,22 +134,22 @@ namespace BlobGame
                 Velocity.X = 0;
             }
             
-            if (Main.inputManager.DLeft && !isDashing)
+            if (Game.inputManager.DLeft && !isDashing)
             {
                 Velocity.X = -speed;
             } 
             else 
-            if (Main.inputManager.DLeft && isDashing)
+            if (Game.inputManager.DLeft && isDashing)
             {
                 Velocity.X --;
             }
             
-            if (Main.inputManager.DRight && !isDashing)
+            if (Game.inputManager.DRight && !isDashing)
             {
                 Velocity.X = speed;
             }
             else 
-            if (Main.inputManager.DRight && isDashing)
+            if (Game.inputManager.DRight && isDashing)
             {
                 Velocity.X ++;
             }
@@ -167,7 +164,8 @@ namespace BlobGame
             {
                 speed = 3;
                 isSanic = false;
-                speedEndSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                PlaySound(speedEndSound);
+                SetSoundVolume(speedEndSound, (float)Game.LoweredVolume);
             } else if(sanicTime < 0 && isSanic && !isDashing)
             {
                 speed = 3;
@@ -192,9 +190,10 @@ namespace BlobGame
                 Velocity.Y += 0.5f;
             }
 
-            if((Main.inputManager.PJump && !isInAir) || (Main.inputManager.PJump && isInAir && doubleJump)) {
+            if((Game.inputManager.PJump && !isInAir) || (Game.inputManager.PJump && isInAir && doubleJump)) {
                 Velocity.Y = -10;
-                jumpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                PlaySound(jumpSound);
+                SetSoundVolume(jumpSound, (float)Game.LoweredVolume);
                 coyoteTime = 0;
                 justCollided = false;
                 doubleJump = false;
@@ -203,7 +202,7 @@ namespace BlobGame
             Velocity.Y = Math.Min(40.0f, Velocity.Y);
 
             SetBounds();
-            Drect.Location = PointClamp(Drect.Location, minPos, maxPos);
+            Drect.Position = Vector2.Clamp(Drect.Position, minPos, maxPos);
             
             // Horizontal Collision Resolution
             Drect.X += (int)Velocity.X;
@@ -224,11 +223,11 @@ namespace BlobGame
             
                         if (Velocity.X > 0) // Moving Right
                         {
-                            Drect.X = collision.Left - Drect.Width;
+                            Drect.X = collision.Left() - Drect.Width;
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
-                            Drect.X = collision.Right;
+                            Drect.X = collision.Right();
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
@@ -239,11 +238,11 @@ namespace BlobGame
             
                         if (Velocity.X > 0) // Moving Right
                         {
-                            Drect.X = collision.Left - Drect.Width;
+                            Drect.X = collision.Left() - Drect.Width;
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
-                            Drect.X = collision.Right;
+                            Drect.X = collision.Right();
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
@@ -253,11 +252,11 @@ namespace BlobGame
             
                         if (Velocity.X > 0) // Moving Right
                         {
-                            Drect.X = collision.Left - Drect.Width;
+                            Drect.X = collision.Left() - Drect.Width;
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
-                            Drect.X = collision.Right;
+                            Drect.X = collision.Right();
                         }
                         Velocity.X = 0; // Stop horizontal movement upon collision
                     }
@@ -282,7 +281,8 @@ namespace BlobGame
                             if(sanicTime >= 500)
                             {
                                 isSanic = true;
-                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                PlaySound(speedStartSound);
+                                SetSoundVolume(speedStartSound, (float)Game.LoweredVolume);
                                 Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
                                 Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             }
@@ -296,11 +296,11 @@ namespace BlobGame
             
                             if (Velocity.X > 0) // Moving Right
                             {
-                                Drect.X = collision.Left - Drect.Width;
+                                Drect.X = collision.Left() - Drect.Width;
                             }
                             else if (Velocity.X < 0) // Moving Left
                             {
-                                Drect.X = collision.Right;
+                                Drect.X = collision.Right();
                             }
                             Velocity.X = 0; // Stop horizontal movement upon collision
                         }
@@ -316,11 +316,11 @@ namespace BlobGame
             
                             if (Velocity.X > 0) // Moving Right
                             {
-                                Drect.X = collision.Left - Drect.Width;
+                                Drect.X = collision.Left() - Drect.Width;
                             }
                             else if (Velocity.X < 0) // Moving Left
                             {
-                                Drect.X = collision.Right;
+                                Drect.X = collision.Right();
                             }
                             Velocity.X = 0; // Stop horizontal movement upon collision
                         }
@@ -335,7 +335,8 @@ namespace BlobGame
                         {
                             doubleJump = true;
                             djReset = 250;
-                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            PlaySound(speedStartSound);
+                            SetSoundVolume(speedStartSound, (float)Game.LoweredVolume);
                             Tilemap.excludedNormalTiles.Add(new Vector3(31, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
@@ -347,7 +348,8 @@ namespace BlobGame
                             if(Health < 100)
                             {
                                 Health += 50;
-                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                PlaySound(speedStartSound);
+                                SetSoundVolume(speedStartSound, (float)Game.LoweredVolume);
                                 Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
                                 Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                                 justDrankMilk = 50;
@@ -361,7 +363,7 @@ namespace BlobGame
                             Tilemap.permaExcludedNormalTiles.Add(new Vector3(33, tile.X, tile.Y));
                             Tilemap.permaExcludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             xartomantila++;
-                            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+                            Globals.SaveFile.SaveSavefile(Game.savefileFilePath);
                         }
                     }
                     else if(value >= 11 && value <= 14 && !Immune)
@@ -404,13 +406,13 @@ namespace BlobGame
                         if (Velocity.Y > 0) // Falling Down
                         {
                             TakeFallDmg();
-                            Drect.Y = collision.Top - Drect.Height;
+                            Drect.Y = collision.Top() - Drect.Height;
                             Velocity.Y = 0.5f;
                             isInAir = false;
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
-                            Drect.Y = collision.Bottom;
+                            Drect.Y = collision.Bottom();
                             Velocity.Y = 0;
                         }
                     }
@@ -421,13 +423,13 @@ namespace BlobGame
             
                         if (Velocity.Y > 0) // Falling Down
                         {
-                            Drect.Y = collision.Top - Drect.Height;
+                            Drect.Y = collision.Top() - Drect.Height;
                             Velocity.Y = 0.5f;
                             isInAir = false;
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
-                            Drect.Y = collision.Bottom;
+                            Drect.Y = collision.Bottom();
                             Velocity.Y = 0;
                         }
                     }
@@ -438,11 +440,11 @@ namespace BlobGame
                         if (Velocity.Y > 0) // Falling Down
                         {
                             Tilemap.MoveLevel();
-                            Main.currentGameState = Main.GameState.Pass;
+                            Game.currentGameState = Game.GameState.Pass;
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
-                            Drect.Y = collision.Bottom;
+                            Drect.Y = collision.Bottom();
                             Velocity.Y = 0;
                         }
                     }
@@ -452,16 +454,16 @@ namespace BlobGame
             
                         if (Velocity.Y > 0) // Falling Down
                         {
-                            Drect.Y = collision.Top - Drect.Height;
+                            Drect.Y = collision.Top() - Drect.Height;
                             Velocity.Y = 0.5f;
                             isInAir = false;
-                            Main.currentGameState = Main.GameState.Win;
+                            Game.currentGameState = Game.GameState.Win;
                             Tilemap.excludedNormalTiles.Clear();
                             Tilemap.excludedCollisionTiles.Clear();
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
-                            Drect.Y = collision.Bottom;
+                            Drect.Y = collision.Bottom();
                             Velocity.Y = 0;
                         }
                     }
@@ -483,7 +485,8 @@ namespace BlobGame
                             if(sanicTime >= 500)
                             {
                                 isSanic = true;
-                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                PlaySound(speedStartSound);
+                                SetSoundVolume(speedStartSound, (float)Game.LoweredVolume);
                                 Tilemap.excludedNormalTiles.Add(new Vector3(26, tile.X, tile.Y));
                                 Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             }
@@ -497,13 +500,13 @@ namespace BlobGame
             
                             if (Velocity.Y > 0) // Falling Down
                             {
-                                Drect.Y = collision.Top - Drect.Height;
+                                Drect.Y = collision.Top() - Drect.Height;
                                 Velocity.Y = 0.5f;
                                 isInAir = false;
                             }
                             else if (Velocity.Y < 0) // Moving Up
                             {
-                                Drect.Y = collision.Bottom;
+                                Drect.Y = collision.Bottom();
                                 Velocity.Y = 0;
                             }
                         }
@@ -519,13 +522,13 @@ namespace BlobGame
             
                             if (Velocity.Y > 0) // Falling Down
                             {
-                                Drect.Y = collision.Top - Drect.Height;
+                                Drect.Y = collision.Top() - Drect.Height;
                                 Velocity.Y = 0.5f;
                                 isInAir = false;
                             }
                             else if (Velocity.Y < 0) // Moving Up
                             {
-                                Drect.Y = collision.Bottom;
+                                Drect.Y = collision.Bottom();
                                 Velocity.Y = 0;
                             }
                         }
@@ -540,7 +543,8 @@ namespace BlobGame
                         {
                             doubleJump = true;
                             djReset = 250;
-                            speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            PlaySound(speedStartSound);
+                            SetSoundVolume(speedStartSound, (float)Game.LoweredVolume);
                             Tilemap.excludedNormalTiles.Add(new Vector3(31, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                         }
@@ -552,7 +556,8 @@ namespace BlobGame
                             if(Health < 100)
                             {
                                 Health += 50;
-                                speedStartSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                                PlaySound(speedStartSound);
+                                SetSoundVolume(speedStartSound, (float)Game.LoweredVolume);
                                 Tilemap.excludedNormalTiles.Add(new Vector3(32, tile.X, tile.Y));
                                 Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             }
@@ -565,7 +570,7 @@ namespace BlobGame
                             Tilemap.permaExcludedNormalTiles.Add(new Vector3(33, tile.X, tile.Y));
                             Tilemap.permaExcludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             xartomantila++;
-                            Globals.SaveFile.SaveSavefile(Main.savefileFilePath);
+                            Globals.SaveFile.SaveSavefile(Game.savefileFilePath);
                         }
                     }
                     else if(value >= 11 && value <= 14 && !Immune)
@@ -637,7 +642,7 @@ namespace BlobGame
 
             //! Handling the Fireball
 
-            if(Main.inputManager.PFireball && (stamina >= 500 || isSanic))
+            if(Game.inputManager.PFireball && (stamina >= 500 || isSanic))
             {
                 Fireball.Fire(Drect, isLeft);
                 if(!isSanic)
@@ -648,10 +653,11 @@ namespace BlobGame
 
             //! Handling the Dash
 
-            if(Main.inputManager.PDash && stamina >= 500 && dashTime < 0)
+            if(Game.inputManager.PDash && stamina >= 500 && dashTime < 0)
             {
-                Dash(Main.inputManager.pressedDirection, 25, 10);
-                powerUpSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                Dash(Game.inputManager.pressedDirection, 25, 10);
+                PlaySound(powerUpSound);
+                SetSoundVolume(powerUpSound, (float)Game.LoweredVolume);
                 isDashing = true;
                 stamina -= 100;
             }
@@ -692,21 +698,20 @@ namespace BlobGame
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            SpriteEffects spriteEffects = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            float flip = isLeft ? -1.0f : 1.0f;
+            Srect.Width *= flip;
 
             if(isMoving && !isInAir)
             {
-                Globals.SpriteBatch.Draw(
+                DrawTexturePro(
                     walkingTextures[walkingActiveFrame],
-                    Drect,
                     Srect,
-                    PlayerColor(),
-                    0f,
+                    Drect,
                     Vector2.Zero,
-                    spriteEffects,
-                    0f
+                    0f,
+                    Color.White
                 );
             }
 
@@ -714,57 +719,51 @@ namespace BlobGame
             {
                 if(Velocity.Y >= 5 || Velocity.Y <= -5)
                 {
-                    Globals.SpriteBatch.Draw(
+                    DrawTexturePro(
                         jumpingTextures[0],
-                        Drect,
                         Srect,
-                        PlayerColor(),
-                        0f,
+                        Drect,
                         Vector2.Zero,
-                        spriteEffects,
-                        0f
+                        0f,
+                        Color.White
                     );
                 }
                 else
                 {
-                    Globals.SpriteBatch.Draw(
+                    DrawTexturePro(
                         jumpingTextures[1],
-                        Drect,
                         Srect,
-                        PlayerColor(),
-                        0f,
+                        Drect,
                         Vector2.Zero,
-                        spriteEffects,
-                        0f
+                        0f,
+                        Color.White
                     );
                 }
             }
 
-            if(!isMoving && !isInAir)
+            if((!isMoving) && !isInAir)
             {
-                Globals.SpriteBatch.Draw(
+                DrawTexturePro(
                     idleTextures[idleActiveFrame],
-                    Drect,
                     Srect,
-                    PlayerColor(),
-                    0f,
+                    Drect,
                     Vector2.Zero,
-                    spriteEffects,
-                    0f
+                    0f,
+                    Color.White
                 );
             }
 
-            if (Main.hasF3On)
+            if (Game.hasF3On)
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Main.DrawRectHollow(Globals.SpriteBatch, Drect, 4, Color.Blue);
+                Game.DrawRectHollow(Drect, 4, Color.Blue);
             }
         }
 
@@ -819,7 +818,7 @@ namespace BlobGame
             player.hazardHorizColl = false;
             player.hazardVertColl = false;
             player.sanicTime = 500;
-            Main.fireballs.Clear();
+            Game.fireballs.Clear();
         }
 
         public static void Respawn(Player player)
@@ -835,24 +834,24 @@ namespace BlobGame
             if(stamina > 0 && stamina < 500 && !isSanic)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
-                return Color.Lerp(Color.White, Color.LightSalmon, t); // Blends from white to red based on t
+                return ColorLerp(Color.White, Color.Maroon, t); // Blends from white to red based on t
             }
             else if(isSanic)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2;
-                return Color.Lerp(Color.White, Color.LightBlue, t);
+                return ColorLerp(Color.White, Color.SkyBlue, t);
             }
 
             if(Immunity > 0)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2;
-                return Color.Lerp(Color.White, Color.Red, t);
+                return ColorLerp(Color.White, Color.Red, t);
             }
 
             if(justDrankMilk > 0)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2;
-                return Color.Lerp(Color.White, Color.LightGreen, t);
+                return ColorLerp(Color.White, Color.Green, t);
             }
 
             return Color.White;
@@ -866,53 +865,53 @@ namespace BlobGame
             switch(pressedDirection)
             {
                 case InputManager.PressedDirection.Right:
-                    Main.player.Velocity.X = (int)hpower;
-                    Main.player.Velocity.Y = 0.5f;
+                    Game.player.Velocity.X = (int)hpower;
+                    Game.player.Velocity.Y = 0.5f;
                     break;
 
                 case InputManager.PressedDirection.Left:
-                    Main.player.Velocity.X = (int)-hpower;
-                    Main.player.Velocity.Y = 0.5f;
+                    Game.player.Velocity.X = (int)-hpower;
+                    Game.player.Velocity.Y = 0.5f;
                     break;
 
                 case InputManager.PressedDirection.Down:
-                    Main.player.Velocity.Y = power;
+                    Game.player.Velocity.Y = power;
                     break;
 
                 case InputManager.PressedDirection.Up:
-                    Main.player.Velocity.Y = -power;
+                    Game.player.Velocity.Y = -power;
                     break;
 
                 case InputManager.PressedDirection.DownRight:
-                    Main.player.Velocity.X = (int)hpower;
-                    Main.player.Velocity.Y = power;
+                    Game.player.Velocity.X = (int)hpower;
+                    Game.player.Velocity.Y = power;
                     break;
 
                 case InputManager.PressedDirection.DownLeft:
-                    Main.player.Velocity.X = (int)-hpower;
-                    Main.player.Velocity.Y = power;
+                    Game.player.Velocity.X = (int)-hpower;
+                    Game.player.Velocity.Y = power;
                     break;
                 
                 case InputManager.PressedDirection.UpRight:
-                    Main.player.Velocity.X = (int)hpower;
-                    Main.player.Velocity.Y = -power;
+                    Game.player.Velocity.X = (int)hpower;
+                    Game.player.Velocity.Y = -power;
                     break;
 
                 case InputManager.PressedDirection.UpLeft:
-                    Main.player.Velocity.X = (int)-hpower;
-                    Main.player.Velocity.Y = -power;
+                    Game.player.Velocity.X = (int)-hpower;
+                    Game.player.Velocity.Y = -power;
                     break;
                 
                 case InputManager.PressedDirection.NA:
-                    if(!Main.player.isLeft)
+                    if(!Game.player.isLeft)
                     {
-                        Main.player.Velocity.X = (int)hpower;
-                        Main.player.Velocity.Y = 0.5f;
+                        Game.player.Velocity.X = (int)hpower;
+                        Game.player.Velocity.Y = 0.5f;
                     }
-                    else if(Main.player.isLeft)
+                    else if(Game.player.isLeft)
                     {
-                        Main.player.Velocity.X = (int)-hpower;
-                        Main.player.Velocity.Y = 0.5f;
+                        Game.player.Velocity.X = (int)-hpower;
+                        Game.player.Velocity.Y = 0.5f;
                     }
                     break;
             }
@@ -920,16 +919,16 @@ namespace BlobGame
 
         public void CalculateTranslation()
         {
-            var dx = (Settings.SimulationSize.X / 2) - Main.player.Drect.X - Main.player.Drect.Width;
-            dx = MathHelper.Clamp(dx, -Main.tilemap.Mapsize.X + Settings.SimulationSize.X, 0);
-            var dy = (Settings.SimulationSize.Y / 2) - Main.player.Drect.Y - Main.player.Drect.Height;
-            dy = MathHelper.Clamp(dy, -Main.tilemap.Mapsize.Y + Settings.SimulationSize.Y, 0);
-            translation = Matrix.CreateTranslation(dx, dy, 0f);
+            var dx = (Settings.SimulationSize.X / 2) - Game.player.Drect.X - Game.player.Drect.Width;
+            dx = Math.Clamp(dx, -Game.tilemap.Mapsize.X + Settings.SimulationSize.X, 0);
+            var dy = (Settings.SimulationSize.Y / 2) - Game.player.Drect.Y - Game.player.Drect.Height;
+            dy = Math.Clamp(dy, -Game.tilemap.Mapsize.Y + Settings.SimulationSize.Y, 0);
+            translation = Matrix3x2.CreateTranslation(new Vector2(dx, dy));
         }
 
         public static void TakeFallDmg()
         {
-            switch(Main.player.Velocity.Y)
+            switch(Game.player.Velocity.Y)
             {
                 case >= 40:
                     Damage(15);
@@ -955,28 +954,30 @@ namespace BlobGame
 
         public static void Damage(float dmgAmount)
         {
-            Main.player.Health -= dmgAmount;
-            if(Main.player.Health > 0)
+            Game.player.Health -= dmgAmount;
+            if(Game.player.Health > 0)
             {
-                hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                PlaySound(hitSound);
+                SetSoundVolume(hitSound, (float)Game.LoweredVolume);
             }
-            Main.player.Immunity = 50;
+            Game.player.Immunity = 50;
         }
 
         public static void Die()
         {
-            Main.player.alive = false;
+            Game.player.alive = false;
             Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 31);
             Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 8);
             Tilemap.excludedNormalTiles.RemoveAll(removeTile => removeTile.X == 32);
             Tilemap.excludedCollisionTiles.RemoveAll(removeTile => removeTile.X == 9);
-            ResetState(Main.player);
-            hitSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            ResetState(Game.player);
+            PlaySound(hitSound);
+            SetSoundVolume(hitSound, (float)Game.LoweredVolume);
         }
 
         public static void Teleport(int x, int y)
         {
-            Main.player.Drect = new Rectangle(x, y, playerSizeW, playerSizeH);
+            Game.player.Drect = new Rectangle(x, y, playerSizeW, playerSizeH);
         }
     }
 }

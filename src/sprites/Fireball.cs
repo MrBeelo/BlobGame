@@ -1,3 +1,4 @@
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
@@ -26,19 +27,19 @@ namespace BlobGame
 
         public override void LoadContent(Game game)
         {
-            explosionSound = game.Content.Load<SoundEffect>("assets/sounds/explosion");
-            laserShootSound = game.Content.Load<SoundEffect>("assets/sounds/laserShoot");
+            explosionSound = LoadSound("assets/sounds/explosion.wav");
+            laserShootSound = LoadSound("assets/sounds/laserShoot.wav");
 
             fireTextures = new Texture2D[3];
 
-            fireTextures[0] = game.Content.Load<Texture2D>("assets/sprites/fireball/Fireball1");
-            fireTextures[1] = game.Content.Load<Texture2D>("assets/sprites/fireball/Fireball2");
-            fireTextures[2] = game.Content.Load<Texture2D>("assets/sprites/fireball/Fireball3");
+            fireTextures[0] = LoadTexture("assets/sprites/fireball/Fireball1.png");
+            fireTextures[1] = LoadTexture("assets/sprites/fireball/Fireball2.png");
+            fireTextures[2] = LoadTexture("assets/sprites/fireball/Fireball3.png");
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            base.Update(gameTime);
+            base.Update();
 
             fireCounter++;
             if(fireCounter > 14)
@@ -76,24 +77,27 @@ namespace BlobGame
                             Tilemap.excludedNormalTiles.Add(new Vector3(29, tile.X, tile.Y));
                             Tilemap.excludedCollisionTiles.Add(new Vector3(value, tile.X, tile.Y));
                             alive = false;
-                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            PlaySound(explosionSound);
+                            SetSoundVolume(explosionSound, (float)Game.LoweredVolume);
                         }
                     } else {
                         Rectangle collision = new Rectangle(tile.X * Tilemap.Tilesize, tile.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize);
             
                         if (Velocity.X > 0) // Moving Right
                         {
-                            Drect.X = collision.Left - Drect.Width;
+                            Drect.X = collision.Left() - Drect.Width;
                             Velocity.X = 0;
                             alive = false;
-                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            PlaySound(explosionSound);
+                            SetSoundVolume(explosionSound, (float)Game.LoweredVolume);
                         }
                         else if (Velocity.X < 0) // Moving Left
                         {
-                            Drect.X = collision.Right;
+                            Drect.X = collision.Right();
                             Velocity.X = 0;
                             alive = false;
-                            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+                            PlaySound(explosionSound);
+                            SetSoundVolume(explosionSound, (float)Game.LoweredVolume);
                         }      
                     }
                 }
@@ -122,13 +126,13 @@ namespace BlobGame
             
                         if (Velocity.Y > 0) // Falling Down
                         {
-                            Drect.Y = collision.Top - Drect.Height;
+                            Drect.Y = collision.Top() - Drect.Height;
                             Velocity.Y = 0;
                             Die();
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
-                            Drect.Y = collision.Bottom;
+                            Drect.Y = collision.Bottom();
                             Velocity.Y = 0;
                             Die();
                         }
@@ -136,7 +140,7 @@ namespace BlobGame
                 }
             }
 
-            if (Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && bad)
+            if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && bad)
             {
                 Player.Damage(10);
                 alive = false;
@@ -149,52 +153,49 @@ namespace BlobGame
 
             if(!alive)
             {
-                Main.fireballs.Remove(this);
-                Main.sprites.Remove(this);
+                Game.fireballs.Remove(this);
+                Game.sprites.Remove(this);
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            Globals.SpriteBatch.Draw(
-                fireTextures[fireActiveFrame],
-                Drect,
-                Srect,
-                Color.White
-            );
+            DrawTexture(fireTextures[fireActiveFrame], (int)Drect.X, (int)Drect.Y, Color.White);
 
-            if (Main.hasF3On)
+            if (Game.hasF3On)
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Main.DrawRectHollow(Globals.SpriteBatch, Drect, 4, Color.Blue);
+                Game.DrawRectHollow(Drect, 4, Color.Blue);
             }
         }
 
         public static void Fire(Rectangle drect, bool isLeft)
         {
-            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center.X, new Random().Next(drect.Top + 1, drect.Bottom - 32 - 1), 32, 32), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft, false);
-            Main.fireballs.Add(fireball);
-            laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 32 - 1)), 32, 32), new Rectangle(0, 0, 16, 16), isLeft, false);
+            Game.fireballs.Add(fireball);
+            PlaySound(laserShootSound);
+            SetSoundVolume(laserShootSound, (float)Game.LoweredVolume);
         }
 
         public static void FireBad(Rectangle drect, bool isLeft)
         {
-            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center.X, new Random().Next(drect.Top + 1, drect.Bottom - 48 - 1), 48, 48), new Rectangle(0, 0, 16, 16), Globals.Graphics, isLeft, true);
-            Main.fireballs.Add(fireball);
-            laserShootSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 48 - 1)), 48, 48), new Rectangle(0, 0, 16, 16), isLeft, true);
+            PlaySound(laserShootSound);
+            SetSoundVolume(laserShootSound, (float)Game.LoweredVolume);
         }
 
         public void Die()
         {
             alive = false;
-            explosionSound.Play((float)Main.LoweredVolume, 0.0f, 0.0f);
+            PlaySound(explosionSound);
+            SetSoundVolume(explosionSound, (float)Game.LoweredVolume);
         }
 
         public override string[] GetDebugInfo()

@@ -40,16 +40,16 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle1");
-            idleTextures[1] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleIdle2");
+            idleTextures[0] = LoadTexture("assets/sprites/triangle/TriangleIdle1.png");
+            idleTextures[1] = LoadTexture("assets/sprites/triangle/TriangleIdle2.png");
 
-            jumpingTextures[0] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleJump1");
-            jumpingTextures[1] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleJump2");
+            jumpingTextures[0] = LoadTexture("assets/sprites/triangle/TriangleJump1.png");
+            jumpingTextures[1] = LoadTexture("assets/sprites/triangle/TriangleJump2.png");
 
-            walkingTextures[0] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleWalk1");
-            walkingTextures[1] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleWalk2");
-            walkingTextures[2] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleWalk1");
-            walkingTextures[3] = game.Content.Load<Texture2D>("assets/sprites/triangle/TriangleWalk3");
+            walkingTextures[0] = LoadTexture("assets/sprites/triangle/TriangleWalk1.png");
+            walkingTextures[1] = LoadTexture("assets/sprites/triangle/TriangleWalk2.png");
+            walkingTextures[2] = LoadTexture("assets/sprites/triangle/TriangleWalk1.png");
+            walkingTextures[3] = LoadTexture("assets/sprites/triangle/TriangleWalk3.png");
 
         }
 
@@ -125,7 +125,7 @@ namespace BlobGame
             Velocity.Y = Math.Min(25.0f, Velocity.Y);
 
             SetBounds();
-            Drect.Location = PointClamp(Drect.Location, minPos, maxPos);
+            Drect.Position = Vector2.Clamp(Drect.Position, minPos, maxPos);
 
             // Horizontal Collision Resolution
             if(!stop){Drect.X += (int)Velocity.X;}
@@ -153,7 +153,7 @@ namespace BlobGame
 
                             if (Velocity.X > 0) // Moving Right
                             {
-                                Drect.X = collision.Left - Drect.Width;
+                                Drect.X = collision.Left() - Drect.Width;
 
                                 if (randomBool)
                                 {
@@ -167,7 +167,7 @@ namespace BlobGame
                             }
                             else if (Velocity.X < 0) // Moving Left
                             {
-                                Drect.X = collision.Right;
+                                Drect.X = collision.Right();
 
                                 if (randomBool)
                                 {
@@ -212,13 +212,13 @@ namespace BlobGame
 
                             if (Velocity.Y > 0) // Falling Down
                             {
-                                Drect.Y = collision.Top - Drect.Height;
+                                Drect.Y = collision.Top() - Drect.Height;
                                 Velocity.Y = 0.5f;
                                 isInAir = false;
                             }
                             else if (Velocity.Y < 0) // Moving Up
                             {
-                                Drect.Y = collision.Bottom;
+                                Drect.Y = collision.Bottom();
                                 Velocity.Y = 0;
                             }
                         }
@@ -253,90 +253,83 @@ namespace BlobGame
                 TriangleIsAlive = false;
             }
 
-            if (Drect.Intersects(Main.player.Drect) && Main.player.Immunity == 0 && !Main.player.Immune && !Main.player.isSanic)
+            if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
             {
                 Player.Damage(20);
             }
 
             if (!TriangleIsAlive)
             {
-                Main.triangles.Remove(this);
+                Game.triangles.Remove(this);
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            SpriteEffects spriteEffects = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            float flip = isLeft ? -1.0f : 1.0f;
+            Srect.Width *= flip;
 
-            if (isMoving && !isInAir && !stop)
+            if(isMoving && !isInAir && !stop)
             {
-                Globals.SpriteBatch.Draw(
+                DrawTexturePro(
                     walkingTextures[walkingActiveFrame],
-                    Drect,
                     Srect,
-                    Color.White,
-                    0f,
+                    Drect,
                     Vector2.Zero,
-                    spriteEffects,
-                    0f
+                    0f,
+                    Color.White
                 );
             }
 
-            if (isInAir)
+            if(isInAir)
             {
-                if (Velocity.Y >= 5 || Velocity.Y <= -5)
+                if(Velocity.Y >= 5 || Velocity.Y <= -5)
                 {
-                    Globals.SpriteBatch.Draw(
+                    DrawTexturePro(
                         jumpingTextures[0],
-                        Drect,
                         Srect,
-                        Color.White,
-                        0f,
+                        Drect,
                         Vector2.Zero,
-                        spriteEffects,
-                        0f
+                        0f,
+                        Color.White
                     );
                 }
                 else
                 {
-                    Globals.SpriteBatch.Draw(
+                    DrawTexturePro(
                         jumpingTextures[1],
-                        Drect,
                         Srect,
-                        Color.White,
-                        0f,
+                        Drect,
                         Vector2.Zero,
-                        spriteEffects,
-                        0f
+                        0f,
+                        Color.White
                     );
                 }
             }
 
-            if ((!isMoving || stop) && !isInAir)
+            if((!isMoving || stop) && !isInAir)
             {
-                Globals.SpriteBatch.Draw(
+                DrawTexturePro(
                     idleTextures[idleActiveFrame],
-                    Drect,
                     Srect,
-                    Color.White,
-                    0f,
+                    Drect,
                     Vector2.Zero,
-                    spriteEffects,
-                    0f
+                    0f,
+                    Color.White
                 );
             }
 
-            if (Main.hasF3On)
+            if (Game.hasF3On)
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Main.DrawRectHollow(Globals.SpriteBatch, new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Main.DrawRectHollow(Globals.SpriteBatch, Drect, 4, Color.Blue);
+                Game.DrawRectHollow(Drect, 4, Color.Blue);
             }
         }
 
