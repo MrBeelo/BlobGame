@@ -147,21 +147,18 @@ public class Game
 
         if (TypingMode)
         {
-            KeyboardKey key = (KeyboardKey)GetKeyPressed();
-            if (key == KeyboardKey.Back && InputText.Length > 0)
+            if(IsKeyPressed(KeyboardKey.Backspace))
+            {
+                InputText = InputText.Substring(0, InputText.Length - 1);
+            } else {
+                KeyboardKey key = (KeyboardKey)GetKeyPressed();
+                char? character = InputManager.KeyToChar(key, IsKeyDown(KeyboardKey.LeftShift) || IsKeyDown(KeyboardKey.RightShift));
+                if (character != null)
                 {
-                    // Handle Backspace
-                    InputText = InputText.Substring(0, InputText.Length - 1);
+                    InputText += character.Value;
                 }
-                else
-                {
-                    // Add the character for the pressed key
-                    char? character = InputManager.KeyToChar(key, IsKeyDown(KeyboardKey.LeftShift) || IsKeyDown(KeyboardKey.RightShift));
-                    if (character != null)
-                    {
-                        InputText += character.Value;
-                    }
-                }
+            }
+            
         }
 
         LoweredVolume = Globals.Settings.Volume * 0.4;
@@ -562,8 +559,8 @@ public class Game
 
     public void DrawTypingZone()
     {
-        DrawRectangle(Globals.Settings.WindowSize.X / 20, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10, Globals.Settings.WindowSize.X - Globals.Settings.WindowSize.X / 10, Globals.Settings.WindowSize.Y / 20, new Color(0, 0, 0, 89));
-        DrawTextEx(rijusans, InputText, new Vector2(Globals.Settings.WindowSize.X / 20 + 10, Globals.Settings.WindowSize.Y - Globals.Settings.WindowSize.Y / 10 + 5), typeSize, 0, Color.White);
+        DrawRectangle(Settings.SimulationSize.X / 20, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10, Settings.SimulationSize.X - Settings.SimulationSize.X / 10, Settings.SimulationSize.Y / 20, new Color(0, 0, 0, 89));
+        DrawTextEx(rijusans, InputText, new Vector2(Settings.SimulationSize.X / 20 + 10, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), typeSize, 0, Color.White);
     }
 
     public static bool TryParseTwoArgs(string input, out int arg1, out int arg2)

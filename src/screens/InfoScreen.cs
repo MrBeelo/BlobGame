@@ -55,15 +55,12 @@ namespace BlobGame
 
             for (int i = 0; i < lines.Length; i++)
             {
-                DrawTextEx(Game.rijusans, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.rijusans, lines[i], Game.indexSize, 0).X / 2), i * 30 + i * 5 + 50), 26, 0, Color.White);
+                DrawTextEx(Game.rijusans, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.rijusans, lines[i], Game.indexSize, 0).X / 4), i * 30 + i * 5 + 50), 26, 0, Color.White);
             }
 
             
 
-            for (int i = 0; i < MenuItem.Length; i++)
-            {
-                DrawTextEx(Game.rijusans, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.rijusans, lines[i], Game.indexSize, 0).X / 2), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), 26, 0, selectedColor);
-            }
+            DrawTextEx(Game.rijusans, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.rijusans, MenuItem, Game.indexSize, 0).X / 4), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), 26, 0, selectedColor);
         }
     }
 }

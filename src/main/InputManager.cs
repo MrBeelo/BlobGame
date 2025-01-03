@@ -195,9 +195,13 @@ public class InputManager
 
         if(IsKeyPressed(KeyboardKey.CapsLock))
         {
-            isCapsLockOn = !isCapsLockOn;
+            if(isCapsLockOn)
+            {
+                isCapsLockOn = false;
+            } else {
+                isCapsLockOn = true;
+            }
         }
-
         }
     }
 
@@ -212,28 +216,18 @@ public class InputManager
             return isUpperCase ? (char)key : char.ToLower((char)key);
         }
 
-        // Handle 0-9 (D0-D9)
-        if (key >= KeyboardKey.Zero && key <= KeyboardKey.Nine)
-        {
-            return shift ? key switch
-            {
-                KeyboardKey.One => '!',
-                KeyboardKey.Two => '@',
-                KeyboardKey.Three => '#',
-                KeyboardKey.Four => '$',
-                KeyboardKey.Five => '%',
-                KeyboardKey.Six => '^',
-                KeyboardKey.Seven => '&',
-                KeyboardKey.Eight => '*',
-                KeyboardKey.Nine => '(',
-                KeyboardKey.Zero => ')',
-                _ => null
-            } : (char)('0' + (key - KeyboardKey.Kp0));
-        }
-
-        // Handle common punctuation and symbols
         return key switch
         {
+            KeyboardKey.One => shift ? '!' : '1',
+            KeyboardKey.Two => shift ? '@' : '2',
+            KeyboardKey.Three => shift ? '#' : '3',
+            KeyboardKey.Four => shift ? '$' : '4',
+            KeyboardKey.Five => shift ? '%' : '5',
+            KeyboardKey.Six => shift ? '^' : '6',
+            KeyboardKey.Seven => shift ? '&' : '7',
+            KeyboardKey.Eight => shift ? '*' : '8',
+            KeyboardKey.Nine => shift ? '(' : '9',
+            KeyboardKey.Zero => shift ? ')' : '0',
             KeyboardKey.Space => ' ',
             KeyboardKey.Comma => shift ? '<' : ',', // Comma or Less-than
             KeyboardKey.Period => shift ? '>' : '.', // Period or Greater-than

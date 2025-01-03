@@ -397,7 +397,7 @@ namespace BlobGame
         public void DrawBar()
         {
             string healthStat = "Boss Health: " + health + "/3600";
-            DrawTextEx(Game.rijusans, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (MeasureText(healthStat, Game.statsSize) / 2), 10), Game.statsSize, 0, Color.Black);
+            DrawTextEx(Game.rijusans, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (MeasureTextEx(Game.rijusans, healthStat, Game.statsSize, 0).X / 2), 10), Game.statsSize, 0, Color.Black);
         }
     }
 }
