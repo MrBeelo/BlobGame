@@ -18,17 +18,6 @@ namespace BlobGame
         public override void Update()
         {
             base.Update();
-
-            if (Game.inputManager.PConfirm)
-            {
-                switch (selectedIndex)
-                {
-                    case 0:
-                        Game.currentGameState = Game.GameState.Playing;
-                        break;
-                }
-                selectedIndex = 0;
-            }
         }
 
         public override void Draw()
@@ -38,6 +27,17 @@ namespace BlobGame
             string message = "You Passed the Level!";
 
             DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.zerove, message, Game.headerSize, 0).X / 2f), 30), Game.headerSize, 0, Color.White);
+        }
+
+        public override void AcceptIndex()
+        {
+            switch (selectedIndex)
+                {
+                    case 0:
+                        Game.currentGameState = Game.GameState.Playing;
+                        break;
+                }
+                selectedIndex = 0;
         }
     }
 }

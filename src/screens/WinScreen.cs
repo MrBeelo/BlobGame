@@ -18,10 +18,20 @@ namespace BlobGame
         public override void Update()
         {
             base.Update();
+        }
 
-            if (Game.inputManager.PConfirm)
-            {
-                switch (selectedIndex)
+        public override void Draw()
+        {
+            base.Draw();
+            
+            string message = "You Won!";
+
+            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.zerove, message, Game.headerSize, 0).X / 2f), 30), Game.headerSize, 0, Color.Gold);
+        }
+
+        public override void AcceptIndex()
+        {
+            switch (selectedIndex)
                 {
                     case 0:
                         Game.currentGameState = Game.GameState.MainMenu;
@@ -33,16 +43,6 @@ namespace BlobGame
                         break;
                 }
                 selectedIndex = 0;
-            }
-        }
-
-        public override void Draw()
-        {
-            base.Draw();
-            
-            string message = "You Won!";
-
-            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.zerove, message, Game.headerSize, 0).X / 2f), 30), Game.headerSize, 0, Color.Gold);
         }
     }
 }

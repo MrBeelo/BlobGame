@@ -10,7 +10,7 @@ public class Game
     public static Game game;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.45.1";
+    public static string version = "v0.46";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "savefile.json");
     public static Player player { get; set; }
@@ -52,6 +52,7 @@ public class Game
     public static Music playMusic;
     public RenderTexture2D target;
     public float scale;
+    public static Dictionary<int, Rectangle> indexRects = new();
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public void Run()
@@ -97,7 +98,7 @@ public class Game
         death = new DeathScreen(rijusans);
         win = new WinScreen(rijusans);
         pass = new PassScreen(rijusans);
-        info = new InfoScreen(rijusans);
+        info = new InfoScreen(rijusans, new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10 + Settings.SimulationSize.Y / 30));
 
         tilemap = new Tilemap();
         tilemap.LoadContent(this);

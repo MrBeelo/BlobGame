@@ -29,9 +29,27 @@ namespace BlobGame
         {
             base.Update();
 
-            if (Game.inputManager.PConfirm)
-            {
-                switch (selectedIndex)
+            Globals.Settings = Settings.LoadSettings(Game.settingsFilePath);
+            UpdateMenuItems();
+        }
+
+        public override void Draw()
+        {
+            base.Draw();
+
+            string message = "Settings";
+
+            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.zerove, message, Game.headerSize, 0).X / 2f), 30), Game.headerSize, 0, Color.White);
+        }
+
+        public void UpdateMenuItems()
+        {
+            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {GetScreenWidth():F0} x {GetScreenHeight():F0}", "Back"};
+        }
+
+        public override void AcceptIndex()
+        {
+            switch (selectedIndex)
                 {
                     case 0: // Volume
                         if(Globals.Settings.Volume == 1.0f)
@@ -67,24 +85,6 @@ namespace BlobGame
                 }
                 selectedIndex = 0;
                 Globals.Settings.SaveSettings(Game.settingsFilePath); // Save changes to the file
-            }
-
-            Globals.Settings = Settings.LoadSettings(Game.settingsFilePath);
-            UpdateMenuItems();
-        }
-
-        public override void Draw()
-        {
-            base.Draw();
-
-            string message = "Settings";
-
-            DrawTextEx(Game.zerove, message, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.zerove, message, Game.headerSize, 0).X / 2f), 30), Game.headerSize, 0, Color.White);
-        }
-
-        public void UpdateMenuItems()
-        {
-            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {GetScreenWidth():F0} x {GetScreenHeight():F0}", "Back"};
         }
     }
 }

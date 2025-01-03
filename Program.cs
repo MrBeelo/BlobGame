@@ -63,14 +63,17 @@ TODO: 1) DELTATIME* []
 TODO: 2) PROPER BOSSFIGHT*** []
 TODO: 3) NEW COOL FONT + MAKE SELECTED INDEX BIGGER [0.41]
 TODO: 4) MENU SCREEN BACKGROUND [0.43]
-TODO: 5) MOUSE SUPPORT []
+TODO: 5) MOUSE SUPPORT [0.46]
 TODO: 6) COVER ART [0.42]
 TODO: 7) LEVEL SELECT SCREEN []
 TODO: 8) 10 MORE LEVELS + BIOMES** []
 TODO: 9) MUSIC [0.44]
 TODO: 10) GOODER HITBOXES [0.45]
 
-also fix controller support if its bugged
+TODO: THINGS THAT I REALLY WANNA DO RN:
+TODO:
+TODO: 1) FIX CONTROLLER SUPPORT
+TODO: 2) FINISH THE BOSS
 
 ! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)

@@ -5,26 +5,26 @@ using System.Numerics;
 
 namespace BlobGame
 {
-    public class InfoScreen
+    public class InfoScreen : Screen
     {
-        public string MenuItem = "Back";
-        public Color selectedColor = Color.Yellow;
-
-        public InfoScreen(Font font)
-        {
+        public override string[] MenuItems() {
+            return new string[] {"Back"};
         }
 
-        public void Update()
+        public InfoScreen(Font font, Vector2 startInVec) : base(font, startInVec)
         {
-
-            if (Game.inputManager.PConfirm)
-            {
-                Game.currentGameState = Game.GameState.MainMenu;
-            }
+            startingIndexVec = startInVec;
         }
 
-        public void Draw()
+        public override void Update()
         {
+            base.Update();
+        }
+
+        public override void Draw()
+        {
+            base.Draw();
+
             string[] lines = {
                 "Hey!",
                 "This is a project made to test my non-existant coding skills!",
@@ -44,7 +44,7 @@ namespace BlobGame
                 "CREDITS:",
                 "Most of the art, coding, sound effects and menu music (made with BandCamp) made by MrBeelo.",
                 "Inspiration and a little help with art by Nick_Greek.",
-                "Some coding fundementals by 'Coding with Sphere' and 'GameDev Quickie'.",
+                "Some coding fundementals by 'Coding with Sphere' and 'GameDev Quickie'. Built in RayLib",
                 "Font: Zerove and Rijusans by GGBot.",
                 "",
                 "",
@@ -57,10 +57,18 @@ namespace BlobGame
             {
                 DrawTextEx(Game.rijusans, lines[i], new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.rijusans, lines[i], Game.indexSize, 0).X / 2), i * 30 + i * 5 + 50), Game.indexSize, 0, Color.White);
             }
+        }
 
-            
+        public override void AcceptIndex()
+        {
+            switch (selectedIndex)
+                {
+                    case 0:
+                        Game.currentGameState = Game.GameState.MainMenu;
+                        break;
+                }
 
-            DrawTextEx(Game.rijusans, MenuItem, new Vector2(Settings.SimulationSize.X / 2 - (MeasureTextEx(Game.rijusans, MenuItem, Game.indexSize, 0).X / 2), Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), Game.indexSize, 0, selectedColor);
+                selectedIndex = 0;
         }
     }
 }
