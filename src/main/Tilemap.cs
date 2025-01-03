@@ -81,7 +81,7 @@ namespace BlobGame
 
             for(int i = 0; i < Collision.Length; i++)
             {
-                Collision[i] = LoadMap("data/level" + i + "_normal.csv");
+                Collision[i] = LoadMap("data/level" + i + "_collision.csv");
             }
         }
 
@@ -92,7 +92,7 @@ namespace BlobGame
                 level = 0;
             }
             
-            GetMapSize("data/level" + Globals.SaveFile.Level + "_normal.csv", this);
+            GetMapSize("data/level" + Globals.SaveFile.Level + "_collision.csv", this);
         }
 
         public void Draw()
@@ -102,7 +102,7 @@ namespace BlobGame
                 int tpr = 8; //Tiles per row
                 int p_tilesize = 32; //Pixel Tilesize
 
-                foreach(var item in Normal[(int)Globals.SaveFile.Level])
+                foreach(var item in Normal[Globals.SaveFile.Level])
                 {
                     normalTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedNormalTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;
@@ -128,7 +128,7 @@ namespace BlobGame
                     DrawTexturePro(textureAtlas, src, dest, Vector2.Zero, 0f, Color.White);
                 }
 
-                foreach(var item in Collision[(int)Globals.SaveFile.Level])
+                foreach(var item in Collision[Globals.SaveFile.Level])
                 {
                     collisionTiles.Add(new Vector3(item.Value, item.Key.X, item.Key.Y));
                     if(excludedCollisionTiles.Contains(new Vector3(item.Value, item.Key.X, item.Key.Y))) continue;

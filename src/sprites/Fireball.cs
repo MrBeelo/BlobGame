@@ -160,7 +160,7 @@ namespace BlobGame
 
         public override void Draw()
         {
-            DrawTexture(fireTextures[fireActiveFrame], (int)Drect.X, (int)Drect.Y, Color.White);
+            DrawTexturePro(fireTextures[fireActiveFrame], Srect, Drect, Vector2.Zero, 0f, Color.White);
 
             if (Game.hasF3On)
             {
@@ -187,6 +187,7 @@ namespace BlobGame
         public static void FireBad(Rectangle drect, bool isLeft)
         {
             Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 48 - 1)), 48, 48), new Rectangle(0, 0, 16, 16), isLeft, true);
+            Game.fireballs.Add(fireball);
             PlaySound(laserShootSound);
             SetSoundVolume(laserShootSound, (float)Game.LoweredVolume);
         }

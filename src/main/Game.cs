@@ -28,11 +28,11 @@ public class Game
     public static Texture2D pixelTexture;
     public static Font rijusans = new();
     public static Font zerove = new();
-    public static int statsSize = 34;
-    public static int typeSize = 26;
-    public static int headerSize = 60;
-    public static int indexSize = 26;
-    public static int debugSize = 14;
+    public static int statsSize = 34 * 2;
+    public static int typeSize = 26 * 2;
+    public static int headerSize = 60 * 2;
+    public static int indexSize = 26 * 2;
+    public static int debugSize = 14 * 2;
     public static GameState currentGameState = GameState.MainMenu;
     private MainMenuScreen mainMenu;
     private PausedScreen paused;
@@ -43,8 +43,6 @@ public class Game
     public PassScreen pass;
     public InfoScreen info;
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
-    public int frameCounter;
-    public TimeSpan timeSpan;
     public int FPS;
     public static InputManager inputManager = new InputManager();
     public Canvas canvas;
@@ -57,12 +55,12 @@ public class Game
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public void Run()
     {
-        InitWindow(1920, 1080, "Blob Ray");
+        InitWindow(1920, 1080, "Blob Game");
         InitAudioDevice();
-        SetWindowIcon(LoadImage("assets/icon.png"));
+        SetWindowIcon(LoadImage("assets/other/icon.png"));
         SetExitKey(KeyboardKey.Null);
-        //SetTargetFPS(144);
-        ToggleFullscreen();
+        SetTargetFPS(60);
+        //ToggleFullscreen();
         ShowCursor();
 
         game = this;
@@ -128,15 +126,24 @@ public class Game
 
         while (!WindowShouldClose())
         {
-            //! UPDATE LOOP
+            Update();
+            Draw();
+        }
+    }
+
+    public void Update()
+    {
+        //! UPDATE LOOP
             game = this;
 
             Globals.Update();
-
             inputManager.Update();
 
             UpdateMusicStream(menuMusic);
             UpdateMusicStream(playMusic); 
+
+            FPS = GetFPS();
+            deltaTime = GetFrameTime();
 
         if (TypingMode)
         {
@@ -158,15 +165,6 @@ public class Game
         }
 
         LoweredVolume = Globals.Settings.Volume * 0.4;
-
-        frameCounter++;
-
-        if (timeSpan > TimeSpan.FromSeconds(1))
-        {
-            timeSpan -= TimeSpan.FromSeconds(1);
-            FPS = frameCounter;
-            frameCounter = 0;
-        }
 
         if (IsKeyPressed(KeyboardKey.F11))
         {
@@ -376,25 +374,30 @@ public class Game
             if (!IsMusicStreamPlaying(playMusic))
             { PlayMusicStream(playMusic); }
             SetMusicVolume(playMusic, (float)LoweredVolume - 0.1f);
+            StopMusicStream(menuMusic);
         } else {
             if (!IsMusicStreamPlaying(menuMusic))
             { PlayMusicStream(menuMusic); }
             SetMusicVolume(menuMusic, (float)LoweredVolume);
+            StopMusicStream(playMusic);
         }
 
         if(currentGameState != GameState.Playing)
         { background.Update(); }
+    }
 
+    public void Draw()
+    {
         //! DRAW LOOP
 
-        canvas.Activate();
+        //canvas.Activate();
 
         ClearBackground(Color.SkyBlue);
 
-        background.DrawBG();
-
-        //!Beggining Play Sprite Batch
+        //!Beggining Sprite Batch
         BeginDrawing();
+
+        background.DrawBG();
 
         switch (currentGameState)
         {
@@ -425,12 +428,6 @@ public class Game
                 break;
         }
 
-        //!Ending Play Sprite Batch
-        EndDrawing();
-
-        //!Beginning UI Sprite Batch
-        BeginDrawing();
-
         switch (currentGameState)
         {
             case GameState.MainMenu:
@@ -442,9 +439,9 @@ public class Game
                 string level = "Level: " + Tilemap.level;
                 string xartomantila = "Xartomantila: " + Player.xartomantila;
 
-                DrawTextEx(rijusans, health, new Vector2(Settings.SimulationSize.X - MeasureText(health, statsSize) - 20, 10), statsSize, 0, Color.Black);
-                DrawTextEx(rijusans, level, new Vector2(Settings.SimulationSize.X - MeasureText(level, statsSize) - 20, 60), statsSize, 0, Color.Black);
-                DrawTextEx(rijusans, xartomantila, new Vector2(Settings.SimulationSize.X - MeasureText(xartomantila, statsSize) - 20, 110), statsSize, 0, Color.Black);
+                DrawTextEx(rijusans, health, new Vector2(Settings.SimulationSize.X - MeasureTextEx(rijusans, health, statsSize, 0).X - 20, 10), statsSize, 0, Color.Black);
+                DrawTextEx(rijusans, level, new Vector2(Settings.SimulationSize.X - MeasureTextEx(rijusans, level, statsSize, 0).X - 20, 60), statsSize, 0, Color.Black);
+                DrawTextEx(rijusans, xartomantila, new Vector2(Settings.SimulationSize.X - MeasureTextEx(rijusans, xartomantila, statsSize, 0).X - 20, 110), statsSize, 0, Color.Black);
                 foreach(TriangleBoss triangleBoss in triangleBosses)
                 { triangleBoss.DrawBar(); }
                 break;
@@ -528,7 +525,7 @@ public class Game
 
             foreach (var info in combinedDebugInfo)
             {
-                DrawTextEx(rijusans, info, pos, 14, 0, Color.Black);
+                DrawTextEx(rijusans, info, pos, debugSize, 0, Color.Black);
                 pos.Y += 20;
             }
         }
@@ -540,11 +537,10 @@ public class Game
             DrawTypingZone();
         }
 
-        //!Ending UI Sprite Batch
+        //!Ending Sprite Batch
         EndDrawing();
 
-        canvas.Draw();
-    }
+        //canvas.Draw();
     }
 
     public static void ExitGame()

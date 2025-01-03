@@ -701,7 +701,7 @@ namespace BlobGame
         public override void Draw()
         {
             float flip = isLeft ? -1.0f : 1.0f;
-            Srect.Width *= flip;
+            Srect = new(0, 0, 20 * flip, 30);
 
             if(isMoving && !isInAir)
             {

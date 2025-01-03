@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -26,7 +27,7 @@ public class Background
     public void Update()
     {
         // Update animation frame
-        timeElapsed += GetFrameTime();
+        timeElapsed += GetFrameTime() * 1000;
 
         if (timeElapsed >= frameDuration)
         {
@@ -46,7 +47,6 @@ public class Background
     }
     public void DrawBG()
     {
-        BeginDrawing();
         if (Game.currentGameState == Game.GameState.Playing)
         {
             DrawTexture(background, 0, 0, Color.White);
@@ -54,7 +54,6 @@ public class Background
         {
             DrawTexture(frames[currentFrame], 0, 0, BGColor());
         }
-        EndDrawing();
     }
 
     public Color BGColor()
