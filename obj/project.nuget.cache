@@ -1,11 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "3YcfYMVP+LT6GjL5Q9ni0GxoFrfQiuA8KEf13/cFwAr72Hb3sqUcXAcJ7vsa1DRtIBGiDdnLgtRkpVuMVOLzfA==",
+  "dgSpecHash": "fj0DJnyYiplWUf8GUPM3k6fV9J4HP0Nt9WJi7EOVwgsX9r2lEFWsiQCuMIpVirvv1UQWYChXo6kgxhcBOV5oFg==",
   "success": true,
-  "projectFilePath": "/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+  "projectFilePath": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
   "expectedPackageFiles": [
+    "/home/MrBeelo/.nuget/packages/microsoft.net.illink.tasks/8.0.11/microsoft.net.illink.tasks.8.0.11.nupkg.sha512",
     "/home/MrBeelo/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
-    "/home/MrBeelo/.nuget/packages/raylib-cs/7.0.0/raylib-cs.7.0.0.nupkg.sha512"
+    "/home/MrBeelo/.nuget/packages/raylib-cs/7.0.0/raylib-cs.7.0.0.nupkg.sha512",
+    "/home/MrBeelo/.nuget/packages/microsoft.netcore.app.runtime.win-x64/8.0.11/microsoft.netcore.app.runtime.win-x64.8.0.11.nupkg.sha512",
+    "/home/MrBeelo/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/8.0.11/microsoft.aspnetcore.app.runtime.win-x64.8.0.11.nupkg.sha512",
+    "/home/MrBeelo/.nuget/packages/microsoft.netcore.app.host.win-x64/8.0.11/microsoft.netcore.app.host.win-x64.8.0.11.nupkg.sha512"
   ],
   "logs": []
 }

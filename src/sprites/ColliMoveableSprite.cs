@@ -46,9 +46,7 @@ namespace BlobGame
         public void SetBounds()
         {
             minPos = Vector2.Zero;
-            maxPos = Game.tilemap.Mapsize.ToVector2();
-            maxPos.X -= Drect.Width;
-            maxPos.Y -= Drect.Height;
+            maxPos = Tilemap.Mapsize;
         }
     }
 }

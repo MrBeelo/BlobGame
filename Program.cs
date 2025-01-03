@@ -70,6 +70,8 @@ TODO: 8) 10 MORE LEVELS + BIOMES** []
 TODO: 9) MUSIC [0.44]
 TODO: 10) GOODER HITBOXES [0.45]
 
+also fix controller support if its bugged
+
 ! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)
 ! Afterwards add LogPos into Drect and update as usual. Prob make that updating thing into a method and add thing in first line,

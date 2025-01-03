@@ -32,7 +32,7 @@ namespace BlobGame
             {
                 itemScales[i] = MinScale;
                 string item = MenuItems()[i];
-                itemPosition[i] = new Vector2(Settings.SimulationSize.X / 2 + (MeasureTextEx(Game.rijusans, item, Game.indexSize, 0).X / 4), Settings.SimulationSize.Y / 3); // Set the position of the menu
+                itemPosition[i] = new Vector2(Settings.SimulationSize.X / 2 + (MeasureTextEx(Game.rijusans, item, Game.indexSize, 0).X / 2), Settings.SimulationSize.Y / 3); // Set the position of the menu
             }
         }
 
@@ -42,8 +42,7 @@ namespace BlobGame
 
             for (int i = 0; i < MenuItems().Length; i++)
             {
-                string item = MenuItems()[i];
-                itemPosition[i] = new Vector2(Settings.SimulationSize.X / 2 + (MeasureTextEx(Game.rijusans, item, Game.indexSize, 0).X / 4), Settings.SimulationSize.Y / 3); // Set the position of the menu
+                itemPosition[i] = new Vector2(Settings.SimulationSize.X / 2 + (MeasureTextEx(Game.rijusans, MenuItems()[i], Game.indexSize, 0).X / 2), Settings.SimulationSize.Y / 3); // Set the position of the menu
             }
 
             if (Game.inputManager.PDown)
@@ -82,13 +81,10 @@ namespace BlobGame
             for (int i = 0; i < MenuItems().Length; i++)
             {
                 Color textColor = (i == selectedIndex) ? selectedColor : normalColor;
-                float scale = itemScales[i];
-                Vector2 textSize = MeasureTextEx(Game.rijusans, MenuItems()[i], Game.indexSize, 0);
-                Vector2 origin = textSize / 2;
-                Vector2 scaledPosition = itemPosition[i] + new Vector2(0, i * 60);
-                DrawTextPro(indexFont, MenuItems()[i], scaledPosition, origin, 0f, 26 * scale, 0, textColor);
+                Vector2 origin = MeasureTextEx(Game.rijusans, MenuItems()[i], Game.indexSize, 0) / 2;
+                Vector2 scaledPosition = itemPosition[i] - origin * itemScales[i] + new Vector2(0, i * 60);
+                DrawTextPro(indexFont, MenuItems()[i], scaledPosition, origin, 0f, Game.indexSize * itemScales[i], 0, textColor);
             }
         }
-
     }
 }

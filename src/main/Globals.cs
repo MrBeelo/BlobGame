@@ -5,7 +5,6 @@ namespace BlobGame;
 
 public static class Globals
 {
-    public static float TotalSeconds { get; set; }
     public static Settings Settings = new Settings();
     public static SaveFile SaveFile = new SaveFile();
 
@@ -16,6 +15,5 @@ public static class Globals
         SaveFile.Update();
         SetWindowMinSize(Settings.WindowSize.X, Settings.WindowSize.Y);
         SetWindowMaxSize(Settings.WindowSize.X, Settings.WindowSize.Y);
-        Game.game.canvas.SetDestinationRectangle();
     }
 }

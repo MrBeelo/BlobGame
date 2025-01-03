@@ -27,7 +27,6 @@ namespace BlobGame
             }
             WindowSize.X = height;
             WindowSize.Y = width;
-            Game.game.canvas.SetDestinationRectangle();
         }
         public static Settings LoadSettings(string filePath)
         {

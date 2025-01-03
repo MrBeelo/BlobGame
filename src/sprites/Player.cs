@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -7,6 +8,7 @@ namespace BlobGame
 {
     public class Player : CollMoveableSprite
     {
+        public static Camera2D camera = new();
         public static int playerSizeW = 42;
         public static int playerSizeH = 64;
         public float Health {get; set;} = 100;
@@ -44,6 +46,7 @@ namespace BlobGame
         public bool Immune = false;
         public Matrix3x2 translation;
         public static int xartomantila = 0;
+        public static Vector2 playerMaxPos;
         
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
@@ -80,13 +83,17 @@ namespace BlobGame
             hitSound = LoadSound("assets/sounds/hitBlob.wav");
 
             PlaySound(successSound);
+
+            camera.Zoom = 1;
+            camera.Target = Drect.Position;
+            camera.Offset = new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 2);
         }
 
         public override void Update()
         {
             base.Update();
 
-            flickerTime += Globals.TotalSeconds * 5; // Adjust speed by changing multiplier
+            flickerTime += GetFrameTime() * 5; // Adjust speed by changing multiplier
 
             if(alive == false)
             {
@@ -202,7 +209,9 @@ namespace BlobGame
             Velocity.Y = Math.Min(40.0f, Velocity.Y);
 
             SetBounds();
-            Drect.Position = Vector2.Clamp(Drect.Position, minPos, maxPos);
+            SetPlayerBounds();
+            Drect.Position = Vector2.Clamp(Drect.Position, minPos, playerMaxPos);
+            UpdateCamera();
             
             // Horizontal Collision Resolution
             Drect.X += (int)Velocity.X;
@@ -711,7 +720,7 @@ namespace BlobGame
                     Drect,
                     Vector2.Zero,
                     0f,
-                    Color.White
+                    PlayerColor()
                 );
             }
 
@@ -725,7 +734,7 @@ namespace BlobGame
                         Drect,
                         Vector2.Zero,
                         0f,
-                        Color.White
+                        PlayerColor()
                     );
                 }
                 else
@@ -736,7 +745,7 @@ namespace BlobGame
                         Drect,
                         Vector2.Zero,
                         0f,
-                        Color.White
+                        PlayerColor()
                     );
                 }
             }
@@ -749,7 +758,7 @@ namespace BlobGame
                     Drect,
                     Vector2.Zero,
                     0f,
-                    Color.White
+                    PlayerColor()
                 );
             }
 
@@ -829,23 +838,19 @@ namespace BlobGame
             ResetState(player);
         }
 
+        public static Color DamageColor() { return new Color(255, 150, 143);}
+
         public Color PlayerColor()
         {
-            if(stamina > 0 && stamina < 500 && !isSanic)
+            if((stamina > 0 && stamina < 500 && !isSanic && !isDashing) || Immunity > 0)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2; // Normalizes to range 0-1
-                return ColorLerp(Color.White, Color.Maroon, t); // Blends from white to red based on t
+                return ColorLerp(Color.White, DamageColor(), t); // Blends from white to red based on t
             }
             else if(isSanic)
             {
                 float t = (MathF.Sin(flickerTime) + 1) / 2;
                 return ColorLerp(Color.White, Color.SkyBlue, t);
-            }
-
-            if(Immunity > 0)
-            {
-                float t = (MathF.Sin(flickerTime) + 1) / 2;
-                return ColorLerp(Color.White, Color.Red, t);
             }
 
             if(justDrankMilk > 0)
@@ -917,14 +922,14 @@ namespace BlobGame
             }
         }
 
-        public void CalculateTranslation()
+        /*public void CalculateTranslation()
         {
             var dx = (Settings.SimulationSize.X / 2) - Game.player.Drect.X - Game.player.Drect.Width;
             dx = Math.Clamp(dx, -Game.tilemap.Mapsize.X + Settings.SimulationSize.X, 0);
             var dy = (Settings.SimulationSize.Y / 2) - Game.player.Drect.Y - Game.player.Drect.Height;
             dy = Math.Clamp(dy, -Game.tilemap.Mapsize.Y + Settings.SimulationSize.Y, 0);
             translation = Matrix3x2.CreateTranslation(new Vector2(dx, dy));
-        }
+        }*/
 
         public static void TakeFallDmg()
         {
@@ -978,6 +983,30 @@ namespace BlobGame
         public static void Teleport(int x, int y)
         {
             Game.player.Drect = new Rectangle(x, y, playerSizeW, playerSizeH);
+        }
+
+        public void SetPlayerBounds()
+        {
+            playerMaxPos = maxPos;
+            playerMaxPos.X -= Drect.Width;
+            playerMaxPos.Y -= Drect.Height;
+        }
+
+        public void UpdateCamera()
+        {
+            camera.Target = Drect.Position;
+
+            float halfX = Settings.SimulationSize.X / 2 / camera.Zoom;
+            float halfY = Settings.SimulationSize.Y / 2 / camera.Zoom;
+
+            camera.Offset = new Vector2(halfX, halfY);
+
+            float clampX = Math.Clamp(camera.Target.X, minPos.X + halfX, maxPos.X - halfX);
+            float clampY = Math.Clamp(camera.Target.Y, minPos.Y + halfY, maxPos.Y - halfY);
+
+            Debug.WriteLine(clampX + ", " + clampY);
+
+            camera.Target = new Vector2(clampX, clampY);
         }
     }
 }

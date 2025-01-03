@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -8,7 +9,7 @@ namespace BlobGame
     {
         public static int level = 0;
         public static int Tilesize = 32; //Display Tilesize
-        public System.Drawing.Point Mapsize {get; private set;}
+        public static Vector2 Mapsize {get; private set;}
         public static Dictionary<Vector2, int>[] Normal = new Dictionary<Vector2, int>[10 + 1]; //! Change based on how many maps you make.
         public static Dictionary<Vector2, int>[] Collision = new Dictionary<Vector2, int>[10 + 1]; //! Same here
         public Texture2D textureAtlas;
@@ -51,7 +52,7 @@ namespace BlobGame
             return result;
         }
 
-        public static void GetMapSize(string filepath, Tilemap tilemap)
+        public static void GetMapSize(string filepath)
         {
             StreamReader reader = new (filepath);
             int y = 0;
@@ -66,7 +67,7 @@ namespace BlobGame
                 y++;
             }
 
-            tilemap.Mapsize = new System.Drawing.Point(x * Tilesize, y * Tilesize);
+            Mapsize = new Vector2(x * Tilesize, y * Tilesize);
         }
 
         public void LoadContent(Game game)
@@ -76,12 +77,12 @@ namespace BlobGame
 
             for(int i = 0; i < Normal.Length; i++)
             {
-                Normal[i] = LoadMap("data/level" + i + "_normal.csv");
+                Normal[i] = LoadMap("assets/maps/level" + i + "_normal.csv");
             }
 
             for(int i = 0; i < Collision.Length; i++)
             {
-                Collision[i] = LoadMap("data/level" + i + "_collision.csv");
+                Collision[i] = LoadMap("assets/maps/level" + i + "_collision.csv");
             }
         }
 
@@ -92,7 +93,7 @@ namespace BlobGame
                 level = 0;
             }
             
-            GetMapSize("data/level" + Globals.SaveFile.Level + "_collision.csv", this);
+            GetMapSize("assets/maps/level" + Globals.SaveFile.Level + "_collision.csv");
         }
 
         public void Draw()
@@ -179,6 +180,7 @@ namespace BlobGame
             Triangle.ClearAll();
             TriangleBoss.ClearAll();
             Circle.ClearAll();
+            Game.fireballs.Clear();
             foreach (var tile in Collision[level])
             {
                 if (Collision[level].TryGetValue(new Vector2(tile.Key.X, tile.Key.Y), out int value))

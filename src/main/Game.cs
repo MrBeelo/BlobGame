@@ -10,9 +10,9 @@ public class Game
     public static Game game;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.45";
-    public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "data", "settings.json");
-    public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "data", "savefile.json");
+    public static string version = "v0.45.1";
+    public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "settings.json");
+    public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "savefile.json");
     public static Player player { get; set; }
     public static TriangleBoss triangleBoss {get; set;}
     public static Fireball fireball { get; set; }
@@ -28,11 +28,11 @@ public class Game
     public static Texture2D pixelTexture;
     public static Font rijusans = new();
     public static Font zerove = new();
-    public static int statsSize = 34 * 2;
-    public static int typeSize = 26 * 2;
-    public static int headerSize = 60 * 2;
-    public static int indexSize = 26 * 2;
-    public static int debugSize = 14 * 2;
+    public static int statsSize = 34 + 34 / 2;
+    public static int typeSize = 26 + 26 / 2;
+    public static int headerSize = 60 + 60 / 2;
+    public static int indexSize = 26 + 26 / 2;
+    public static int debugSize = 14 + 14 / 2;
     public static GameState currentGameState = GameState.MainMenu;
     private MainMenuScreen mainMenu;
     private PausedScreen paused;
@@ -45,39 +45,40 @@ public class Game
     public static double LoweredVolume = Globals.Settings.Volume * 0.4;
     public int FPS;
     public static InputManager inputManager = new InputManager();
-    public Canvas canvas;
     public bool TypingMode = false;
     public string InputText = "";
     public Background background = new();
     public static Music menuMusic;
     public static Music playMusic;
+    public RenderTexture2D target;
+    public float scale;
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public void Run()
     {
-        InitWindow(1920, 1080, "Blob Game");
+        SetConfigFlags(ConfigFlags.ResizableWindow);
+        SetConfigFlags(ConfigFlags.VSyncHint);
+        InitWindow(1920, 1031, "Blob Game");
+        SetWindowMinSize(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 2);
         InitAudioDevice();
         SetWindowIcon(LoadImage("assets/other/icon.png"));
         SetExitKey(KeyboardKey.Null);
         SetTargetFPS(60);
-        //ToggleFullscreen();
         ShowCursor();
+
+        target = LoadRenderTexture(Settings.SimulationSize.X, Settings.SimulationSize.Y);
+        SetTextureFilter(target.Texture, TextureFilter.Bilinear);
 
         game = this;
 
         Settings.LoadSettings(settingsFilePath);
         SaveFile.LoadSavefile(savefileFilePath);
 
-        SetWindowMinSize(Globals.Settings.WindowSize.X, Globals.Settings.WindowSize.Y);
-        SetWindowMaxSize(Globals.Settings.WindowSize.X, Globals.Settings.WindowSize.Y);
-
-        canvas = new Canvas(1920, 1080);
-
         //! Definition of a texture and a position for the sprite class is needed here.
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
 
-        rijusans = LoadFont("assets/fonts/Rijusans-Regular.ttf");
-        zerove = LoadFont("assets/fonts/Zerove.ttf");
+        rijusans = LoadFontEx("assets/fonts/Rijusans-Regular.ttf", 60, null, 0);
+        zerove = LoadFontEx("assets/fonts/Zerove.ttf", 100, null, 0);
 
         Texture2D playerTexture = LoadTexture("assets/sprites/player/PlayerIdle1.png");
         Texture2D fireTexture = LoadTexture("assets/sprites/fireball/Fireball1.png");
@@ -135,6 +136,8 @@ public class Game
     {
         //! UPDATE LOOP
             game = this;
+
+            scale = Math.Min((float)GetScreenWidth()/Settings.SimulationSize.X, (float)GetScreenHeight()/Settings.SimulationSize.Y);
 
             Globals.Update();
             inputManager.Update();
@@ -305,7 +308,6 @@ public class Game
             case GameState.Playing:
                 tilemap.Update(this);
                 player.Update();
-                player.CalculateTranslation();
 
                 foreach (var fireball in fireballs.ToList())
                 {
@@ -387,14 +389,14 @@ public class Game
     {
         //! DRAW LOOP
 
-        //canvas.Activate();
-
         ClearBackground(Color.SkyBlue);
 
-        //!Beggining Sprite Batch
-        BeginDrawing();
+        //!Beggining Texture Mode
+        BeginTextureMode(target);
 
         background.DrawBG();
+
+        BeginMode2D(Player.camera);
 
         switch (currentGameState)
         {
@@ -424,6 +426,8 @@ public class Game
                 }
                 break;
         }
+
+        EndMode2D();
 
         switch (currentGameState)
         {
@@ -509,7 +513,7 @@ public class Game
                     "Delta Time: " + deltaTime,
                     "Level: " + Tilemap.level,
                     "Savefile Level: " + Globals.SaveFile.Level,
-                    "Mapsize: " + tilemap.Mapsize,
+                    "Mapsize: " + Tilemap.Mapsize,
                     "Pressed Direction: " + inputManager.pressedDirection,
                     "Typing Mode: " + TypingMode
                 };
@@ -523,7 +527,7 @@ public class Game
             foreach (var info in combinedDebugInfo)
             {
                 DrawTextEx(rijusans, info, pos, debugSize, 0, Color.Black);
-                pos.Y += 20;
+                pos.Y += 25;
             }
         }
 
@@ -534,10 +538,17 @@ public class Game
             DrawTypingZone();
         }
 
-        //!Ending Sprite Batch
-        EndDrawing();
+        //inputManager.DrawController();
 
-        //canvas.Draw();
+        //!Ending Texture Mode
+        EndTextureMode();
+
+        BeginDrawing();
+            ClearBackground(Color.Black);
+
+            DrawTexturePro(target.Texture, new Rectangle (0, 0, target.Texture.Width, -target.Texture.Height), new Rectangle((float)(GetScreenWidth() - Settings.SimulationSize.X*scale)*0.5f,
+                (GetScreenHeight() - Settings.SimulationSize.Y*scale)*0.5f, Settings.SimulationSize.X*scale,Settings.SimulationSize.Y*scale), Vector2.Zero, 0f, Color.White);
+        EndDrawing();
     }
 
     public static void ExitGame()
