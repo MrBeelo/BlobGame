@@ -49,6 +49,8 @@ namespace BlobGame
 
         public override void AcceptIndex()
         {
+            base.AcceptIndex();
+
             switch (selectedIndex)
                 {
                     case 0: // Volume
@@ -62,12 +64,23 @@ namespace BlobGame
                         }
                         break;
                     case 1:
-                        if (Globals.Settings.WindowSize.X == 1920 && Globals.Settings.WindowSize.Y == 1080)
+                        switch(Globals.Settings.WindowSize.X, Globals.Settings.WindowSize.Y)
                         {
-                            Globals.Settings.SetResolution(800, 480);
-                        } else if (Globals.Settings.WindowSize.X == 800 && Globals.Settings.WindowSize.Y == 480)
-                        {
-                            Globals.Settings.SetResolution(1920, 1080);
+                            case (1920, 1080):
+                                Globals.Settings.SetResolution(800, 480);
+                                break;
+
+                            case (800, 480):
+                                Globals.Settings.SetResolution(1400, 650);
+                                break;
+
+                            case (1400, 650):
+                                Globals.Settings.SetResolution(1100, 950);
+                                break;
+
+                            case (1100, 950):
+                                Globals.Settings.SetResolution(1920, 1080);
+                                break;
                         }
                         break;
                     case 2:
@@ -81,6 +94,8 @@ namespace BlobGame
                                 Game.currentGameState = Game.GameState.Playing;
                                 break;
                         }
+                        Globals.Settings.SetResolution(GetScreenWidth(), GetScreenHeight());
+                        Globals.Settings.SaveSettings(Game.settingsFilePath);
                         break;
                 }
                 selectedIndex = 0;

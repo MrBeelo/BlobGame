@@ -82,8 +82,6 @@ namespace BlobGame
             powerUpSound = LoadSound("assets/sounds/powerUp.wav");
             hitSound = LoadSound("assets/sounds/hitBlob.wav");
 
-            PlaySound(successSound);
-
             camera.Zoom = 1;
             camera.Target = Drect.Position;
             camera.Offset = new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 2);
@@ -466,9 +464,12 @@ namespace BlobGame
                             Drect.Y = collision.Top() - Drect.Height;
                             Velocity.Y = 0.5f;
                             isInAir = false;
-                            Game.currentGameState = Game.GameState.Win;
-                            Tilemap.excludedNormalTiles.Clear();
-                            Tilemap.excludedCollisionTiles.Clear();
+                            if(Game.triangleBosses.Count == 0)
+                            {
+                                Game.currentGameState = Game.GameState.Win;
+                                Tilemap.excludedNormalTiles.Clear();
+                                Tilemap.excludedCollisionTiles.Clear();
+                            }
                         }
                         else if (Velocity.Y < 0) // Moving Up
                         {
@@ -766,13 +767,13 @@ namespace BlobGame
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Game.DrawRectHollow(Drect, 4, Color.Blue);
+                DrawRectangleLinesEx(Drect, 4, Color.Blue);
             }
         }
 
@@ -922,15 +923,6 @@ namespace BlobGame
             }
         }
 
-        /*public void CalculateTranslation()
-        {
-            var dx = (Settings.SimulationSize.X / 2) - Game.player.Drect.X - Game.player.Drect.Width;
-            dx = Math.Clamp(dx, -Game.tilemap.Mapsize.X + Settings.SimulationSize.X, 0);
-            var dy = (Settings.SimulationSize.Y / 2) - Game.player.Drect.Y - Game.player.Drect.Height;
-            dy = Math.Clamp(dy, -Game.tilemap.Mapsize.Y + Settings.SimulationSize.Y, 0);
-            translation = Matrix3x2.CreateTranslation(new Vector2(dx, dy));
-        }*/
-
         public static void TakeFallDmg()
         {
             switch(Game.player.Velocity.Y)
@@ -1003,8 +995,6 @@ namespace BlobGame
 
             float clampX = Math.Clamp(camera.Target.X, minPos.X + halfX, maxPos.X - halfX);
             float clampY = Math.Clamp(camera.Target.Y, minPos.Y + halfY, maxPos.Y - halfY);
-
-            Debug.WriteLine(clampX + ", " + clampY);
 
             camera.Target = new Vector2(clampX, clampY);
         }

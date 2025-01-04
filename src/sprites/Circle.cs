@@ -21,8 +21,9 @@ namespace BlobGame
         int switchTick = new Random().Next(1, 101);
         int delay = 0;
         int onGroundDelay = 0;
-        bool TriangleIsAlive = true;
+        bool alive = true;
         bool stop = false;
+        int health = 20;
 
         public Circle(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
@@ -243,9 +244,23 @@ namespace BlobGame
                 stop = true;
             }
 
+            foreach (Fireball fireball in Game.fireballs)
+            {
+                if (fireball.Drect.Intersects(Drect) && !fireball.bad)
+                {
+                    fireball.Die();
+                    health -= 20;
+                }
+            }
+
+            if (health == 0 && alive)
+            {
+                alive = false;
+            }
+
             if(Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
             {
-                TriangleIsAlive = false;
+                alive = false;
             }
 
             if(Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
@@ -257,10 +272,9 @@ namespace BlobGame
                 Player.Damage(10);
             }
 
-            if(!TriangleIsAlive)
+            if(!alive)
             {
                 Game.circles.Remove(this);
-                //Main.sprites.Remove(this);
             }
         }
 
@@ -323,13 +337,13 @@ namespace BlobGame
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Game.DrawRectHollow(Drect, 4, Color.Blue);
+                DrawRectangleLinesEx(Drect, 4, Color.Blue);
             }
         }
 
@@ -352,6 +366,11 @@ namespace BlobGame
         {
             Circle circle = new Circle(idleTextures[1], new Rectangle((int)pos.X, (int)pos.Y, circleSizeW, circleSizeH), new Rectangle(0, 0, 20, 30));
             Game.circles.Add(circle);
+        }
+
+        public void Die()
+        {
+            alive = false;
         }
 
         public static void ClearAll()

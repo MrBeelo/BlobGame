@@ -10,7 +10,7 @@ public class Game
     public static Game game;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.46.1";
+    public static string version = "v0.46.2";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "savefile.json");
     public static Player player { get; set; }
@@ -59,6 +59,7 @@ public class Game
     {
         SetConfigFlags(ConfigFlags.ResizableWindow);
         SetConfigFlags(ConfigFlags.VSyncHint);
+        SetConfigFlags(ConfigFlags.Msaa4xHint);
         InitWindow(1920, 1031, "Blob Game");
         SetWindowMinSize(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 2);
         InitAudioDevice();
@@ -98,7 +99,7 @@ public class Game
         death = new DeathScreen(rijusans);
         win = new WinScreen(rijusans);
         pass = new PassScreen(rijusans);
-        info = new InfoScreen(rijusans, new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10 + Settings.SimulationSize.Y / 30));
+        info = new InfoScreen(rijusans, new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y * 14 / 15));
 
         tilemap = new Tilemap();
         tilemap.LoadContent(this);
@@ -151,7 +152,7 @@ public class Game
 
         if (TypingMode)
         {
-            if(IsKeyPressed(KeyboardKey.Backspace))
+            if(IsKeyPressed(KeyboardKey.Backspace) && InputText.Length > 0)
             {
                 InputText = InputText.Substring(0, InputText.Length - 1);
             } else {
@@ -507,6 +508,11 @@ public class Game
                 otherDebugInfoList.AddRange(circleDebugInfo);
             }
 
+            /*foreach (Rectangle rect in indexRects.Values)
+            {
+                DrawRectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height, Color.White);
+            }*/
+
             string[] mainDebugInfo =
             {
                     "Current Game State: " + currentGameState,
@@ -539,7 +545,7 @@ public class Game
             DrawTypingZone();
         }
 
-        //inputManager.DrawController();
+        inputManager.DrawController();
 
         //!Ending Texture Mode
         EndTextureMode();
@@ -557,22 +563,10 @@ public class Game
         Environment.Exit(0);
     }
 
-    public static void DrawRectHollow(Rectangle rect, int thickness, Color color) {
-    // Draw top side
-    DrawRectangle((int)rect.X, (int)rect.Y, (int)rect.Width, thickness, color);
-    // Draw bottom side
-    DrawRectangle((int)rect.X, (int)(rect.Y + rect.Height - thickness), (int)rect.Width, thickness, color);
-    // Draw left side
-    DrawRectangle((int)rect.X, (int)rect.Y, thickness, (int)rect.Height, color);
-    // Draw right side
-    DrawRectangle((int)(rect.X + rect.Width - thickness), (int)rect.Y, thickness, (int)rect.Height, color);
-    }
-
-
     public void DrawTypingZone()
     {
         DrawRectangle(Settings.SimulationSize.X / 20, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10, Settings.SimulationSize.X - Settings.SimulationSize.X / 10, Settings.SimulationSize.Y / 20, new Color(0, 0, 0, 89));
-        DrawTextEx(rijusans, InputText, new Vector2(Settings.SimulationSize.X / 20 + 10, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10), typeSize, 0, Color.White);
+        DrawTextEx(rijusans, InputText, new Vector2(Settings.SimulationSize.X / 20 + 10, Settings.SimulationSize.Y - Settings.SimulationSize.Y / 10 + 7), typeSize, 0, Color.White);
     }
 
     public static bool TryParseTwoArgs(string input, out int arg1, out int arg2)

@@ -56,43 +56,6 @@
           }
         }
       }
-    },
-    "net8.0/win-x64": {
-      "Microsoft.NET.ILLink.Tasks/8.0.11": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
-      },
-      "Newtonsoft.Json/13.0.3": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "Raylib-cs/7.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/Raylib-cs.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/Raylib-cs.dll": {
-            "related": ".xml"
-          }
-        },
-        "native": {
-          "runtimes/win-x64/native/raylib.dll": {}
-        }
-      }
     }
   },
   "libraries": {
@@ -211,11 +174,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+      "projectUniqueName": "/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
       "projectName": "BlobGame",
-      "projectPath": "/var/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
+      "projectPath": "/home/MrBeelo/Desktop/BlobGame/BlobGame.csproj",
       "packagesPath": "/home/MrBeelo/.nuget/packages/",
-      "outputPath": "/var/home/MrBeelo/Desktop/BlobGame/obj/",
+      "outputPath": "/home/MrBeelo/Desktop/BlobGame/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/MrBeelo/.nuget/NuGet/NuGet.Config"
@@ -268,31 +231,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-            "version": "[8.0.11, 8.0.11]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.11, 8.0.11]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.win-x64",
-            "version": "[8.0.11, 8.0.11]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
         "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
-      }
-    },
-    "runtimes": {
-      "win-x64": {
-        "#import": []
       }
     }
   }

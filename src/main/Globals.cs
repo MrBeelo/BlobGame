@@ -13,7 +13,5 @@ public static class Globals
         Settings = Settings.LoadSettings(Game.settingsFilePath);
         SaveFile = SaveFile.LoadSavefile(Game.savefileFilePath);
         SaveFile.Update();
-        SetWindowMinSize(Settings.WindowSize.X, Settings.WindowSize.Y);
-        SetWindowMaxSize(Settings.WindowSize.X, Settings.WindowSize.Y);
     }
 }

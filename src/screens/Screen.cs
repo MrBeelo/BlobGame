@@ -28,7 +28,6 @@ namespace BlobGame
         {
             indexFont = font;
             selectedIndex = 0;
-            startingIndexVec = default ? new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 3) : startInVec;
             startingIndexVec = (startInVec == default) ? new Vector2(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 3) : startInVec;
             itemScales = new float[MenuItems().Length];
             for (int i = 0; i < MenuItems().Length; i++)
@@ -66,7 +65,7 @@ namespace BlobGame
                 }
             }
 
-            if (Game.inputManager.PConfirm || IsMouseButtonPressed(MouseButton.Left))
+            if (Game.inputManager.PConfirm)
             {
                 AcceptIndex();
             }
@@ -84,9 +83,13 @@ namespace BlobGame
 
                 if(Game.indexRects.TryGetValue(i, out Rectangle rect))
                 {
-                    if(CheckCollisionPointRec(GetMousePosition(), rect))
+                    if(CheckCollisionPointRec(Game.inputManager.vMouse, rect))
                     {
                         selectedIndex = i;
+                        if(IsMouseButtonPressed(MouseButton.Left))
+                        {
+                            AcceptIndex();
+                        }
                     }
                 }
             }
@@ -111,13 +114,13 @@ namespace BlobGame
                     Game.indexRects.Add(i, indexHitbox);
                 }
 
-                Game.DrawRectHollow(indexHitbox, 3, textColor);
+                DrawRectangleLinesEx(indexHitbox, 3, textColor);
             }
         }
 
         public virtual void AcceptIndex()
         {
-
+            Game.indexRects.Clear();
         }
     }
 }

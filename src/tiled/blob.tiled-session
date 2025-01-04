@@ -16,16 +16,16 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 960,
-                "y": 544
+                "x": 960.3333333333333,
+                "y": 544.3333333333333
             }
         },
         "level1.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 959.9999999999999,
-                "y": 544
+                "x": 960.6666666666666,
+                "y": 544.6666666666667
             }
         },
         "level10.tmx": {
@@ -33,71 +33,71 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 961.0667744216588,
-                "y": 544.0549550459643
+                "y": 359.79391857763414
             }
         },
         "level2.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 959.9999999999999,
-                "y": 544
+                "x": 960.6666666666666,
+                "y": 544.6666666666667
             }
         },
         "level3.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 960,
-                "y": 544
+                "x": 961,
+                "y": 545
             }
         },
         "level4.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 960,
-                "y": 544
+                "x": 961,
+                "y": 545
             }
         },
         "level5.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 960,
-                "y": 544
+                "x": 961,
+                "y": 545
             }
         },
         "level6.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1200,
-                "y": 720
+                "x": 1201,
+                "y": 721
             }
         },
         "level7.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1312,
-                "y": 544
+                "x": 1313,
+                "y": 545
             }
         },
         "level8.tmx": {
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1088,
-                "y": 544
+                "x": 1089,
+                "y": 833
             }
         },
         "level9.tmx": {
             "scale": 0.5413020833333333,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 960.6465890503223,
-                "y": 700.1635716347542
+                "x": 1061.3297411719427,
+                "y": 575.4642547868758
             }
         },
         "normal.tsx": {
@@ -106,7 +106,7 @@
         }
     },
     "last.exportedFilePath": "/home/MrBeelo",
-    "last.imagePath": "/home/MrBeelo/Desktop/BlobGame/content/assets/atlases",
+    "last.imagePath": "/var/home/MrBeelo/Desktop/BlobGame/assets/atlases",
     "map.height": 34,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
@@ -137,7 +137,7 @@
         "level1.tmx",
         "level0.tmx",
         "level10.tmx",
-        "normal.tsx"
+        "collision.tsx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

@@ -18,12 +18,13 @@ namespace BlobGame
         bool randomBool;
         int delay = 0;
         int onGroundDelay = 0;
-        bool TriangleIsAlive = true;
+        bool alive = true;
         public static int bossTriangleSizeW = 126;
         public static int bossTriangleSizeH = 192;
         int switchTick = new Random().Next(1, 101);
         bool stop = false;
-        public int health = 3600;
+        public int health = 500;
+        public int dHealth = 500;
 
         public TriangleBoss(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
@@ -90,6 +91,11 @@ namespace BlobGame
                 } else if(randomBool) {
                     isLeft = false;
                 }
+            }
+
+            if(dHealth > health)
+            {
+                dHealth--;
             }
 
             if(Drect.X <= minPos.X + 10)
@@ -280,14 +286,18 @@ namespace BlobGame
                 }
             }
 
-            if (health == 0)
+            if (health == 0 && alive)
             {
-                TriangleIsAlive = false;
+                alive = false;
+                Circle.ClearAll();
+                Triangle.ClearAll();
+                Fireball.ClearAll();
+                PlaySound(Player.successSound);
             }
 
             if (Drect.X > 3000 || Drect.X < -500 || Drect.Y > 1500 || Drect.Y < -500)
             {
-                TriangleIsAlive = false;
+                alive = false;
             }
 
             if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
@@ -295,7 +305,7 @@ namespace BlobGame
                 Player.Damage(30);
             }
 
-            if (!TriangleIsAlive)
+            if (!alive)
             {
                 Game.triangleBosses.Remove(this);
             }
@@ -360,13 +370,13 @@ namespace BlobGame
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Game.DrawRectHollow(Drect, 4, Color.Blue);
+                DrawRectangleLinesEx(Drect, 4, Color.Blue);
             }
         }
 
@@ -389,6 +399,11 @@ namespace BlobGame
             Game.triangleBosses.Add(triangleBoss);
         }
 
+        public void Die()
+        {
+            alive = false;
+        }
+
         public static void ClearAll()
         {
             Game.triangleBosses.Clear();
@@ -396,8 +411,10 @@ namespace BlobGame
 
         public void DrawBar()
         {
-            string healthStat = "Boss Health: " + health + "/3600";
-            DrawTextEx(Game.rijusans, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (MeasureTextEx(Game.rijusans, healthStat, Game.statsSize, 0).X / 2), 10), Game.statsSize, 0, Color.Black);
+            string healthStat = "Boss Health: " + dHealth + "/500";
+            DrawRectangle((Settings.SimulationSize.X / 2) - 250, 10, dHealth, 30, Color.Red);
+            DrawRectangleLinesEx(new Rectangle((Settings.SimulationSize.X / 2) - 250, 10, 500, 30), 5, Color.Black);
+            DrawTextEx(Game.rijusans, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (MeasureTextEx(Game.rijusans, healthStat, Game.debugSize, 0).X / 2), 50), Game.debugSize, 0, Color.Black);
         }
     }
 }

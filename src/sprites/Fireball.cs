@@ -67,7 +67,7 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[Tilemap.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(value == 1 || value == 4 || value == 5 || value >= 16)
+                    if(value == 1 || value == 4 || value == 5 || value >= 8)
                     {
                         //! Do nothing
                     } else if(value == 6)
@@ -110,7 +110,7 @@ namespace BlobGame
             {
                 if (Tilemap.Collision[Tilemap.level].TryGetValue(new Vector2(tile.X, tile.Y), out int value))
                 {
-                    if(value == 1 || value == 4 || value == 5)
+                    if(value == 1 || value == 4 || value == 5 || value >= 8)
                     {
                         //! Do nothing
                     } else if(value == 6)
@@ -166,13 +166,13 @@ namespace BlobGame
             {
                 foreach (var rect in horizontalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
                 foreach (var rect in verticalCollisions)
                 {
-                    Game.DrawRectHollow(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
+                    DrawRectangleLinesEx(new Rectangle(rect.X * Tilemap.Tilesize, rect.Y * Tilemap.Tilesize, Tilemap.Tilesize, Tilemap.Tilesize), 1, Color.DarkBlue);
                 }
-                Game.DrawRectHollow(Drect, 4, Color.Blue);
+                DrawRectangleLinesEx(Drect, 4, Color.Blue);
             }
         }
 
@@ -197,6 +197,11 @@ namespace BlobGame
             alive = false;
             PlaySound(explosionSound);
             SetSoundVolume(explosionSound, (float)Game.LoweredVolume);
+        }
+
+        public static void ClearAll()
+        {
+            Game.fireballs.Clear();
         }
 
         public override string[] GetDebugInfo()

@@ -61,14 +61,16 @@ namespace BlobGame
 
         public override void AcceptIndex()
         {
+            base.AcceptIndex();
+            
             switch (selectedIndex)
-                {
-                    case 0:
-                        Game.currentGameState = Game.GameState.MainMenu;
-                        break;
-                }
+            {
+                case 0:
+                    Game.currentGameState = Game.GameState.MainMenu;
+                    break;
+            }
 
-                selectedIndex = 0;
+            selectedIndex = 0;
         }
     }
 }

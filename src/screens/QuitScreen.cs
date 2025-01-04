@@ -30,6 +30,8 @@ namespace BlobGame
 
         public override void AcceptIndex()
         {
+            base.AcceptIndex();
+            
             switch (selectedIndex)
                 {
                     case 0:
