@@ -10,7 +10,7 @@ public class Game
     public static Game game;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.46";
+    public static string version = "v0.46.1";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "savefile.json");
     public static Player player { get; set; }

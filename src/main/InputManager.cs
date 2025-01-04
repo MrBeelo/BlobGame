@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -17,7 +18,11 @@ public class InputManager
     public bool PUp {get; set;} = false;
     public bool PDown {get; set;} = false;
     public static bool isCapsLockOn = false;
-    int gamepad;
+    public List<int> gamepads = new();
+    public Vector2 mouse = GetMousePosition();
+    public Vector2 vMouse = Vector2.Zero;
+    float leftStickX = 0.0f;
+    float leftStickY = 0.0f;
 
     public enum PressedDirection 
     {Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight, NA}
@@ -25,11 +30,21 @@ public class InputManager
 
     public InputManager()
     {
-        gamepad = 0;
+        
     }
 
     public void Update()
     {
+        for(int i = 0; i < 16; i++)
+        {
+            if(IsGamepadAvailable(i))
+            {
+                gamepads.Add(i);
+            } else {
+                gamepads.Remove(i);
+            }
+        }
+
         DLeft = false;
         DRight = false;
         DUp = false;
@@ -41,32 +56,41 @@ public class InputManager
         PUp = false;
         PDown = false;
 
+        mouse =  GetMousePosition();
+        float scale = Math.Min((float)GetScreenWidth()/Settings.SimulationSize.X, (float)GetScreenHeight()/Settings.SimulationSize.Y);
+        vMouse.X = (mouse.X - (GetScreenWidth() - (Settings.SimulationSize.X*scale))*0.5f)/scale;
+        vMouse.Y = (mouse.Y - (GetScreenHeight() - (Settings.SimulationSize.Y*scale))*0.5f)/scale;
+        vMouse = Vector2.Clamp(vMouse, Vector2.Zero, Settings.SimulationSize.ToVector2());
+
         if(!Game.game.TypingMode)
+        {
+
+        foreach(int gamepad in gamepads)
         {
 
         if(IsGamepadAvailable(gamepad))
         {
-            float leftStickX = GetGamepadAxisMovement(gamepad, GamepadAxis.LeftX);
-            float leftStickY = GetGamepadAxisMovement(gamepad, GamepadAxis.LeftY);
+            leftStickX = GetGamepadAxisMovement(gamepad, GamepadAxis.LeftX);
+            leftStickY = GetGamepadAxisMovement(gamepad, GamepadAxis.LeftY);
             //float rightStickX = GetGamepadAxisMovement(gamepad, GamepadAxis.RightX);
             //float rightStickY = GetGamepadAxisMovement(gamepad, GamepadAxis.RightY);
         
-        if(IsKeyDown(KeyboardKey.A) || IsKeyDown(KeyboardKey.Left) || leftStickX < -16384 / 2 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceLeft))
+        if(IsKeyDown(KeyboardKey.A) || IsKeyDown(KeyboardKey.Left) || leftStickX < -0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceLeft))
         {
             DLeft = true;
         }
 
-        if(IsKeyDown(KeyboardKey.D) || IsKeyDown(KeyboardKey.Right) || leftStickX > 16384 / 2 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceRight))
+        if(IsKeyDown(KeyboardKey.D) || IsKeyDown(KeyboardKey.Right) || leftStickX > 0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceRight))
         {
             DRight = true;
         }
 
-        if(IsKeyDown(KeyboardKey.W) || IsKeyDown(KeyboardKey.Up) || leftStickY < -16384 / 2 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceUp))
+        if(IsKeyDown(KeyboardKey.W) || IsKeyDown(KeyboardKey.Up) || leftStickY < -0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceUp))
         {
             DUp = true;
         }
 
-        if(IsKeyDown(KeyboardKey.S) || IsKeyDown(KeyboardKey.Down) || leftStickY > 16384 / 2 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceDown))
+        if(IsKeyDown(KeyboardKey.S) || IsKeyDown(KeyboardKey.Down) || leftStickY > 0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceDown))
         {
             DDown = true;
         }
@@ -91,12 +115,12 @@ public class InputManager
             PConfirm = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.W) || IsKeyPressed(KeyboardKey.Up) || leftStickY < -16384 || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceUp))
+        if(IsKeyPressed(KeyboardKey.W) || IsKeyPressed(KeyboardKey.Up) || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceUp))
         {
             PUp = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.S) || IsKeyPressed(KeyboardKey.Down) || leftStickY > 16384 || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceDown))
+        if(IsKeyPressed(KeyboardKey.S) || IsKeyPressed(KeyboardKey.Down) || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceDown))
         {
             PDown = true;
         }
@@ -153,6 +177,7 @@ public class InputManager
             PDown = true;
         }
         }
+        }
 
         switch(DLeft, DRight, DUp, DDown)
         {
@@ -198,7 +223,7 @@ public class InputManager
             if(isCapsLockOn)
             {
                 isCapsLockOn = false;
-            } else {
+            } else if(!isCapsLockOn) {
                 isCapsLockOn = true;
             }
         }
@@ -212,8 +237,8 @@ public class InputManager
         if (key >= KeyboardKey.A && key <= KeyboardKey.Z)
         {
             // Uppercase if either Shift or Caps Lock is active, but not both
-            bool isUpperCase = shift ^ isCapsLockOn; // XOR to toggle case
-            return isUpperCase ? (char)key : char.ToLower((char)key);
+            bool isUpperCase = shift || isCapsLockOn; // XOR to toggle case
+            return isUpperCase ? char.ToUpper((char)key) : char.ToLower((char)key);
         }
 
         return key switch
@@ -239,14 +264,16 @@ public class InputManager
             KeyboardKey.Backslash => shift ? '|' : '\\', // Pipe or Backslash
             KeyboardKey.Equal => shift ? '+' : '=', // Plus or Equal
             KeyboardKey.Minus => shift ? '_' : '-', // Underscore or Hyphen
-            //KeyboardKey.OemTilde => shift ? '~' : '`', // Tilde or Backtick
+            //KeyboardKey.Grave => shift ? '~' : '`', // Tilde or Backtick
             _ => null // Unhandled key
         };
     }
 
     public void DrawController()
     {
-        if(IsGamepadAvailable(gamepad))
+        //DrawText(leftStickY + ", " + previousLeftStickY, 100, 100, 32, Color.White);
+
+        /*if(IsGamepadAvailable(gamepad))
         {
             DrawTextEx(Game.rijusans, "Controller Found: " + GetGamepadName_(gamepad), new Vector2(20, 70), Game.indexSize, 0, Color.White);
         } else {
@@ -260,5 +287,21 @@ public class InputManager
                 DrawTextEx(Game.rijusans, "Holding Button: " + i, new Vector2(20, 120), Game.indexSize, 0, Color.White);
             }
         }
+
+        for (int gamepad = 0; gamepad < 4; gamepad++) // Check up to 4 controllers
+        {
+            if (IsGamepadAvailable(gamepad))
+            {
+                DrawText("Gamepad Detected: " + gamepad + ", " + GetGamepadName_(gamepad), 100, 100 * (gamepad + 1), 32, Color.White);
+
+                foreach (GamepadButton button in Enum.GetValues(typeof(GamepadButton)))
+                {
+                    if (IsGamepadButtonDown(gamepad, button))
+                    {
+                        DrawText("Gamepad Button Down: " + button + " from gamepad: " + gamepad, 100, 100 * (gamepad + 1) + 400, 32, Color.White);
+                    }
+                }
+            }
+        }*/
     }
 }

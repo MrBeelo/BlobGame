@@ -72,8 +72,7 @@ TODO: 10) GOODER HITBOXES [0.45]
 
 TODO: THINGS THAT I REALLY WANNA DO RN:
 TODO:
-TODO: 1) FIX CONTROLLER SUPPORT
-TODO: 2) FINISH THE BOSS
+TODO: 1) FINISH THE BOSS
 
 ! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)
