@@ -296,7 +296,7 @@ public class InputManager
             {
                 DrawTextEx(Game.rijusans, "Holding Button: " + i, new Vector2(20, 120), Game.indexSize, 0, Color.White);
             }
-        }*/
+        }
 
         for (int gamepad = 0; gamepad < 4; gamepad++) // Check up to 4 controllers
         {
@@ -312,6 +312,6 @@ public class InputManager
                     }
                 }
             }
-        }
+        }*/
     }
 }
