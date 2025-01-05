@@ -12,7 +12,6 @@
           "Microsoft.NET.ILLink.Tasks": "8.0.11",
           "Newtonsoft.Json": "13.0.3",
           "Raylib-cs": "7.0.0",
-          "SDL2-CS": "2.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.linux-x64": "8.0.11"
         },
         "runtime": {
@@ -716,8 +715,7 @@
             "fileVersion": "0.0.0.0"
           }
         }
-      },
-      "SDL2-CS/2.0.0": {}
+      }
     }
   },
   "libraries": {
@@ -751,13 +749,6 @@
       "sha512": "sha512-8SvFkeKujjBToZTzVGKiYQErvQaekDxWIdNIVUDiayKamMR7vT9ZzUv0W4BfQ6iA02KOui5I9HSzI6Cq9u4jCA==",
       "path": "raylib-cs/7.0.0",
       "hashPath": "raylib-cs.7.0.0.nupkg.sha512"
-    },
-    "SDL2-CS/2.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-W7T4y+lMs7Wm/94dGggRxJYqxX5N6uuxuxw5ob/H34fnaoUwgoG0s+P7xzqsGXUc1cbCAjnShs21FdeFUnPlHA==",
-      "path": "sdl2-cs/2.0.0",
-      "hashPath": "sdl2-cs.2.0.0.nupkg.sha512"
     }
   },
   "runtimes": {
@@ -791,14 +782,6 @@
       "base"
     ],
     "linux-x64": [
-      "linux",
-      "unix-x64",
-      "unix",
-      "any",
-      "base"
-    ],
-    "fedora.41-x64": [
-      "linux-x64",
       "linux",
       "unix-x64",
       "unix",

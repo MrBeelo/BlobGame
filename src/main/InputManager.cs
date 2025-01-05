@@ -15,6 +15,7 @@ public class InputManager
     public bool PDash {get; set;} = false;
     public bool PFireball {get; set;} = false;
     public bool PConfirm {get; set;} = false;
+    public bool PBack {get; set;} = false;
     public bool PUp {get; set;} = false;
     public bool PDown {get; set;} = false;
     public static bool isCapsLockOn = false;
@@ -53,6 +54,7 @@ public class InputManager
         PDash = false;
         PFireball = false;
         PConfirm = false;
+        PBack = false;
         PUp = false;
         PDown = false;
 
@@ -75,58 +77,63 @@ public class InputManager
             //float rightStickX = GetGamepadAxisMovement(gamepad, GamepadAxis.RightX);
             //float rightStickY = GetGamepadAxisMovement(gamepad, GamepadAxis.RightY);
         
-        if(IsKeyDown(KeyboardKey.A) || IsKeyDown(KeyboardKey.Left) || leftStickX < -0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceLeft))
+        if(leftStickX < -0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceLeft))
         {
             DLeft = true;
         }
 
-        if(IsKeyDown(KeyboardKey.D) || IsKeyDown(KeyboardKey.Right) || leftStickX > 0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceRight))
+        if(leftStickX > 0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceRight))
         {
             DRight = true;
         }
 
-        if(IsKeyDown(KeyboardKey.W) || IsKeyDown(KeyboardKey.Up) || leftStickY < -0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceUp))
+        if(leftStickY < -0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceUp))
         {
             DUp = true;
         }
 
-        if(IsKeyDown(KeyboardKey.S) || IsKeyDown(KeyboardKey.Down) || leftStickY > 0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceDown))
+        if(leftStickY > 0.5 || IsGamepadButtonDown(gamepad, GamepadButton.LeftFaceDown))
         {
             DDown = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.Space) || IsKeyPressed(KeyboardKey.Up) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceDown))
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceDown))
         {
             PJump = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.J) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceLeft))
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceLeft))
         {
             PDash = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.F) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceUp))
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceUp))
         {
             PFireball = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.Enter) || IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceDown))
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.RightFaceDown))
         {
             PConfirm = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.W) || IsKeyPressed(KeyboardKey.Up) || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceUp))
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.MiddleRight))
+        {
+            PBack = true;
+        }
+
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceUp))
         {
             PUp = true;
         }
 
-        if(IsKeyPressed(KeyboardKey.S) || IsKeyPressed(KeyboardKey.Down) || IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceDown))
+        if(IsGamepadButtonPressed(gamepad, GamepadButton.LeftFaceDown))
         {
             PDown = true;
         }
-        } 
-        else if(!IsGamepadAvailable(gamepad))
-        {
+        }
+        }
+
         if(IsKeyDown(KeyboardKey.A) || IsKeyDown(KeyboardKey.Left))
         {
             DLeft = true;
@@ -167,6 +174,11 @@ public class InputManager
             PConfirm = true;
         }
 
+        if(IsKeyPressed(KeyboardKey.Escape))
+        {
+            PBack = true;
+        }
+
         if(IsKeyPressed(KeyboardKey.W) || IsKeyPressed(KeyboardKey.Up))
         {
             PUp = true;
@@ -175,8 +187,6 @@ public class InputManager
         if(IsKeyPressed(KeyboardKey.S) || IsKeyPressed(KeyboardKey.Down))
         {
             PDown = true;
-        }
-        }
         }
 
         switch(DLeft, DRight, DUp, DDown)
@@ -286,7 +296,7 @@ public class InputManager
             {
                 DrawTextEx(Game.rijusans, "Holding Button: " + i, new Vector2(20, 120), Game.indexSize, 0, Color.White);
             }
-        }
+        }*/
 
         for (int gamepad = 0; gamepad < 4; gamepad++) // Check up to 4 controllers
         {
@@ -302,6 +312,6 @@ public class InputManager
                     }
                 }
             }
-        }*/
+        }
     }
 }

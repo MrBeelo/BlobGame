@@ -10,7 +10,7 @@ public class Game
     public static Game game;
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
-    public static string version = "v0.46.2";
+    public static string version = "v0.46.3";
     public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "settings.json");
     public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "savefile.json");
     public static Player player { get; set; }
@@ -57,11 +57,21 @@ public class Game
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public void Run()
     {
+        Globals.Update();
+
         SetConfigFlags(ConfigFlags.ResizableWindow);
         SetConfigFlags(ConfigFlags.VSyncHint);
         SetConfigFlags(ConfigFlags.Msaa4xHint);
-        InitWindow(1920, 1031, "Blob Game");
+        ClearWindowState(ConfigFlags.FullscreenMode);
+        
+        InitWindow(Globals.Settings.WindowSize.X, Globals.Settings.WindowSize.Y, "Blob Game");
         SetWindowMinSize(Settings.SimulationSize.X / 2, Settings.SimulationSize.Y / 2);
+
+        if(IsWindowFullscreen())
+        {
+            ToggleFullscreen();
+        }
+
         InitAudioDevice();
         SetWindowIcon(LoadImage("assets/other/icon.png"));
         SetExitKey(KeyboardKey.Null);
@@ -72,9 +82,6 @@ public class Game
         SetTextureFilter(target.Texture, TextureFilter.Bilinear);
 
         game = this;
-
-        Settings.LoadSettings(settingsFilePath);
-        SaveFile.LoadSavefile(savefileFilePath);
 
         //! Definition of a texture and a position for the sprite class is needed here.
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
@@ -170,6 +177,10 @@ public class Game
 
         if (IsKeyPressed(KeyboardKey.F11))
         {
+            if(!IsWindowFullscreen())
+            {
+                Globals.Settings.SetResolution(GetMonitorWidth(GetCurrentMonitor()), GetMonitorHeight(GetCurrentMonitor()), true);
+            }
             ToggleFullscreen();
         }
 
@@ -289,7 +300,7 @@ public class Game
             TypingMode = false;
         }
 
-        if (TypingMode && IsKeyPressed(KeyboardKey.Escape))
+        if (TypingMode && inputManager.PBack)
         {
             InputText = "";
             TypingMode = false;
@@ -301,7 +312,7 @@ public class Game
         {
             case GameState.MainMenu:
                 mainMenu.Update();
-                if (IsKeyPressed(KeyboardKey.Escape) && !TypingMode)
+                if (inputManager.PBack && !TypingMode)
                 {
                     currentGameState = GameState.Quit;
                 }
@@ -331,14 +342,14 @@ public class Game
                     circle.Update();
                 }
 
-                if (IsKeyPressed(KeyboardKey.Escape) && !TypingMode)
+                if (inputManager.PBack && !TypingMode)
                 {
                     currentGameState = GameState.Paused;
                 }
                 break;
 
             case GameState.Paused:
-                if (IsKeyPressed(KeyboardKey.Escape) && !TypingMode)
+                if (inputManager.PBack && !TypingMode)
                 {
                     currentGameState = GameState.MainMenu;
                 }

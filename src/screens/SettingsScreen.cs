@@ -14,7 +14,7 @@ namespace BlobGame
         }
         public CameFrom cameFrom = CameFrom.MainMenu;
         public override string[] MenuItems() {
-            return menuItems ?? new string[] {"PLACEHOLDER", "PLACEHOLDER", "Back"};
+            return menuItems ?? new string[] {"PLACEHOLDER", "PLACEHOLDER", "Save and Exit"};
         }
 
         private string[] menuItems;
@@ -28,6 +28,13 @@ namespace BlobGame
         public override void Update()
         {
             base.Update();
+
+            if(IsWindowResized())
+            {
+                Globals.Settings.WindowSize.X = GetScreenWidth();
+                Globals.Settings.WindowSize.Y = GetScreenHeight();
+                Globals.Settings.SaveSettings(Game.settingsFilePath);
+            }
 
             Globals.Settings = Settings.LoadSettings(Game.settingsFilePath);
             UpdateMenuItems();
@@ -44,7 +51,7 @@ namespace BlobGame
 
         public void UpdateMenuItems()
         {
-            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {GetScreenWidth():F0} x {GetScreenHeight():F0}", "Back"};
+            menuItems = new string[] {$"Volume: {Globals.Settings.Volume:F2}", $"Resolution: {GetScreenWidth():F0} x {GetScreenHeight():F0}", "Save and Exit"};
         }
 
         public override void AcceptIndex()
@@ -67,19 +74,23 @@ namespace BlobGame
                         switch(Globals.Settings.WindowSize.X, Globals.Settings.WindowSize.Y)
                         {
                             case (1920, 1080):
-                                Globals.Settings.SetResolution(800, 480);
+                                Globals.Settings.SetResolution(960, 540, true);
                                 break;
 
-                            case (800, 480):
-                                Globals.Settings.SetResolution(1400, 650);
+                            case (960, 540):
+                                Globals.Settings.SetResolution(1400, 650, true);
                                 break;
 
                             case (1400, 650):
-                                Globals.Settings.SetResolution(1100, 950);
+                                Globals.Settings.SetResolution(1100, 950, true);
                                 break;
 
                             case (1100, 950):
-                                Globals.Settings.SetResolution(1920, 1080);
+                                Globals.Settings.SetResolution(1920, 1080, true);
+                                break;
+
+                            default:
+                                Globals.Settings.SetResolution(1920, 1080, true);
                                 break;
                         }
                         break;
@@ -94,7 +105,6 @@ namespace BlobGame
                                 Game.currentGameState = Game.GameState.Playing;
                                 break;
                         }
-                        Globals.Settings.SetResolution(GetScreenWidth(), GetScreenHeight());
                         Globals.Settings.SaveSettings(Game.settingsFilePath);
                         break;
                 }

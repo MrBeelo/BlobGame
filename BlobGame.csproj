@@ -19,12 +19,5 @@
         <Link>assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="data\**\*">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <Link>assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </None>
-  </ItemGroup>
-
+  
 </Project>

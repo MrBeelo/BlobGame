@@ -15,7 +15,7 @@ namespace BlobGame
             Volume = Math.Clamp(Volume + delta, 0f, 1.0f); // Clamp between 0 and 1
         }
 
-        public void SetResolution(int height, int width)
+        public void SetResolution(int height, int width, bool updateWindow)
         {
             if(IsWindowFullscreen())
             {
@@ -27,6 +27,11 @@ namespace BlobGame
             }
             WindowSize.X = height;
             WindowSize.Y = width;
+
+            if(updateWindow)
+            {
+                SetWindowSize(WindowSize.X, WindowSize.Y);
+            }
         }
         public static Settings LoadSettings(string filePath)
         {
