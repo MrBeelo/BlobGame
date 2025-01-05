@@ -121,7 +121,7 @@ public class Game
         triangleBoss = new TriangleBoss(triangleTexture, new Rectangle(0, 0, 0, 0), new Rectangle(0, 0, 0, 0));
         triangleBoss.LoadContent(this);
 
-        fireball = new Fireball(fireTexture, new Rectangle(0, 0, 0, 0), new Rectangle(0, 0, 0, 0), false, false);
+        fireball = new Fireball(fireTexture, new Rectangle(0, 0, 0, 0), new Rectangle(0, 0, 0, 0), false, false, 5);
         fireball.LoadContent(this);
 
         triangle = new Triangle(triangleTexture, new Rectangle(0, 0, Triangle.triangleSizeW, Triangle.triangleSizeH), new(0, 0, 20, 30));
@@ -277,6 +277,11 @@ public class Game
                     player.alive = false;
                     Triangle.ClearAll();
                     Circle.ClearAll();
+                    break;
+
+                case "/becomeSuper":
+                    player.insanity = 100;
+                    player.isSuper = true;
                     break;
 
                 case string s when s.StartsWith("/moveTo") && int.TryParse(s.Substring("/moveTo ".Length).Trim(), out int level):
@@ -442,6 +447,8 @@ public class Game
 
         EndMode2D();
 
+        DrawTexture(Player.flash, 0, 0, new Color(255, 255, 255, player.flashProgress));
+
         switch (currentGameState)
         {
             case GameState.MainMenu:
@@ -449,11 +456,10 @@ public class Game
                 break;
 
             case GameState.Playing:
-                string health = "Health: " + player.Health.ToString() + "/100";
                 string level = "Level: " + Tilemap.level;
                 string xartomantila = "Xartomantila: " + Player.xartomantila;
 
-                DrawTextEx(rijusans, health, new Vector2(Settings.SimulationSize.X - MeasureTextEx(rijusans, health, statsSize, 0).X - 20, 10), statsSize, 0, Color.Black);
+                player.DrawHealthBar();
                 DrawTextEx(rijusans, level, new Vector2(Settings.SimulationSize.X - MeasureTextEx(rijusans, level, statsSize, 0).X - 20, 60), statsSize, 0, Color.Black);
                 DrawTextEx(rijusans, xartomantila, new Vector2(Settings.SimulationSize.X - MeasureTextEx(rijusans, xartomantila, statsSize, 0).X - 20, 110), statsSize, 0, Color.Black);
                 foreach(TriangleBoss triangleBoss in triangleBosses)

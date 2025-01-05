@@ -14,6 +14,7 @@ public class InputManager
     public bool PJump {get; set;} = false;
     public bool PDash {get; set;} = false;
     public bool PFireball {get; set;} = false;
+    public bool PSuper {get; set;} = false;
     public bool PConfirm {get; set;} = false;
     public bool PBack {get; set;} = false;
     public bool PUp {get; set;} = false;
@@ -53,6 +54,7 @@ public class InputManager
         PJump = false;
         PDash = false;
         PFireball = false;
+        PSuper = false;
         PConfirm = false;
         PBack = false;
         PUp = false;
@@ -169,6 +171,11 @@ public class InputManager
             PFireball = true;
         }
 
+        if(IsKeyPressed(KeyboardKey.G))
+        {
+            PSuper = true;
+        }
+
         if(IsKeyPressed(KeyboardKey.Enter))
         {
             PConfirm = true;
@@ -281,6 +288,8 @@ public class InputManager
 
     public void DrawController()
     {
+        //DrawText(GetGamepadButtonPressed().ToString(), 100, 100, 32, Color.White);
+        
         //DrawText(leftStickY + ", " + previousLeftStickY, 100, 100, 32, Color.White);
 
         /*if(IsGamepadAvailable(gamepad))

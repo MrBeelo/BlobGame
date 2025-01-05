@@ -15,7 +15,7 @@ namespace BlobGame
         public bool alive = true;
         public bool bad = false;
 
-        public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, bool fireIsLeft, bool fireBad) : base(texture, drect, srect)
+        public Fireball(Texture2D texture, Rectangle drect, Rectangle srect, bool fireIsLeft, bool fireBad, int fireSpeed) : base(texture, drect, srect)
         {
             Texture = texture;
             Drect = drect;
@@ -23,6 +23,7 @@ namespace BlobGame
             Velocity = new();
             isLeft = fireIsLeft;
             bad = fireBad;
+            speed = fireSpeed;
         }
 
         public override void LoadContent(Game game)
@@ -55,10 +56,10 @@ namespace BlobGame
 
             if(isLeft)
             {
-                Velocity.X = -5;
+                Velocity.X = -speed;
             } else if(!isLeft)
             {
-                Velocity.X = 5;
+                Velocity.X = speed;
             }
 
             Drect.X += (int)Velocity.X;
@@ -176,17 +177,17 @@ namespace BlobGame
             }
         }
 
-        public static void Fire(Rectangle drect, bool isLeft)
+        public static void Fire(Rectangle drect, bool isLeft, int speed)
         {
-            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 32 - 1)), 32, 32), new Rectangle(0, 0, 16, 16), isLeft, false);
+            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 32 - 1)), 32, 32), new Rectangle(0, 0, 16, 16), isLeft, false, speed);
             Game.fireballs.Add(fireball);
             PlaySound(laserShootSound);
             SetSoundVolume(laserShootSound, (float)Game.LoweredVolume);
         }
 
-        public static void FireBad(Rectangle drect, bool isLeft)
+        public static void FireBad(Rectangle drect, bool isLeft, int speed)
         {
-            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 48 - 1)), 48, 48), new Rectangle(0, 0, 16, 16), isLeft, true);
+            Fireball fireball = new Fireball(fireTextures[1], new Rectangle(drect.Center().X, new Random().Next((int)(drect.Top() + 1), (int)(drect.Bottom() - 48 - 1)), 48, 48), new Rectangle(0, 0, 16, 16), isLeft, true, speed);
             Game.fireballs.Add(fireball);
             PlaySound(laserShootSound);
             SetSoundVolume(laserShootSound, (float)Game.LoweredVolume);

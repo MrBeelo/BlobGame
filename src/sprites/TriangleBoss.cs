@@ -23,8 +23,8 @@ namespace BlobGame
         public static int bossTriangleSizeH = 192;
         int switchTick = new Random().Next(1, 101);
         bool stop = false;
-        public int health = 500;
-        public int dHealth = 500;
+        public int health = 3600;
+        public int dHealth = 3600;
 
         public TriangleBoss(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
@@ -42,16 +42,16 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = LoadTexture("assets/sprites/triangle/TriangleIdle1.png");
-            idleTextures[1] = LoadTexture("assets/sprites/triangle/TriangleIdle2.png");
+            idleTextures[0] = LoadTexture("assets/sprites/bossTriangle/BossTriangleIdle1.png");
+            idleTextures[1] = LoadTexture("assets/sprites/bossTriangle/BossTriangleIdle2.png");
 
-            jumpingTextures[0] = LoadTexture("assets/sprites/triangle/TriangleJump1.png");
-            jumpingTextures[1] = LoadTexture("assets/sprites/triangle/TriangleJump2.png");
+            jumpingTextures[0] = LoadTexture("assets/sprites/bossTriangle/BossTriangleJump1.png");
+            jumpingTextures[1] = LoadTexture("assets/sprites/bossTriangle/BossTriangleJump2.png");
 
-            walkingTextures[0] = LoadTexture("assets/sprites/triangle/TriangleWalk1.png");
-            walkingTextures[1] = LoadTexture("assets/sprites/triangle/TriangleWalk2.png");
-            walkingTextures[2] = LoadTexture("assets/sprites/triangle/TriangleWalk1.png");
-            walkingTextures[3] = LoadTexture("assets/sprites/triangle/TriangleWalk3.png");
+            walkingTextures[0] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk1.png");
+            walkingTextures[1] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk2.png");
+            walkingTextures[2] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk1.png");
+            walkingTextures[3] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk3.png");
 
         }
 
@@ -274,7 +274,7 @@ namespace BlobGame
 
             if (switchTick % 50 == 0)
             {
-                Fireball.FireBad(Drect, isLeft);
+                Fireball.FireBad(Drect, isLeft, 4);
             }
             
             foreach (Fireball fireball in Game.fireballs)
@@ -411,8 +411,8 @@ namespace BlobGame
 
         public void DrawBar()
         {
-            string healthStat = "Boss Health: " + dHealth + "/500";
-            DrawRectangle((Settings.SimulationSize.X / 2) - 250, 10, dHealth, 30, Color.Red);
+            string healthStat = "Boss Health: " + dHealth + "/3600";
+            DrawRectangle((Settings.SimulationSize.X / 2) - 250, 10, dHealth * 5 / 36, 30, Color.Red);
             DrawRectangleLinesEx(new Rectangle((Settings.SimulationSize.X / 2) - 250, 10, 500, 30), 5, Color.Black);
             DrawTextEx(Game.rijusans, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (MeasureTextEx(Game.rijusans, healthStat, Game.debugSize, 0).X / 2), 50), Game.debugSize, 0, Color.Black);
         }

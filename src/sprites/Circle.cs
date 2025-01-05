@@ -23,7 +23,7 @@ namespace BlobGame
         int onGroundDelay = 0;
         bool alive = true;
         bool stop = false;
-        int health = 20;
+        int health = 200;
 
         public Circle(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {

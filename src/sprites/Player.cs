@@ -19,6 +19,7 @@ namespace BlobGame
         private static Sound speedEndSound;
         private static Sound powerUpSound;
         public static Sound hitSound;
+        public static Sound superizeSound;
         public Texture2D[] idleTextures;
         int idleCounter;
         int idleActiveFrame;
@@ -47,6 +48,13 @@ namespace BlobGame
         public Matrix3x2 translation;
         public static int xartomantila = 0;
         public static Vector2 playerMaxPos;
+        public static Texture2D flash;
+        public int flashProgress = 0;
+        public bool isSuper = false;
+        public float insanity {get; set;} = 0;
+        public Texture2D[] superIdleTextures;
+        public Texture2D[] superWalkingTextures;
+        public Texture2D[] superJumpingTextures;
         
 
         public Player(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
@@ -75,12 +83,30 @@ namespace BlobGame
             walkingTextures[2] = LoadTexture("assets/sprites/player/PlayerWalk1.png");
             walkingTextures[3] = LoadTexture("assets/sprites/player/PlayerWalk3.png");
 
+            superIdleTextures = new Texture2D[2];
+            superWalkingTextures = new Texture2D[4];
+            superJumpingTextures = new Texture2D[2];
+
+            superIdleTextures[0] = LoadTexture("assets/sprites/superBlob/SuperBlobIdle1.png");
+            superIdleTextures[1] = LoadTexture("assets/sprites/superBlob/SuperBlobIdle2.png");
+
+            superJumpingTextures[0] = LoadTexture("assets/sprites/superBlob/SuperBlobJump1.png");
+            superJumpingTextures[1] = LoadTexture("assets/sprites/superBlob/SuperBlobJump2.png");
+
+            superWalkingTextures[0] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk1.png");
+            superWalkingTextures[1] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk2.png");
+            superWalkingTextures[2] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk1.png");
+            superWalkingTextures[3] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk3.png");
+
             successSound = LoadSound("assets/sounds/success.wav");
             jumpSound = LoadSound("assets/sounds/jump.wav");
             speedStartSound = LoadSound("assets/sounds/speedStart.wav");
             speedEndSound = LoadSound("assets/sounds/speedEnd.wav");
             powerUpSound = LoadSound("assets/sounds/powerUp.wav");
             hitSound = LoadSound("assets/sounds/hitBlob.wav");
+            superizeSound = LoadSound("assets/sounds/superize.wav");
+
+            flash = LoadTexture("assets/backgrounds/flash.png");
 
             camera.Zoom = 1;
             camera.Target = Drect.Position;
@@ -165,6 +191,17 @@ namespace BlobGame
                 sanicTime--;
             }
 
+            if(isSuper && !isDashing)
+            {
+                speed = 6;
+            }
+
+            if(isSuper && isSanic && !isDashing)
+            {
+                speed = 9;
+                sanicTime--;
+            }
+            
             if(sanicTime == 0 && isSanic && !isDashing)
             {
                 speed = 3;
@@ -181,6 +218,11 @@ namespace BlobGame
             {
                 speed = 3;
                 sanicTime++;
+            }
+
+            if(!isSuper && !isSanic)
+            {
+                speed = 3;
             }
 
             if(stamina < 500)
@@ -654,11 +696,9 @@ namespace BlobGame
 
             if(Game.inputManager.PFireball && (stamina >= 500 || isSanic))
             {
-                Fireball.Fire(Drect, isLeft);
-                if(!isSanic)
-                {
-                    stamina -= 100;
-                }
+                int fireSpeed = isSuper ? 10 : 5;
+                stamina -= (isSuper || isSanic) ? 0 : 100;
+                Fireball.Fire(Drect, isLeft, fireSpeed);
             }
 
             //! Handling the Dash
@@ -706,6 +746,51 @@ namespace BlobGame
             {
                 justDrankMilk--;
             }
+
+            //! Handling Insanity
+
+            if(insanity == 100 && Game.inputManager.PSuper)
+            {
+                isSuper = true;
+                PlaySound(superizeSound);
+                SetSoundVolume(superizeSound, (float)Game.LoweredVolume);
+            }
+
+            if(insanity > 0 && isSuper)
+            {
+                insanity -= 0.3f;
+                flashProgress--;
+            }
+
+            if(insanity == 0 && isSuper)
+            {
+                isSuper = false;
+            }
+
+            if(insanity > 100)
+            {
+                insanity = 100;
+            }
+
+            if(insanity < 0)
+            {
+                insanity = 0;
+            }
+
+            if(insanity == 100)
+            {
+                flashProgress++;
+            }
+
+            if(flashProgress < 0)
+            {
+                flashProgress = 0;
+            }
+
+            if(flashProgress > 100)
+            {
+                flashProgress = 100;
+            }
         }
 
         public override void Draw()
@@ -713,10 +798,14 @@ namespace BlobGame
             float flip = isLeft ? -1.0f : 1.0f;
             Srect = new(0, 0, 20 * flip, 30);
 
+            Texture2D[] currentIdleTextures = isSuper ? superIdleTextures : idleTextures;
+            Texture2D[] currentWalkingTextures = isSuper ? superWalkingTextures : walkingTextures;
+            Texture2D[] currentJumpingTextures = isSuper ? superJumpingTextures : jumpingTextures;
+
             if(isMoving && !isInAir)
             {
                 DrawTexturePro(
-                    walkingTextures[walkingActiveFrame],
+                    currentWalkingTextures[walkingActiveFrame],
                     Srect,
                     Drect,
                     Vector2.Zero,
@@ -730,7 +819,7 @@ namespace BlobGame
                 if(Velocity.Y >= 5 || Velocity.Y <= -5)
                 {
                     DrawTexturePro(
-                        jumpingTextures[0],
+                        currentJumpingTextures[0],
                         Srect,
                         Drect,
                         Vector2.Zero,
@@ -741,7 +830,7 @@ namespace BlobGame
                 else
                 {
                     DrawTexturePro(
-                        jumpingTextures[1],
+                        currentJumpingTextures[1],
                         Srect,
                         Drect,
                         Vector2.Zero,
@@ -754,7 +843,7 @@ namespace BlobGame
             if((!isMoving) && !isInAir)
             {
                 DrawTexturePro(
-                    idleTextures[idleActiveFrame],
+                    currentIdleTextures[idleActiveFrame],
                     Srect,
                     Drect,
                     Vector2.Zero,
@@ -952,6 +1041,10 @@ namespace BlobGame
         public static void Damage(float dmgAmount)
         {
             Game.player.Health -= dmgAmount;
+            if(!Game.player.isSuper)
+            {
+                Game.player.insanity += dmgAmount * 2;
+            }
             if(Game.player.Health > 0)
             {
                 PlaySound(hitSound);
@@ -997,6 +1090,17 @@ namespace BlobGame
             float clampY = Math.Clamp(camera.Target.Y, minPos.Y + halfY, maxPos.Y - halfY);
 
             camera.Target = new Vector2(clampX, clampY);
+        }
+
+        public void DrawHealthBar()
+        {
+            Rectangle healthBar = new Rectangle(Settings.SimulationSize.X - 300 - 20, 10, Health * 3, 30);
+            Rectangle border = new Rectangle(Settings.SimulationSize.X - 300 - 20, 10, 300, 40);
+            DrawRectanglePro(healthBar, Vector2.Zero, 0f, Color.Red);
+            DrawRectanglePro(new Rectangle(Settings.SimulationSize.X - 300 - 20, 40, insanity * 3, 10), Vector2.Zero, 0f, Color.Yellow);
+            DrawRectangleLinesEx(border, 3, Color.Black);
+            string health = "Health: " + Health.ToString() + "/100";
+            DrawTextEx(Game.rijusans, health, new Vector2(Settings.SimulationSize.X - border.Width / 2 - (MeasureTextEx(Game.rijusans, health, Game.debugSize, 0).X / 2) - 20, 15), Game.debugSize, 0, Color.Black);
         }
     }
 }

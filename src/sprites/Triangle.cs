@@ -23,7 +23,7 @@ namespace BlobGame
         bool alive = true;
         int switchTick = new Random().Next(1, 101);
         bool stop = false;
-        int health = 40;
+        int health = 80;
 
         public Triangle(Texture2D texture, Rectangle drect, Rectangle srect) : base(texture, drect, srect)
         {
@@ -270,7 +270,7 @@ namespace BlobGame
 
             if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
             {
-                Player.Damage(20);
+                Player.Damage(40);
             }
 
             if (!alive)

@@ -72,7 +72,9 @@ TODO: 10) GOODER HITBOXES [0.45]
 
 TODO: THINGS THAT I REALLY WANNA DO RN:
 TODO:
-TODO: 1) FINISH THE BOSS
+TODO: FINISH THE BOSS:
+TODO: 1) ADD FIREBALL CHARING (HOLD DOWN F, FROM 10 TO 50 DMG)
+TODO: 2) ADD BOSS ABILITIES (CRYSTALS, DRILL, BLINDNESS)
 
 ! * Definition: float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 ! USE LogicalPosition TO MOVE!! (Just Position but it sounds cooler)
