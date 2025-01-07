@@ -39,4 +39,28 @@ public static class Extensions
         return new Sys.Point((int)vector2.X, (int)vector2.Y);
     }
 
+    public static bool SearchAndSetResourceDir(string resourceDirName)
+    {
+        string currentDir = Directory.GetCurrentDirectory();
+
+        // Search for the resource directory
+        while (!string.IsNullOrEmpty(currentDir))
+        {
+            string resourcePath = Path.Combine(currentDir, resourceDirName);
+            if (Directory.Exists(resourcePath))
+            {
+                // Set the working directory to the resource path
+                Directory.SetCurrentDirectory(resourcePath);
+                Console.WriteLine($"Resource directory set to: {resourcePath}");
+                return true;
+            }
+
+            // Move to the parent directory
+            currentDir = Directory.GetParent(currentDir)?.FullName;
+        }
+
+        Console.WriteLine("Resource directory not found.");
+        return false;
+    }
+
 }

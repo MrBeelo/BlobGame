@@ -72,41 +72,41 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = LoadTexture("assets/sprites/player/PlayerIdle1.png");
-            idleTextures[1] = LoadTexture("assets/sprites/player/PlayerIdle2.png");
+            idleTextures[0] = LoadTexture("sprites/player/PlayerIdle1.png");
+            idleTextures[1] = LoadTexture("sprites/player/PlayerIdle2.png");
 
-            jumpingTextures[0] = LoadTexture("assets/sprites/player/PlayerJump1.png");
-            jumpingTextures[1] = LoadTexture("assets/sprites/player/PlayerJump2.png");
+            jumpingTextures[0] = LoadTexture("sprites/player/PlayerJump1.png");
+            jumpingTextures[1] = LoadTexture("sprites/player/PlayerJump2.png");
 
-            walkingTextures[0] = LoadTexture("assets/sprites/player/PlayerWalk1.png");
-            walkingTextures[1] = LoadTexture("assets/sprites/player/PlayerWalk2.png");
-            walkingTextures[2] = LoadTexture("assets/sprites/player/PlayerWalk1.png");
-            walkingTextures[3] = LoadTexture("assets/sprites/player/PlayerWalk3.png");
+            walkingTextures[0] = LoadTexture("sprites/player/PlayerWalk1.png");
+            walkingTextures[1] = LoadTexture("sprites/player/PlayerWalk2.png");
+            walkingTextures[2] = LoadTexture("sprites/player/PlayerWalk1.png");
+            walkingTextures[3] = LoadTexture("sprites/player/PlayerWalk3.png");
 
             superIdleTextures = new Texture2D[2];
             superWalkingTextures = new Texture2D[4];
             superJumpingTextures = new Texture2D[2];
 
-            superIdleTextures[0] = LoadTexture("assets/sprites/superBlob/SuperBlobIdle1.png");
-            superIdleTextures[1] = LoadTexture("assets/sprites/superBlob/SuperBlobIdle2.png");
+            superIdleTextures[0] = LoadTexture("sprites/superBlob/SuperBlobIdle1.png");
+            superIdleTextures[1] = LoadTexture("sprites/superBlob/SuperBlobIdle2.png");
 
-            superJumpingTextures[0] = LoadTexture("assets/sprites/superBlob/SuperBlobJump1.png");
-            superJumpingTextures[1] = LoadTexture("assets/sprites/superBlob/SuperBlobJump2.png");
+            superJumpingTextures[0] = LoadTexture("sprites/superBlob/SuperBlobJump1.png");
+            superJumpingTextures[1] = LoadTexture("sprites/superBlob/SuperBlobJump2.png");
 
-            superWalkingTextures[0] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk1.png");
-            superWalkingTextures[1] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk2.png");
-            superWalkingTextures[2] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk1.png");
-            superWalkingTextures[3] = LoadTexture("assets/sprites/superBlob/SuperBlobWalk3.png");
+            superWalkingTextures[0] = LoadTexture("sprites/superBlob/SuperBlobWalk1.png");
+            superWalkingTextures[1] = LoadTexture("sprites/superBlob/SuperBlobWalk2.png");
+            superWalkingTextures[2] = LoadTexture("sprites/superBlob/SuperBlobWalk1.png");
+            superWalkingTextures[3] = LoadTexture("sprites/superBlob/SuperBlobWalk3.png");
 
-            successSound = LoadSound("assets/sounds/success.wav");
-            jumpSound = LoadSound("assets/sounds/jump.wav");
-            speedStartSound = LoadSound("assets/sounds/speedStart.wav");
-            speedEndSound = LoadSound("assets/sounds/speedEnd.wav");
-            powerUpSound = LoadSound("assets/sounds/powerUp.wav");
-            hitSound = LoadSound("assets/sounds/hitBlob.wav");
-            superizeSound = LoadSound("assets/sounds/superize.wav");
+            successSound = LoadSound("sounds/success.wav");
+            jumpSound = LoadSound("sounds/jump.wav");
+            speedStartSound = LoadSound("sounds/speedStart.wav");
+            speedEndSound = LoadSound("sounds/speedEnd.wav");
+            powerUpSound = LoadSound("sounds/powerUp.wav");
+            hitSound = LoadSound("sounds/hitBlob.wav");
+            superizeSound = LoadSound("sounds/superize.wav");
 
-            flash = LoadTexture("assets/backgrounds/flash.png");
+            flash = LoadTexture("backgrounds/flash.png");
 
             camera.Zoom = 1;
             camera.Target = Drect.Position;
@@ -917,7 +917,9 @@ namespace BlobGame
             player.hazardHorizColl = false;
             player.hazardVertColl = false;
             player.sanicTime = 500;
-            Game.fireballs.Clear();
+            player.insanity = 0;
+            player.flashProgress = 0;
+            Fireball.ClearAll();
         }
 
         public static void Respawn(Player player)
@@ -1040,19 +1042,21 @@ namespace BlobGame
 
         public static void Damage(float dmgAmount)
         {
-            Game.player.Health -= dmgAmount;
-            if(!Game.player.isSuper)
+            if(Game.player.Immunity == 0 && !Game.player.Immune)
             {
-                Game.player.insanity += dmgAmount * 2;
+                Game.player.Health -= dmgAmount;
+                if(!Game.player.isSuper)
+                {
+                    Game.player.insanity += dmgAmount * 2;
+                }
+                if(Game.player.Health > 0)
+                {
+                    PlaySound(hitSound);
+                    SetSoundVolume(hitSound, (float)Game.LoweredVolume);
+                }
+                Game.player.Immunity = 50;
             }
-            if(Game.player.Health > 0)
-            {
-                PlaySound(hitSound);
-                SetSoundVolume(hitSound, (float)Game.LoweredVolume);
-            }
-            Game.player.Immunity = 50;
         }
-
         public static void Die()
         {
             Game.player.alive = false;

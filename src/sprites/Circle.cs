@@ -41,16 +41,16 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = LoadTexture("assets/sprites/circle/CircleIdle1.png");
-            idleTextures[1] = LoadTexture("assets/sprites/circle/CircleIdle2.png");
+            idleTextures[0] = LoadTexture("sprites/circle/CircleIdle1.png");
+            idleTextures[1] = LoadTexture("sprites/circle/CircleIdle2.png");
 
-            jumpingTextures[0] = LoadTexture("assets/sprites/circle/CircleJump1.png");
-            jumpingTextures[1] = LoadTexture("assets/sprites/circle/CircleJump2.png");
+            jumpingTextures[0] = LoadTexture("sprites/circle/CircleJump1.png");
+            jumpingTextures[1] = LoadTexture("sprites/circle/CircleJump2.png");
 
-            walkingTextures[0] = LoadTexture("assets/sprites/circle/CircleWalk1.png");
-            walkingTextures[1] = LoadTexture("assets/sprites/circle/CircleWalk2.png");
-            walkingTextures[2] = LoadTexture("assets/sprites/circle/CircleWalk1.png");
-            walkingTextures[3] = LoadTexture("assets/sprites/circle/CircleWalk3.png");
+            walkingTextures[0] = LoadTexture("sprites/circle/CircleWalk1.png");
+            walkingTextures[1] = LoadTexture("sprites/circle/CircleWalk2.png");
+            walkingTextures[2] = LoadTexture("sprites/circle/CircleWalk1.png");
+            walkingTextures[3] = LoadTexture("sprites/circle/CircleWalk3.png");
 
         }
 
@@ -263,7 +263,7 @@ namespace BlobGame
                 alive = false;
             }
 
-            if(Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
+            if(Drect.Intersects(Game.player.Drect) && !Game.player.isSanic)
             {
                 SetSoundVolume(Player.hitSound, (int)Game.LoweredVolume);
                 PlaySound(Player.hitSound);

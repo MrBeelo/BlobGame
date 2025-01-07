@@ -28,14 +28,14 @@ namespace BlobGame
 
         public override void LoadContent(Game game)
         {
-            explosionSound = LoadSound("assets/sounds/explosion.wav");
-            laserShootSound = LoadSound("assets/sounds/laserShoot.wav");
+            explosionSound = LoadSound("sounds/explosion.wav");
+            laserShootSound = LoadSound("sounds/laserShoot.wav");
 
             fireTextures = new Texture2D[3];
 
-            fireTextures[0] = LoadTexture("assets/sprites/fireball/Fireball1.png");
-            fireTextures[1] = LoadTexture("assets/sprites/fireball/Fireball2.png");
-            fireTextures[2] = LoadTexture("assets/sprites/fireball/Fireball3.png");
+            fireTextures[0] = LoadTexture("sprites/fireball/Fireball1.png");
+            fireTextures[1] = LoadTexture("sprites/fireball/Fireball2.png");
+            fireTextures[2] = LoadTexture("sprites/fireball/Fireball3.png");
         }
 
         public override void Update()
@@ -141,7 +141,7 @@ namespace BlobGame
                 }
             }
 
-            if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && bad)
+            if (Drect.Intersects(Game.player.Drect) && bad)
             {
                 Player.Damage(10);
                 alive = false;

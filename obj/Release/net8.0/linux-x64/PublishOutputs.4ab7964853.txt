@@ -1,0 +1,3 @@
+/var/home/MrBeelo/Desktop/Projects/Src/BlobGame/bin/Release/net8.0/linux-x64/publish/BlobGame.pdb
+/var/home/MrBeelo/Desktop/Projects/Src/BlobGame/bin/Release/net8.0/linux-x64/publish/libraylib.so
+/var/home/MrBeelo/Desktop/Projects/Src/BlobGame/bin/Release/net8.0/linux-x64/publish/BlobGame

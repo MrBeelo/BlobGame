@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -42,16 +43,16 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = LoadTexture("assets/sprites/bossTriangle/BossTriangleIdle1.png");
-            idleTextures[1] = LoadTexture("assets/sprites/bossTriangle/BossTriangleIdle2.png");
+            idleTextures[0] = LoadTexture("sprites/bossTriangle/BossTriangleIdle1.png");
+            idleTextures[1] = LoadTexture("sprites/bossTriangle/BossTriangleIdle2.png");
 
-            jumpingTextures[0] = LoadTexture("assets/sprites/bossTriangle/BossTriangleJump1.png");
-            jumpingTextures[1] = LoadTexture("assets/sprites/bossTriangle/BossTriangleJump2.png");
+            jumpingTextures[0] = LoadTexture("sprites/bossTriangle/BossTriangleJump1.png");
+            jumpingTextures[1] = LoadTexture("sprites/bossTriangle/BossTriangleJump2.png");
 
-            walkingTextures[0] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk1.png");
-            walkingTextures[1] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk2.png");
-            walkingTextures[2] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk1.png");
-            walkingTextures[3] = LoadTexture("assets/sprites/bossTriangle/BossTriangleWalk3.png");
+            walkingTextures[0] = LoadTexture("sprites/bossTriangle/BossTriangleWalk1.png");
+            walkingTextures[1] = LoadTexture("sprites/bossTriangle/BossTriangleWalk2.png");
+            walkingTextures[2] = LoadTexture("sprites/bossTriangle/BossTriangleWalk1.png");
+            walkingTextures[3] = LoadTexture("sprites/bossTriangle/BossTriangleWalk3.png");
 
         }
 
@@ -90,6 +91,24 @@ namespace BlobGame
                     isLeft = true;
                 } else if(randomBool) {
                     isLeft = false;
+                }
+            }
+
+            if(switchTick % 1000 == 300)
+            {
+                switch(random.Next(1, 4))
+                {
+                    case 1:
+                        CrystalEvent.Start();
+                        break;
+
+                    case 2:
+                        //! Second Event (Drill?)
+                        break;
+
+                    case 3:
+                        ///! Third Event (Blindness?)
+                        break;
                 }
             }
 
@@ -247,7 +266,7 @@ namespace BlobGame
             {
                 switchTick--;
             } else {
-                switchTick = 499;
+                switchTick = 999;
             }
 
             /*if(switchTick % 100 <= 25)
@@ -257,7 +276,7 @@ namespace BlobGame
                 stop = false;
             }*/
 
-            if(switchTick == 250)
+            if(switchTick == 250 || switchTick == 750)
             {
                 int value = new Random().Next(1, 3);
                 switch(value)
@@ -300,7 +319,7 @@ namespace BlobGame
                 alive = false;
             }
 
-            if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
+            if (Drect.Intersects(Game.player.Drect) && !Game.player.isSanic)
             {
                 Player.Damage(30);
             }
@@ -415,6 +434,8 @@ namespace BlobGame
             DrawRectangle((Settings.SimulationSize.X / 2) - 250, 10, dHealth * 5 / 36, 30, Color.Red);
             DrawRectangleLinesEx(new Rectangle((Settings.SimulationSize.X / 2) - 250, 10, 500, 30), 5, Color.Black);
             DrawTextEx(Game.rijusans, healthStat, new Vector2((Settings.SimulationSize.X / 2) - (MeasureTextEx(Game.rijusans, healthStat, Game.debugSize, 0).X / 2), 50), Game.debugSize, 0, Color.Black);
+            if(switchTick > 300 && switchTick < 400)
+            { DrawTextEx(Game.rijusans, "A RANDOM EVENT IS HAPPENING!", new Vector2(Settings.SimulationSize.X / 2 - MeasureTextEx(Game.rijusans, "A RANDOM EVENT IS HAPPENING!", Game.statsSize, 0).X / 2, 100), Game.statsSize, 0, Color.Black); }
         }
     }
 }

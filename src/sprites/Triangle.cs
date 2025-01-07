@@ -41,16 +41,16 @@ namespace BlobGame
             walkingTextures = new Texture2D[4];
             jumpingTextures = new Texture2D[2];
 
-            idleTextures[0] = LoadTexture("assets/sprites/triangle/TriangleIdle1.png");
-            idleTextures[1] = LoadTexture("assets/sprites/triangle/TriangleIdle2.png");
+            idleTextures[0] = LoadTexture("sprites/triangle/TriangleIdle1.png");
+            idleTextures[1] = LoadTexture("sprites/triangle/TriangleIdle2.png");
 
-            jumpingTextures[0] = LoadTexture("assets/sprites/triangle/TriangleJump1.png");
-            jumpingTextures[1] = LoadTexture("assets/sprites/triangle/TriangleJump2.png");
+            jumpingTextures[0] = LoadTexture("sprites/triangle/TriangleJump1.png");
+            jumpingTextures[1] = LoadTexture("sprites/triangle/TriangleJump2.png");
 
-            walkingTextures[0] = LoadTexture("assets/sprites/triangle/TriangleWalk1.png");
-            walkingTextures[1] = LoadTexture("assets/sprites/triangle/TriangleWalk2.png");
-            walkingTextures[2] = LoadTexture("assets/sprites/triangle/TriangleWalk1.png");
-            walkingTextures[3] = LoadTexture("assets/sprites/triangle/TriangleWalk3.png");
+            walkingTextures[0] = LoadTexture("sprites/triangle/TriangleWalk1.png");
+            walkingTextures[1] = LoadTexture("sprites/triangle/TriangleWalk2.png");
+            walkingTextures[2] = LoadTexture("sprites/triangle/TriangleWalk1.png");
+            walkingTextures[3] = LoadTexture("sprites/triangle/TriangleWalk3.png");
 
         }
 
@@ -268,7 +268,7 @@ namespace BlobGame
                 alive = false;
             }
 
-            if (Drect.Intersects(Game.player.Drect) && Game.player.Immunity == 0 && !Game.player.Immune && !Game.player.isSanic)
+            if (Drect.Intersects(Game.player.Drect) && !Game.player.isSanic)
             {
                 Player.Damage(40);
             }

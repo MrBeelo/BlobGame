@@ -17,10 +17,10 @@ public class Background
     private const float transitionSpeed = 2f; // Adjust for faster/slower transitions
     public void LoadContent()
     {
-        background = LoadTexture("assets/backgrounds/mainbg.png");
+        background = LoadTexture("backgrounds/mainbg.png");
         for (int i = 1; i < 28; i++)
         {
-            frames.Add(LoadTexture("assets/backgrounds/menubg" + i + ".png"));
+            frames.Add(LoadTexture("backgrounds/menubg" + i + ".png"));
         }
     }
 

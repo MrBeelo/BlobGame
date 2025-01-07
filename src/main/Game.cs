@@ -11,14 +11,15 @@ public class Game
     public float deltaTime;
     public static string credits = "Made by MrBeelo";
     public static string version = "v0.46.3";
-    public static string settingsFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "settings.json");
-    public static string savefileFilePath = Path.Combine(AppContext.BaseDirectory, "assets", "data", "savefile.json");
+    public static string settingsFilePath = "data/settings.json";
+    public static string savefileFilePath = "data/savefile.json";
     public static Player player { get; set; }
     public static TriangleBoss triangleBoss {get; set;}
     public static Fireball fireball { get; set; }
     public static Tilemap tilemap { get; set; }
     public static Triangle triangle { get; set; }
     public static Circle circle { get; set; }
+    public static CrystalEvent crystalEvent { get; set; }
     public static List<TriangleBoss> triangleBosses = new();
     public static List<Triangle> triangles = new();
     public static List<Circle> circles = new();
@@ -53,10 +54,17 @@ public class Game
     public RenderTexture2D target;
     public float scale;
     public static Dictionary<int, Rectangle> indexRects = new();
+    public static List<Event> events = new();
     public enum GameState
     { MainMenu, Playing, Paused, Options, Quit, Death, Win, Pass, Info }
     public void Run()
     {
+        if (!Extensions.SearchAndSetResourceDir("assets"))
+        {
+            Console.WriteLine("Resources directory not found. Exiting...");
+            return;
+        }
+
         Globals.Update();
 
         SetConfigFlags(ConfigFlags.ResizableWindow);
@@ -73,7 +81,7 @@ public class Game
         }
 
         InitAudioDevice();
-        SetWindowIcon(LoadImage("assets/other/icon.png"));
+        SetWindowIcon(LoadImage("other/icon.png"));
         SetExitKey(KeyboardKey.Null);
         SetTargetFPS(60);
         ShowCursor();
@@ -86,16 +94,16 @@ public class Game
         //! Definition of a texture and a position for the sprite class is needed here.
         //! Apart from that, you can do whatever the fuck you want with all entities after this point.
 
-        rijusans = LoadFontEx("assets/fonts/Rijusans-Regular.ttf", 60, null, 0);
-        zerove = LoadFontEx("assets/fonts/Zerove.ttf", 100, null, 0);
+        rijusans = LoadFontEx("fonts/Rijusans-Regular.ttf", 60, null, 0);
+        zerove = LoadFontEx("fonts/Zerove.ttf", 100, null, 0);
 
-        Texture2D playerTexture = LoadTexture("assets/sprites/player/PlayerIdle1.png");
-        Texture2D fireTexture = LoadTexture("assets/sprites/fireball/Fireball1.png");
-        Texture2D triangleTexture = LoadTexture("assets/sprites/triangle/TriangleIdle1.png");
-        Texture2D circleTexture = LoadTexture("assets/sprites/circle/CircleIdle1.png");
+        Texture2D playerTexture = LoadTexture("sprites/player/PlayerIdle1.png");
+        Texture2D fireTexture = LoadTexture("sprites/fireball/Fireball1.png");
+        Texture2D triangleTexture = LoadTexture("sprites/triangle/TriangleIdle1.png");
+        Texture2D circleTexture = LoadTexture("sprites/circle/CircleIdle1.png");
 
-        menuMusic = LoadMusicStream("assets/music/menumusic.mp3");
-        playMusic = LoadMusicStream("assets/music/playmusic.mp3");
+        menuMusic = LoadMusicStream("music/menumusic.mp3");
+        playMusic = LoadMusicStream("music/playmusic.mp3");
 
         background.LoadContent();
 
@@ -131,6 +139,9 @@ public class Game
         circle.LoadContent(this);
 
         Player.Respawn(player);
+
+        crystalEvent = new CrystalEvent();
+        crystalEvent.LoadContent(this);
 
         PlayMusicStream(menuMusic);
 
@@ -347,6 +358,11 @@ public class Game
                     circle.Update();
                 }
 
+                foreach (var Event in events.ToList())
+                {
+                    Event.Update();
+                }
+
                 if (inputManager.PBack && !TypingMode)
                 {
                     currentGameState = GameState.Paused;
@@ -441,6 +457,11 @@ public class Game
                 foreach (var circle in circles.ToList())
                 {
                     circle.Draw();
+                }
+
+                foreach (var Event in events.ToList())
+                {
+                    Event.Draw();
                 }
                 break;
         }

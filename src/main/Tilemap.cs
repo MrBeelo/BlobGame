@@ -72,17 +72,17 @@ namespace BlobGame
 
         public void LoadContent(Game game)
         {
-            textureAtlas = LoadTexture("assets/atlases/atlas.png");
-            hitboxAtlas = LoadTexture("assets/atlases/collision_atlas.png");
+            textureAtlas = LoadTexture("atlases/atlas.png");
+            hitboxAtlas = LoadTexture("atlases/collision_atlas.png");
 
             for(int i = 0; i < Normal.Length; i++)
             {
-                Normal[i] = LoadMap("assets/maps/level" + i + "_normal.csv");
+                Normal[i] = LoadMap("maps/level" + i + "_normal.csv");
             }
 
             for(int i = 0; i < Collision.Length; i++)
             {
-                Collision[i] = LoadMap("assets/maps/level" + i + "_collision.csv");
+                Collision[i] = LoadMap("maps/level" + i + "_collision.csv");
             }
         }
 
@@ -93,7 +93,7 @@ namespace BlobGame
                 level = 0;
             }
             
-            GetMapSize("assets/maps/level" + Globals.SaveFile.Level + "_collision.csv");
+            GetMapSize("maps/level" + Globals.SaveFile.Level + "_collision.csv");
         }
 
         public void Draw()
