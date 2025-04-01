@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "Microsoft.NET.ILLink.Tasks/8.0.11": {
+      "Microsoft.NET.ILLink.Tasks/8.0.13": {
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
@@ -59,10 +59,10 @@
     }
   },
   "libraries": {
-    "Microsoft.NET.ILLink.Tasks/8.0.11": {
-      "sha512": "zk5lnZrYJgtuJG8L4v17Ej8rZ3PUcR2iweNV08BaO5LbYHIi2wNaVNcJoLxvqgQdnjLlKnCCfVGLDr6QHeAarQ==",
+    "Microsoft.NET.ILLink.Tasks/8.0.13": {
+      "sha512": "R19ZTaRiQAK+xo9ZwaHbF/1vb1wwR1Wn5+sqp9v8+CDjbdS8R6qftKdw0VSXWKm7VAMi7P+NCU4zxDzhEWcAwQ==",
       "type": "package",
-      "path": "microsoft.net.illink.tasks/8.0.11",
+      "path": "microsoft.net.illink.tasks/8.0.13",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -76,7 +76,7 @@
         "build/Microsoft.NET.ILLink.Analyzers.props",
         "build/Microsoft.NET.ILLink.Tasks.props",
         "build/Microsoft.NET.ILLink.targets",
-        "microsoft.net.illink.tasks.8.0.11.nupkg.sha512",
+        "microsoft.net.illink.tasks.8.0.13.nupkg.sha512",
         "microsoft.net.illink.tasks.nuspec",
         "tools/net472/ILLink.Tasks.dll",
         "tools/net472/ILLink.Tasks.dll.config",
@@ -163,7 +163,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Microsoft.NET.ILLink.Tasks >= 8.0.11",
+      "Microsoft.NET.ILLink.Tasks >= 8.0.13",
       "Newtonsoft.Json >= 13.0.3",
       "Raylib-cs >= 7.0.0"
     ]
@@ -174,11 +174,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/MrBeelo/Desktop/Projects/Src/BlobGame/BlobGame.csproj",
+      "projectUniqueName": "/var/home/MrBeelo/Desktop/Projects/BlobGame/BlobGame.csproj",
       "projectName": "BlobGame",
-      "projectPath": "/home/MrBeelo/Desktop/Projects/Src/BlobGame/BlobGame.csproj",
+      "projectPath": "/var/home/MrBeelo/Desktop/Projects/BlobGame/BlobGame.csproj",
       "packagesPath": "/home/MrBeelo/.nuget/packages/",
-      "outputPath": "/home/MrBeelo/Desktop/Projects/Src/BlobGame/obj/",
+      "outputPath": "/var/home/MrBeelo/Desktop/Projects/BlobGame/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/MrBeelo/.nuget/NuGet/NuGet.Config"
@@ -208,7 +208,7 @@
           "Microsoft.NET.ILLink.Tasks": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[8.0.11, )",
+            "version": "[8.0.13, )",
             "autoReferenced": true
           },
           "Newtonsoft.Json": {
@@ -236,7 +236,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.113/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

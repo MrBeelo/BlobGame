@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/MrBeelo/Desktop/Projects/Src/BlobGame/BlobGame.csproj": {}
+    "/var/home/MrBeelo/Desktop/Projects/BlobGame/BlobGame.csproj": {}
   },
   "projects": {
-    "/home/MrBeelo/Desktop/Projects/Src/BlobGame/BlobGame.csproj": {
+    "/var/home/MrBeelo/Desktop/Projects/BlobGame/BlobGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/MrBeelo/Desktop/Projects/Src/BlobGame/BlobGame.csproj",
+        "projectUniqueName": "/var/home/MrBeelo/Desktop/Projects/BlobGame/BlobGame.csproj",
         "projectName": "BlobGame",
-        "projectPath": "/home/MrBeelo/Desktop/Projects/Src/BlobGame/BlobGame.csproj",
+        "projectPath": "/var/home/MrBeelo/Desktop/Projects/BlobGame/BlobGame.csproj",
         "packagesPath": "/home/MrBeelo/.nuget/packages/",
-        "outputPath": "/home/MrBeelo/Desktop/Projects/Src/BlobGame/obj/",
+        "outputPath": "/var/home/MrBeelo/Desktop/Projects/BlobGame/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/MrBeelo/.nuget/NuGet/NuGet.Config"
@@ -41,7 +41,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.11, )",
+              "version": "[8.0.13, )",
               "autoReferenced": true
             },
             "Newtonsoft.Json": {
@@ -69,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.111/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.113/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

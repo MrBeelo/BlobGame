@@ -96,7 +96,7 @@ namespace BlobGame
 
             if(switchTick % 1000 == 300)
             {
-                switch(random.Next(1, 4))
+                switch(random.Next(1, 2))
                 {
                     case 1:
                         CrystalEvent.Start();
